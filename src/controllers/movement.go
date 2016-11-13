@@ -1,10 +1,6 @@
 package controllers
 
-import (
-	"models/connect"
-
-	"github.com/astaxie/beego"
-)
+import "github.com/astaxie/beego"
 
 type MovementController struct {
 	beego.Controller
@@ -24,7 +20,7 @@ type movement struct {
 
 // @router /movements [get]
 func (this *MovementController) getMovements() {
-	rows := connect.Querier.Query("select id, target_muscle, secondary_muscle, name, description from movement where ")
+	rows := models.Querier.Query("select id, target_muscle, secondary_muscle, name, description from movement where ")
 	movements := make([]*movement, 0)
 	for rows.Next() {
 		one := new(movement)
