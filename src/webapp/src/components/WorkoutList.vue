@@ -3,7 +3,7 @@
         <div class="list-group">
             <template v-for="workout in workouts">
                 <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">{{workout.name}}}</h4>
+                    <h4 class="list-group-item-heading">{{workout.name}}</h4>
                     <p class="list-group-item-text">{{workout.description}}</p>
                 </a>
             </template>
@@ -19,9 +19,17 @@ export default {
         }
     },
     created: function() {
-        this.$http.get("/workouts", (response) => {
-            this.$set('workouts', response.body.data)
-        })
+        this.$data.workouts =   [{
+            name:'upper strength',
+            description: 'upper strength session to improve upperbody  '
+        }, {
+            name:'lower strength',
+            description: 'lower strength session to improve squat and deadlift'
+        }
+        ]
+        //this.$http.get("/workouts", (response) => {
+        //    this.$set('workouts', response.body.data)
+        //})
     }
 }
 </script>

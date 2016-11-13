@@ -26,7 +26,7 @@
 <script>
 export default {
     name: 'movement',
-    props: ['movement', 'sets'].
+    props: ['movement', 'sets'],
     methods: {
         handleAchieve: function(set) {
             if (set.achieved == undefined || set.achieved <= 0) {
