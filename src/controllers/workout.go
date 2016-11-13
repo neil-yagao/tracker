@@ -15,7 +15,7 @@ type workout struct {
 	Id          int    `json:"id"`
 	Name        string `json:"name"`
 	Target      string `json:"target"`
-	PerformDate string `json:"performDate"`
+	PerformDate string `json:"perform_date"`
 	Description string `json:"description"`
 }
 
@@ -36,4 +36,5 @@ func (this *WorkoutController) getWorkouts() {
 func (this *WorkoutController) insertWorkout() {
 	ob := make([]workout, 0)
 	json.Unmarshal(this.Ctx.Input.RequestBody, &ob)
+	for 
 }
