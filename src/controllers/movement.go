@@ -1,6 +1,10 @@
 package controllers
 
-import "github.com/astaxie/beego"
+import (
+	"models"
+
+	"github.com/astaxie/beego"
+)
 
 type MovementController struct {
 	beego.Controller
@@ -15,7 +19,7 @@ type movement struct {
 }
 
 /*const MOVEMENT_QUERY string = "SELECT 'm.name' as movement, 'w.name' as workout, ws.target_weight as weight, " +
-"ws.target_number as default_number" + "from powerlift.movement m, powerlift.working_set ws, " +
+"ws.target_number as default_number " + "from powerlift.movement m, powerlift.working_set ws, " +
 "powerlift.workout w where w.id = ws.workout and ws.movement = m.id;"*/
 
 // @router /movements [get]
