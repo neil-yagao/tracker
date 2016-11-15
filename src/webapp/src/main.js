@@ -19,8 +19,8 @@ const routes = [{
 },/* {
      path: '/workout/:id',
      component: Workout
- }
-*/, {
+ },
+*/ {
     path: '/new-workout',
     component: WorkoutCreate
 }]

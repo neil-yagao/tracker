@@ -1,11 +1,83 @@
 <template>
-    <div id="workout-create" class="row">
-        <div class="input-group input-group-lg">
-            <span class="input-group-addon">Workout</span>
-            <input type="text" class="form-control" id="basic-url">
+    <div id="workout-create">
+        <div class="row" style="margin-bottom:1em;text-align: center;">
+            <div class="col-lg-2" style="margin-top:6px">
+                <label>Workout Template Name</label>
+            </div>
+            <div class="col-lg-2">
+                <input class="form-control" placeholder="Name" v-model="workout" type="text">
+            </div>
+            <div class="col-lg-2" style="margin-top:6px">
+                <label>Start Workout At</label>
+            </div>
+            <div class="col-lg-2">
+                <input class="form-control" placeholder="Start At" v-model="startAt" type="text">
+            </div>
         </div>
-        <movement-create :movement="currentMovement"></movement-create>
-        <movement-create v-for="movement in movements" :movement="movement"></movement-create>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Workout Content
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-6 col-lg-offset-3">
+                    <table class="table table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <td><b>#</b></td>
+                                <td>Name</td>
+                                <td>Weight</td>
+                                <td>Repeats</td>
+                                <td>Sets</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(movement, index) in movements">
+                                <td><b>{{index + 1}}</b></td>
+                                <td>{{movement.name}}</td>
+                                <td>{{movement.weight}}</td>
+                                <td>{{movement.repeats}}</td>
+                                <td>{{movement.sets}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-xs" @click="remove(index)">X</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <movement-create @addMovement="updateMovement" :movement="{}"></movement-create>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="repeats != ''">Weekly On<span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li v-for="day in week" @click="weekly = day"><a>{{day}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <input type="text" class="form-control" v-model="weekly">
+                        </div>
+                    </div>
+                    <div class="col-lg-1">
+                        <h5>OR</h5>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="input-group">
+                            <span class="input-group-addon">Weight Add Per Workout</span>
+                            <input type="text" class="form-control" v-model="addition">
+                            <span class="input-group-addon">KG</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-lg-offset-4">
+                        <button class="btn btn-default">Create
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 <script>
 import MovementCreate from "./Movement-Create.vue"
@@ -13,28 +85,33 @@ export default {
     name: 'workout',
     data() {
         return {
-            workout: {},
+            workout: '',
             movements: [],
-            currentMovement: {}
+            startAt: new Date().toISOString().slice(0, 10),
+            week: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            weekly: '',
+            addition: ''
         }
-    },
-    created: function() {
-        this.$on('addMovement', function(newMovement) {
-            this.$data.currentMovement = {}
-            this.$data.movements.push(newMovement)
-        })
-        this.$data.movements = []
     },
     components: {
         'movement-create': MovementCreate
     },
-    computed: {
-        currentMovement: function() {
-            if (this.$data.movements != null || this.$data.movements.length > 0) {
-                return this.$data.movements[this.$data.movements.length - 1]
-            } else {
-                return {}
+    methods: {
+        updateMovement: function(newMovement) {
+            if (newMovement.name) {
+                this.$data.movements.push(newMovement)
             }
+        },
+        remove: function(index) {
+            this.$data.movements.splice(index, 1)
+        },
+        createWorkoutTemplate: function() {
+            this.$http.put('/workouts', JSON.stringify({
+                'workout': this.workout,
+                'movements': this.movements,
+                'addition': this.addition,
+                'weekly': this.weekly
+            }))
         }
     }
 }

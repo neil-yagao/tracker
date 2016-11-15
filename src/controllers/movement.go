@@ -18,6 +18,13 @@ type movement struct {
 	Description     string
 }
 
+type MovementTemplate struct {
+	Name    string `json:"name"`
+	Repeats string `json:"repeats"`
+	Weight  string `json:"weight"`
+	Sets    string `json:"sets"`
+}
+
 /*const MOVEMENT_QUERY string = "SELECT 'm.name' as movement, 'w.name' as workout, ws.target_weight as weight, " +
 "ws.target_number as default_number " + "from powerlift.movement m, powerlift.working_set ws, " +
 "powerlift.workout w where w.id = ws.workout and ws.movement = m.id;"*/
