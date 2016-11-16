@@ -10,8 +10,8 @@ CREATE TABLE `powerlift`.`workout` (
   `description` VARCHAR(512) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
-ALTER TABLE `powerlift`.`workout` 
-ADD COLUMN `perform_date` VARCHAR(32) NOT NULL DEFAULT '2016-11-11'
+ALTER TABLE `powerlift`.`workout`
+ADD COLUMN `perform_date` VARCHAR(32) NOT NULL DEFAULT '2016-11-11';
 
 
 CREATE TABLE `powerlift`.`movement` (
@@ -33,4 +33,3 @@ CREATE TABLE `powerlift`.`working_set` (
   `sequence` SMALLINT(4) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
-

@@ -35,7 +35,7 @@ func (this *MovementController) getMovements() {
 	movements := make([]*movement, 0)
 	for rows.Next() {
 		one := new(movement)
-		rows.Scan(&one.Id, &one.TargetMuscle, &one.SecondaryMuscle, &one.Equipment, &one.Description)
+		rows.Scan(&one.Id, &one.TargetMuscle, &one.SecondaryMuscle, &one.Name, &one.Description)
 		movements = append(movements, one)
 	}
 	this.Data["json"] = map[string]interface{}{"data": movements}

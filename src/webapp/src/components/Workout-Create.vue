@@ -8,10 +8,25 @@
                 <input class="form-control" placeholder="Name" v-model="workout" type="text">
             </div>
             <div class="col-lg-2" style="margin-top:6px">
+                <label>Workout Target Muscle</label>
+            </div>
+            <div class="col-lg-2">
+                <input class="form-control" placeholder="Target Muscle Group" v-model="target" type="text">
+            </div>
+
+            <div class="col-lg-2" style="margin-top:6px">
                 <label>Start Workout At</label>
             </div>
             <div class="col-lg-2">
                 <input class="form-control" placeholder="Start At" v-model="startAt" type="text">
+            </div>
+        </div>
+        <div class="row" style="margin-bottom:1em;text-align: center;">
+            <div class="col-lg-2" style="margin-top:6px">
+                <label>Workout Notes</label>
+            </div>
+            <div class="col-lg-5">
+                <input class="form-control" placeholder="Notes during the workout..." v-model="description" type="text">
             </div>
         </div>
         <div class="panel panel-default">
@@ -51,7 +66,7 @@
                     <div class="col-lg-3">
                         <div class="input-group">
                             <div class="input-group-btn">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="repeats != ''">Weekly On<span class="caret"></span></button>
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Weekly On<span class="caret"></span></button>
                                 <ul class="dropdown-menu">
                                     <li v-for="day in week" @click="weekly = day"><a>{{day}}</a>
                                     </li>
@@ -61,7 +76,7 @@
                         </div>
                     </div>
                     <div class="col-lg-1">
-                        <h5>OR</h5>
+                        <h5>AND</h5>
                     </div>
                     <div class="col-lg-3">
                         <div class="input-group">
@@ -71,7 +86,7 @@
                         </div>
                     </div>
                     <div class="col-lg-1 col-lg-offset-4">
-                        <button class="btn btn-default">Create
+                        <button class="btn btn-default" @click="createWorkoutTemplate">Create
                         </button>
                     </div>
                 </div>
@@ -90,7 +105,9 @@ export default {
             startAt: new Date().toISOString().slice(0, 10),
             week: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
             weekly: '',
-            addition: ''
+            addition: '',
+            target:'',
+            description:''
         }
     },
     components: {
@@ -106,12 +123,17 @@ export default {
             this.$data.movements.splice(index, 1)
         },
         createWorkoutTemplate: function() {
-            this.$http.put('/workouts', JSON.stringify({
+            var requestBody = JSON.stringify({
                 'workout': this.workout,
                 'movements': this.movements,
+                'startAt': this.startAt,
                 'addition': this.addition,
-                'weekly': this.weekly
-            }))
+                'weekly': this.weekly,
+                'targetMuscle':this.target,
+                'description': this.description
+            });
+            console.info(requestBody)
+            //  this.$http.put('/workouts', requestBody )
         }
     }
 }
