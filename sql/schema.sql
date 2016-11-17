@@ -33,3 +33,6 @@ CREATE TABLE `powerlift`.`working_set` (
   `sequence` SMALLINT(4) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
+ALTER TABLE `powerlift`.`working_set` 
+CHANGE COLUMN `acheive_number` `acheive_number` INT(11) NULL DEFAULT 0 ;
+
