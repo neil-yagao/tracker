@@ -15,7 +15,7 @@ type MovementController struct {
 "powerlift.workout w where w.id = ws.workout and ws.movement = m.id;"*/
 
 // @router /movements [get]
-func (this *MovementController) getMovements() {
+func (this *MovementController) GetMovements() {
 	rows := models.BasicCRUD.Query("select id, target_muscle, secondary_muscle, name, description from movement where ")
 	movements := make([]*models.Movement, 0)
 	for rows.Next() {

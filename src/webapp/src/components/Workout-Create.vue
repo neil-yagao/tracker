@@ -5,7 +5,7 @@
                 <label>Workout Template Name</label>
             </div>
             <div class="col-lg-2">
-                <input class="form-control" placeholder="Name" v-model="workout" type="text">
+                <input class="form-control" placeholder="Name" v-model="name" type="text">
             </div>
             <div class="col-lg-2" style="margin-top:6px">
                 <label>Workout Target Muscle</label>
@@ -13,7 +13,6 @@
             <div class="col-lg-2">
                 <input class="form-control" placeholder="Target Muscle Group" v-model="target" type="text">
             </div>
-
             <div class="col-lg-2" style="margin-top:6px">
                 <label>Start Workout At</label>
             </div>
@@ -100,14 +99,14 @@ export default {
     name: 'workout',
     data() {
         return {
-            workout: '',
+            name: '',
             movements: [],
             startAt: new Date().toISOString().slice(0, 10),
             week: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
             weekly: '',
             addition: '',
-            target:'',
-            description:''
+            target: '',
+            description: ''
         }
     },
     components: {
@@ -124,16 +123,16 @@ export default {
         },
         createWorkoutTemplate: function() {
             var requestBody = JSON.stringify({
-                'workout': this.workout,
+                'name': this.name,
                 'movements': this.movements,
                 'startAt': this.startAt,
                 'addition': this.addition,
                 'weekly': this.weekly,
-                'targetMuscle':this.target,
+                'targetMuscle': this.target,
                 'description': this.description
             });
             console.info(requestBody)
-            //  this.$http.put('/workouts', requestBody )
+            this.$http.put('/workouts', requestBody)
         }
     }
 }

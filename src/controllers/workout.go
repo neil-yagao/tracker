@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"models"
+	"services"
 
 	"github.com/astaxie/beego"
 )
@@ -13,7 +14,7 @@ type WorkoutController struct {
 }
 
 // @router /workouts [get]
-func (this *WorkoutController) getWorkouts() {
+func (this *WorkoutController) GetWorkouts() {
 	rows := models.BasicCRUD.Query("select id, name, target, perform_date, description from workout")
 	workouts := make([]*models.Workout, 0)
 	for rows.Next() {
@@ -26,7 +27,7 @@ func (this *WorkoutController) getWorkouts() {
 }
 
 // @router /workouts [put]
-func (this *WorkoutController) insertWorkout() {
+func (this *WorkoutController) InsertWorkout() {
 	var template models.WorkoutTemplate
 	// response.Count = 123
 	err := json.Unmarshal(this.Ctx.Input.RequestBody, &template)
@@ -34,5 +35,11 @@ func (this *WorkoutController) insertWorkout() {
 		log.Fatalln(err)
 		panic(err)
 	}
+	//experiment using goroutine
+	log.Print("received template:")
+	log.Println(template)
+	go services.WorkoutCreator.CreateWorkoutsFromeTemplate(template)
+	this.Data["json"] = map[string]interface{}{"data": "", "success": true}
+	this.ServeJSON()
 
 }

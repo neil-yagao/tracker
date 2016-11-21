@@ -38,7 +38,7 @@ var db *sql.DB
 var err error
 
 func init() {
-	db, err = sql.Open("mysql", "powerlift:password@/powerlift")
+	db, err = sql.Open("mysql", "powerlift:password@tcp(127.0.0.1:3306)/powerlift")
 	checkErr(err)
 }
 
@@ -57,7 +57,7 @@ func (b *basicCRUD) InsertOne(sql string) int64 {
 func insertOne(sql string) int64 {
 	result, err := db.Exec(sql)
 	checkErr(err)
-	if lastInsert, err := result.LastInsertId(); err != nil {
+	if lastInsert, err := result.LastInsertId(); err == nil {
 		return lastInsert
 	} else {
 		log.Fatal(err)
@@ -67,6 +67,7 @@ func insertOne(sql string) int64 {
 
 func (s *basicCRUD) Save(table string, value interface{}) int64 {
 	insertSql := buildInsert(table, value)
+	log.Println("saving sql:" + insertSql)
 	return insertOne(insertSql)
 }
 

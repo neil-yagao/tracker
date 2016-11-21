@@ -34,11 +34,11 @@ type MovementTemplate struct {
 }
 
 type WorkingSet struct {
-	Id            int64 `json:"id"`
-	Workout       int64 `json:"workout"`
-	Movement      int64 `json:"movement"`
-	TargetWeight  int64 `json:"target_weight"`
-	TargetNumber  int64 `json:"target_number"`
-	AcheiveNumber int64 `json:"acheive_number"`
-	Sequence      int8  `json:"sequence"`
+	Id            int64   `json:"id"`
+	Workout       int64   `json:"workout"`
+	Movement      int64   `json:"movement"`
+	TargetWeight  float64 `json:"target_weight"`
+	TargetNumber  int     `json:"target_number"`
+	AcheiveNumber int64   `json:"acheive_number"`
+	Sequence      int8    `json:"sequence"`
 }

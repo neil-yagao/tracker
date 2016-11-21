@@ -2,11 +2,17 @@ package services
 
 import (
 	"models"
+	"strconv"
 	"time"
+
+	"github.com/astaxie/beego/logs"
 )
 
 type WorkoutSerivces struct {
 }
+
+var WorkoutCreator WorkoutSerivces
+var week, _ = time.ParseDuration("168h")
 
 /**
 * now we only generate workout for 4 times
@@ -15,11 +21,11 @@ func (this *WorkoutSerivces) CreateWorkoutsFromeTemplate(template models.Workout
 
 	workouts := createAndSaveWorkouts(template)
 	for _, workout := range workouts {
-		createAndSaveMovementForWorkout(workout, template)
+		generateWorkingSets(workout, template)
 	}
 }
 
-func createAndSaveMovementForWorkout(workout models.Workout, template models.WorkoutTemplate) {
+func generateWorkingSets(workout models.Workout, template models.WorkoutTemplate) {
 	var containMovements []models.MovementTemplate = template.Movements
 	for _, mv := range containMovements {
 		movement := new(models.Movement)
@@ -27,9 +33,30 @@ func createAndSaveMovementForWorkout(workout models.Workout, template models.Wor
 		movement.TargetMuscle = template.TargetMuscle
 		movement.SecondaryMuscle = ""
 		movement.Name = mv.Name
+		movmentId := getMovementId(*movement)
+		sets, err := strconv.Atoi(mv.Sets)
+		handleIncorrectFormattingNumber(err)
+		for sequence := 1; sequence <= sets; sequence++ {
+			workingSet := new(models.WorkingSet)
+			workingSet.Movement = movmentId
+			workingSet.Workout = workout.Id
+			workingSet.AcheiveNumber = 0
+			workingSet.TargetNumber, err = strconv.Atoi(mv.Repeats)
+			handleIncorrectFormattingNumber(err)
+			workingSet.TargetWeight, err = strconv.ParseFloat(mv.Weight, 32)
+			workingSet.Sequence = int8(sequence)
+			handleIncorrectFormattingNumber(err)
+			models.BasicCRUD.Save("working_set", *workingSet)
+		}
 
 	}
+}
 
+func handleIncorrectFormattingNumber(err error) {
+	if err != nil {
+		logs.Error("incorrect input during parsing number")
+		panic(err)
+	}
 }
 
 func getMovementId(movement models.Movement) int64 {
@@ -51,18 +78,21 @@ func getMovementId(movement models.Movement) int64 {
 
 func createAndSaveWorkouts(template models.WorkoutTemplate) []models.Workout {
 	var timePoint time.Time
-	timePoint, _ = time.Parse("2016-11-17", template.StartAt)
+	timePoint, _ = time.Parse("2006-01-02", template.StartAt)
 	workouts := make([]models.Workout, 0)
-	for i := 0; i <= 4; i++ {
+
+	//TODO remove hard code 4 in the future
+	//TODO let user input repeat times
+	for i := 0; i < 4; i++ {
+		logs.Info("current time Point:%v", timePoint)
 		workout := new(models.Workout)
 		workout.Name = template.Name
 		workout.PerformDate = timePoint.String()[0:10]
 		workout.Description = template.Description
 		workout.Target = template.TargetMuscle
 		// add once perweek
-		duration, _ := time.ParseDuration("168h")
-		timePoint.Add(duration)
-		workout.Id = models.BasicCRUD.Save("workout", workout)
+		timePoint = timePoint.Add(week)
+		workout.Id = models.BasicCRUD.Save("workout", *workout)
 		workouts = append(workouts, *workout)
 	}
 	return workouts
