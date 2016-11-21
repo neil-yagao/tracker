@@ -10,31 +10,16 @@ type MovementController struct {
 	beego.Controller
 }
 
-type movement struct {
-	Id              int
-	TargetMuscle    string
-	SecondaryMuscle string
-	Name            string
-	Description     string
-}
-
-type MovementTemplate struct {
-	Name    string `json:"name"`
-	Repeats string `json:"repeats"`
-	Weight  string `json:"weight"`
-	Sets    string `json:"sets"`
-}
-
 /*const MOVEMENT_QUERY string = "SELECT 'm.name' as movement, 'w.name' as workout, ws.target_weight as weight, " +
 "ws.target_number as default_number " + "from powerlift.movement m, powerlift.working_set ws, " +
 "powerlift.workout w where w.id = ws.workout and ws.movement = m.id;"*/
 
 // @router /movements [get]
-func (this *MovementController) getMovements() {
-	rows := models.Querier.Query("select id, target_muscle, secondary_muscle, name, description from movement where ")
-	movements := make([]*movement, 0)
+func (this *MovementController) GetMovements() {
+	rows := models.BasicCRUD.Query("select id, target_muscle, secondary_muscle, name, description from movement where ")
+	movements := make([]*models.Movement, 0)
 	for rows.Next() {
-		one := new(movement)
+		one := new(models.Movement)
 		rows.Scan(&one.Id, &one.TargetMuscle, &one.SecondaryMuscle, &one.Name, &one.Description)
 		movements = append(movements, one)
 	}

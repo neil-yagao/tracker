@@ -24,7 +24,7 @@ type CRUD interface {
 type basicCRUD struct {
 }
 
-var Querier *basicCRUD
+var BasicCRUD basicCRUD
 
 var QueryBuilder *queryBuilder
 
@@ -38,7 +38,7 @@ var db *sql.DB
 var err error
 
 func init() {
-	db, err = sql.Open("mysql", "powerlift:password@/powerlift")
+	db, err = sql.Open("mysql", "powerlift:password@tcp(127.0.0.1:3306)/powerlift")
 	checkErr(err)
 }
 
@@ -50,13 +50,37 @@ func (b *basicCRUD) Query(sql string) *sql.Rows {
 	return rows
 }
 
+func (b *basicCRUD) InsertOne(sql string) int64 {
+	return insertOne(sql)
+}
+
+func insertOne(sql string) int64 {
+	result, err := db.Exec(sql)
+	checkErr(err)
+	if lastInsert, err := result.LastInsertId(); err == nil {
+		return lastInsert
+	} else {
+		log.Fatal(err)
+		panic(err)
+	}
+}
+
+func (s *basicCRUD) Save(table string, value interface{}) int64 {
+	insertSql := buildInsert(table, value)
+	log.Println("saving sql:" + insertSql)
+	return insertOne(insertSql)
+}
+
 func checkErr(err error) {
 	if err != nil {
 		log.Fatalln(err)
 	}
 }
+func (query *queryBuilder) BuildQuery(sql string, param map[string]interface{}) string {
+	return build(sql, param)
+}
 
-func (query *queryBuilder) Build(sql string, param map[string]interface{}) string {
+func build(sql string, param map[string]interface{}) string {
 	var buildSQL, replaceCriteria string
 	buildSQL = sql
 	for _, criteria := range WHERE_CLAUSE_MATCHING_PATTERN.FindAllString(sql, -1) {
@@ -84,6 +108,10 @@ func (query *queryBuilder) Build(sql string, param map[string]interface{}) strin
 }
 
 func (query *queryBuilder) BuildInsert(table string, value interface{}) string {
+	return buildInsert(table, value)
+}
+
+func buildInsert(table string, value interface{}) string {
 	valueType := reflect.TypeOf(value)
 	valueValue := reflect.ValueOf(value)
 
@@ -106,7 +134,7 @@ func (query *queryBuilder) BuildInsert(table string, value interface{}) string {
 		field := valueType.Field(i)
 		fields = append(fields, underscore(field.Name))
 	}
-	insertSql := "INSERT INTO " + table + " (" + strings.Join(fields, ",") + ") values (" + strings.Join(values, ",") + ")"
+	insertSql := "INSERT INTO " + table + " (" + strings.Join(fields, ",") + ") values (" + strings.Join(values, ",") + ");"
 	return insertSql
 }
 
