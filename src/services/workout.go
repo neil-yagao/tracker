@@ -36,6 +36,8 @@ func generateWorkingSets(workout models.Workout, template models.WorkoutTemplate
 		movmentId := getMovementId(*movement)
 		sets, err := strconv.Atoi(mv.Sets)
 		handleIncorrectFormattingNumber(err)
+		addition, _ := strconv.ParseFloat(template.Addition, 32)
+		targetWeight, err := strconv.ParseFloat(mv.Weight, 32)
 		for sequence := 1; sequence <= sets; sequence++ {
 			workingSet := new(models.WorkingSet)
 			workingSet.Movement = movmentId
@@ -43,7 +45,8 @@ func generateWorkingSets(workout models.Workout, template models.WorkoutTemplate
 			workingSet.AcheiveNumber = 0
 			workingSet.TargetNumber, err = strconv.Atoi(mv.Repeats)
 			handleIncorrectFormattingNumber(err)
-			workingSet.TargetWeight, err = strconv.ParseFloat(mv.Weight, 32)
+			workingSet.TargetWeight = targetWeight
+			targetWeight += addition
 			workingSet.Sequence = int8(sequence)
 			handleIncorrectFormattingNumber(err)
 			models.BasicCRUD.Save("working_set", *workingSet)
