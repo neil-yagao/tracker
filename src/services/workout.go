@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
 )
 
@@ -19,14 +20,16 @@ var week, _ = time.ParseDuration("168h")
  */
 
 func (this *WorkoutSerivces) CreateWorkoutsFromeTemplate(template models.WorkoutTemplate) {
-
+	var extraWeight float32 = 0
+	addition, _ := strconv.ParseFloat(template.Addition, 32)
 	workouts := createAndSaveWorkouts(template)
 	for _, workout := range workouts {
-		generateWorkingSets(workout, template)
+		generateWorkingSets(workout, template, extraWeight)
+		extraWeight += float32(addition)
 	}
 }
 
-func generateWorkingSets(workout models.Workout, template models.WorkoutTemplate) {
+func generateWorkingSets(workout models.Workout, template models.WorkoutTemplate, extraWeight float32) {
 	var containMovements []models.MovementTemplate = template.Movements
 	for _, mv := range containMovements {
 		movement := new(models.Movement)
@@ -37,7 +40,6 @@ func generateWorkingSets(workout models.Workout, template models.WorkoutTemplate
 		movmentId := getMovementId(*movement)
 		sets, err := strconv.Atoi(mv.Sets)
 		handleIncorrectFormattingNumber(err)
-		addition, _ := strconv.ParseFloat(template.Addition, 32)
 		targetWeight, err := strconv.ParseFloat(mv.Weight, 32)
 		for sequence := 1; sequence <= sets; sequence++ {
 			workingSet := new(models.WorkingSet)
@@ -46,8 +48,7 @@ func generateWorkingSets(workout models.Workout, template models.WorkoutTemplate
 			workingSet.AcheiveNumber = 0
 			workingSet.TargetNumber, err = strconv.Atoi(mv.Repeats)
 			handleIncorrectFormattingNumber(err)
-			workingSet.TargetWeight = targetWeight
-			targetWeight += addition
+			workingSet.TargetWeight = targetWeight + float64(extraWeight)
 			workingSet.Sequence = int8(sequence)
 			handleIncorrectFormattingNumber(err)
 			models.BasicCRUD.Save("working_set", *workingSet)
@@ -58,7 +59,7 @@ func generateWorkingSets(workout models.Workout, template models.WorkoutTemplate
 
 func handleIncorrectFormattingNumber(err error) {
 	if err != nil {
-		logs.Error("incorrect input during parsing number")
+		beego.Error("incorrect input during parsing number")
 		panic(err)
 	}
 }

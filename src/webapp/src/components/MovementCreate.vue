@@ -1,7 +1,7 @@
 <template>
-    <div id="movement-create" class="row head-space">
+    <div id="movement-create">
         <div class="row">
-            <div class="col-lg-3 col-lg-offset-2">
+            <div class="col-md-3 col-md-offset-2">
                 <div class="input-group">
                     <span class="input-group-addon">
                         Movement
@@ -9,7 +9,7 @@
                     <input type="text" class="form-control" v-model="name">
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-md-2">
                 <div class="input-group">
                     <span class="input-group-addon">
                         Weight
@@ -20,7 +20,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-lg-1">
+            <div class="col-md-1">
                 <div class="input-group">
                     <span class="input-group-addon">
                         Sets
@@ -28,7 +28,7 @@
                     <input type="text" class="form-control" v-model="sets">
                 </div>
             </div>
-            <div class="col-lg-1">
+            <div class="col-md-1">
                 <div class="input-group">
                     <span class="input-group-addon">
                         Reps
@@ -36,7 +36,7 @@
                     <input type="text" class="form-control" v-model="repeats">
                 </div>
             </div>
-            <div class="col-lg-1">
+            <div class="col-md-1">
                 <button type="button" class="btn btn-default" @click="addMovement()">Add</button>
             </div>
         </div>
@@ -74,10 +74,6 @@ export default {
 }
 </script>
 <style scoped>
-.head-space {
-    margin-top: 0.5em;
-}
-
 .input-group-addon {
     padding-right: 3px;
     padding-left: 2px

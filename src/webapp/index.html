@@ -3,19 +3,21 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>webapp</title>
     <link rel="stylesheet" href="dist/build.css">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
     <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="node_modules/lodash/lodash.js"></script>
 </head>
 
 <body>
     <div id="app" style="margin: 1em">
-        <h1>Lifting!</h1>
+        <h1><a href="#/">Lifting Tracker</a></h1>
         <!-- route outlet -->
         <!-- component matched by the route will render here -->
-        <router-view></router-view>
+        <router-view class="container-fluid"></router-view>
     </div>
     <script src="dist/build.js"></script>
 </body>
