@@ -5,8 +5,7 @@
                 <h4>{{title}}</h4>
             </div>
             <div class="panel-body" style="padding-bottom:0px">
-                <table class="table table-hover table-condensed
-" style="margin-bottom:0px">
+                <table class="table table-hover table-condensed" style="margin-bottom:0px">
                     <thead>
                         <tr>
                             <th>#</th>

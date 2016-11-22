@@ -3,7 +3,6 @@ package models
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"reflect"
 	"regexp"
 	"strings"
@@ -66,7 +65,7 @@ func insertOne(sql string) int64 {
 	if lastInsert, err := result.LastInsertId(); err == nil {
 		return lastInsert
 	} else {
-		log.Fatal(err)
+		beego.Error(err)
 		panic(err)
 	}
 }
@@ -79,7 +78,7 @@ func (s *basicCRUD) Save(table string, value interface{}) int64 {
 
 func checkErr(err error) {
 	if err != nil {
-		log.Fatalln(err)
+		beego.Error(err)
 	}
 }
 func (query *queryBuilder) BuildQuery(sql string, param map[string]interface{}) string {
@@ -151,7 +150,7 @@ func CloseRowsAndCheckError(rows *sql.Rows) {
 	defer rows.Close()
 	err := rows.Err()
 	if err != nil {
-		log.Fatal(err)
+		beego.Error(err)
 	}
 }
 

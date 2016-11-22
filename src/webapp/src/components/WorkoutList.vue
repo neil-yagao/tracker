@@ -4,7 +4,7 @@
             <template v-for="workout in workouts">
                 <a :href="'#/workout/' + workout.id" class="list-group-item">
                     <h4 class="list-group-item-heading" style="display: inline-block">{{workout.name}}</h4>
-                    <h4 class="pull-right">{{workout.perform_date}}</h4>
+                    <h6 class="pull-right">{{workout.perform_date}}</h6>
                     <p class="list-group-item-text">{{workout.description}}</p>
                 </a>
             </template>

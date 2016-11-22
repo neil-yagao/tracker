@@ -33,12 +33,10 @@ func (this *WorkoutController) InsertWorkout() {
 	// response.Count = 123
 	err := json.Unmarshal(this.Ctx.Input.RequestBody, &template)
 	if err != nil {
-		log.Fatalln(err)
-		panic(err)
+		beego.Error(err)
 	}
 	//experiment using goroutine
-	log.Print("received template:")
-	log.Println(template)
+	beego.Debug("received template:", template)
 	go services.WorkoutCreator.CreateWorkoutsFromeTemplate(template)
 	this.Data["json"] = map[string]interface{}{"data": "", "success": true}
 	this.ServeJSON()

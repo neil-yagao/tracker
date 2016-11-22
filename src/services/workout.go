@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
 )
 
@@ -57,7 +58,7 @@ func generateWorkingSets(workout models.Workout, template models.WorkoutTemplate
 
 func handleIncorrectFormattingNumber(err error) {
 	if err != nil {
-		logs.Error("incorrect input during parsing number")
+		beego.Error("incorrect input during parsing number")
 		panic(err)
 	}
 }

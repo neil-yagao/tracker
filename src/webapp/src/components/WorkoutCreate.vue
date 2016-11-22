@@ -1,30 +1,31 @@
 <template>
     <div id="workout-create">
+        <div class="row"><a class="btn btn-lick pull-right " href="#/">Back to List</a></div>
         <div class="row" style="margin-bottom:1em;text-align: center;">
-            <div class="col-lg-2" style="margin-top:6px">
+            <div class="col-md-2" style="margin-top:6px">
                 <label>Workout Template Name</label>
             </div>
-            <div class="col-lg-2">
+            <div class="col-md-2">
                 <input class="form-control" placeholder="Name" v-model="name" type="text">
             </div>
-            <div class="col-lg-2" style="margin-top:6px">
+            <div class="col-md-2" style="margin-top:6px">
                 <label>Workout Target Muscle</label>
             </div>
-            <div class="col-lg-2">
+            <div class="col-md-2">
                 <input class="form-control" placeholder="Target Muscle Group" v-model="target" type="text">
             </div>
-            <div class="col-lg-2" style="margin-top:6px">
+            <div class="col-md-2" style="margin-top:6px">
                 <label>Start Workout At</label>
             </div>
-            <div class="col-lg-2">
+            <div class="col-md-2">
                 <input class="form-control" placeholder="Start At" v-model="startAt" type="text">
             </div>
         </div>
         <div class="row" style="margin-bottom:1em;text-align: center;">
-            <div class="col-lg-2" style="margin-top:6px">
+            <div class="col-md-2" style="margin-top:6px">
                 <label>Workout Notes</label>
             </div>
-            <div class="col-lg-5">
+            <div class="col-md-5">
                 <input class="form-control" placeholder="Notes during the workout..." v-model="description" type="text">
             </div>
         </div>
@@ -33,7 +34,7 @@
                 Workout Content
             </div>
             <div class="panel-body">
-                <div class="col-lg-6 col-lg-offset-3">
+                <div class="col-md-6 col-md-offset-3">
                     <table class="table table-condensed table-hover">
                         <thead>
                             <tr>
@@ -62,7 +63,7 @@
             </div>
             <div class="panel-footer">
                 <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-md-3">
                         <div class="input-group">
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Weekly On<span class="caret"></span></button>
@@ -74,17 +75,17 @@
                             <input type="text" class="form-control" v-model="weekly">
                         </div>
                     </div>
-                    <div class="col-lg-1">
+                    <div class="col-md-1">
                         <h5>AND</h5>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-md-3">
                         <div class="input-group">
                             <span class="input-group-addon">Weight Add Per Workout</span>
                             <input type="text" class="form-control" v-model="addition">
                             <span class="input-group-addon">KG</span>
                         </div>
                     </div>
-                    <div class="col-lg-1 col-lg-offset-4">
+                    <div class="col-md-1 col-md-offset-4">
                         <button class="btn btn-default" @click="createWorkoutTemplate">Create
                         </button>
                     </div>
