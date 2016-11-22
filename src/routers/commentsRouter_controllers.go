@@ -13,6 +13,13 @@ func init() {
 			AllowHTTPMethods: []string{"get"},
 			Params: nil})
 
+	beego.GlobalControllerRouter["controllers:WorkingSessionController"] = append(beego.GlobalControllerRouter["controllers:WorkingSessionController"],
+		beego.ControllerComments{
+			Method: "GetWorkoutSessions",
+			Router: `/session/?:workout`,
+			AllowHTTPMethods: []string{"get"},
+			Params: nil})
+
 	beego.GlobalControllerRouter["controllers:WorkoutController"] = append(beego.GlobalControllerRouter["controllers:WorkoutController"],
 		beego.ControllerComments{
 			Method: "GetWorkouts",

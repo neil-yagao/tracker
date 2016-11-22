@@ -4,26 +4,31 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
+import Session from './components/Session.vue'
 import WorkoutList from './components/WorkoutList.vue'
-import MovementList from './components/MovementList.vue'
-import WorkoutCreate from './components/Workout-Create.vue'
+import WorkoutCreate from './components/WorkoutCreate.vue'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
 const routes = [{
-    path: '/',
-    component: WorkoutList
-}, {
-    path: '/movements',
-    component: MovementList
-},/* {
-     path: '/workout/:id',
-     component: Workout
- },
-*/ {
-    path: '/new-workout',
-    component: WorkoutCreate
-}]
+        path: '/',
+        component: WorkoutList
+    },
+    /* {
+         path: '/movements',
+         component: MovementList
+     },
+    */
+    {
+        path: '/workout/:id',
+        component: Session
+    },
+
+    {
+        path: '/new-workout',
+        component: WorkoutCreate
+    }
+]
 
 
 const router = new VueRouter({

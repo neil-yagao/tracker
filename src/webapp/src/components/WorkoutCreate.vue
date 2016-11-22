@@ -94,7 +94,7 @@
     </div>
 </template>
 <script>
-import MovementCreate from "./Movement-Create.vue"
+import MovementCreate from "./MovementCreate.vue"
 export default {
     name: 'workout',
     data() {

@@ -15,7 +15,8 @@ type WorkoutController struct {
 
 // @router /workouts [get]
 func (this *WorkoutController) GetWorkouts() {
-	rows := models.BasicCRUD.Query("select id, name, target, perform_date, description from workout")
+	log.Println("query for workouts")
+	rows := models.BasicCRUD.Query("select id, name, target, perform_date, description from workout where is_finalized = 0 order by perform_date ASC")
 	workouts := make([]*models.Workout, 0)
 	for rows.Next() {
 		one := new(models.Workout)
