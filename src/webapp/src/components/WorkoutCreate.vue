@@ -1,6 +1,6 @@
 <template>
     <div id="workout-create">
-        <div class="row"><a class="btn btn-lick pull-right " href="#/">Back to List</a></div>
+        <div class="row"><a class="btn btn-lick pull-right " href="#/workouts">Back to List</a></div>
         <div class="row" style="margin-bottom:1em;text-align: center;">
             <div class="col-md-2" style="margin-top:6px">
                 <label>Workout Template Name</label>
@@ -95,7 +95,7 @@
     </div>
 </template>
 <script>
-import MovementCreate from "./MovementCreate.vue"
+import MovementCreate from "./ExerciseCreate.vue"
 export default {
     name: 'workout',
     data() {

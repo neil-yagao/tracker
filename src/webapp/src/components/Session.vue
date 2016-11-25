@@ -1,11 +1,11 @@
 <template>
     <div id="movement-list">
-        <div class="row"><a class="btn btn-lick pull-right " href="#/">Back to List</a></div>
+        <div class="row"><a class="btn btn-lick pull-right " href="#/workouts">Back to List</a></div>
         <div class="row">
             <workset v-for="movement in movements" :title="movement.name" :sets="movement.sets"></workset>
         </div>
         <div class="row">
-            <button type="button" class="btn btn-info" style="width:100%" @click="finishSession">Finish</button>
+            <button type="button" class="btn btn-info" style="max-width:450px; width:100%" @click="finishSession">Finish</button>
         </div>
     </div>
 </template>

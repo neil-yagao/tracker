@@ -7,25 +7,23 @@ import VueResource from 'vue-resource'
 import Session from './components/Session.vue'
 import WorkoutList from './components/WorkoutList.vue'
 import WorkoutCreate from './components/WorkoutCreate.vue'
+import MovementList from './components/MovementList.vue'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
 const routes = [{
-        path: '/',
+        path: '/workouts',
         component: WorkoutList
-    },
-    /* {
-         path: '/movements',
-         component: MovementList
-     },
-    */
-    {
+    }, {
+        path: '/movements',
+        component: MovementList
+    }, {
         path: '/workout/:id',
         component: Session
     },
 
     {
-        path: '/new-workout',
+        path: '/workout/template/new',
         component: WorkoutCreate
     }
 ]
