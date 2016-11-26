@@ -26,12 +26,14 @@ export default {
             var beforeAssign = _.map(movements, function(value, key) {
                 var sequence = 0;
                 var newSets = _.map(value, function(set) {
-                    var eachSide = (set.targetWeight - 20) / 2
-                    if (_.toLower(key).indexOf('dumbbell') >= 0) {
+                    var eachSide = (set.targetWeight - 20) / 2;
+                    var movementName =_.toLower(key)
+                    if (movementName.indexOf('dumbbell') >= 0 || movementName.indexOf("body") >= 0) {
                         eachSide = "--"
                     }
                     sequence += 1
                     return {
+                        'id': set.id,
                         'sequence': sequence,
                         'repeat': set.targetNumber,
                         'eachSide': eachSide,
@@ -44,8 +46,8 @@ export default {
                     "sets": newSets
                 }
             })
-            console.info("beforeAssign")
-            console.info(beforeAssign)
+            console.info("beforeAssign");
+            console.info(beforeAssign);
             this.$data.movements = beforeAssign;
 
         })
@@ -53,6 +55,17 @@ export default {
     methods: {
         finishSession: function() {
             console.info(this.$data.movements)
+            var sessionData = _.reduce(this.$data.movements, function (arry, value){
+                return _.concat(arry, _.flatMap(value.sets, (set)=>{
+                    return {
+                        'id': set.id,
+                        'acheiveNumber': set.achieved
+                    }
+                }))
+
+            }, [])
+            console.info(sessionData)
+            this.$http.post('/session/'+  this.$route.params["id"], JSON.stringify(sessionData))
         }
     },
     components: {

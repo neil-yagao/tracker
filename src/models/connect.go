@@ -85,6 +85,29 @@ func (query *queryBuilder) BuildQuery(sql string, param map[string]interface{}) 
 	return build(sql, param)
 }
 
+func (b *basicCRUD) BuildAndUpdate(sql string, params []map[string]interface{}) {
+	update(sql, params)
+}
+
+func (b *basicCRUD) Update(sql string) {
+	rs, err := db.Exec(sql)
+	beego.Debug("executing sql:", sql)
+	checkErr(err)
+	if rows, _ := rs.RowsAffected(); rows > 1 {
+		beego.Warning("update sql:%v has affected more than one row.", sql)
+	}
+}
+
+func update(sql string, params []map[string]interface{}) {
+	for _, param := range params {
+		str := build(sql, param)
+		beego.Debug("update:", str)
+		db.Exec(str)
+	}
+
+	checkErr(err)
+}
+
 func build(sql string, param map[string]interface{}) string {
 	var buildSQL, replaceCriteria string
 	buildSQL = sql

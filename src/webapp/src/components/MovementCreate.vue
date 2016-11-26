@@ -1,20 +1,14 @@
 <template>
     <div id="movement-create">
         <div class="row">
-            <div class="col-md-3 col-md-offset-2">
+            <div class="col-md-2 col-md-offset-3">
                 <div class="input-group">
-                    <span class="input-group-addon">
-                        Movement
-                    </span>
-                    <input type="text" class="form-control" v-model="name">
+                    <input type="text" class="form-control" v-model="name" placeholder="Movement Name">
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="input-group">
-                    <span class="input-group-addon">
-                        Weight
-                    </span>
-                    <input type="text" class="form-control" v-model="weight">
+                    <input type="number" class="form-control" v-model="weight" placeholder="Weight">
                     <span class="input-group-addon">
                         KG
                     </span>
@@ -22,20 +16,15 @@
             </div>
             <div class="col-md-1">
                 <div class="input-group">
-                    <span class="input-group-addon">
-                        Sets
-                    </span>
-                    <input type="text" class="form-control" v-model="sets">
+                    <input type="number" class="form-control" v-model="repeats" placeholder="Reps">
                 </div>
             </div>
             <div class="col-md-1">
                 <div class="input-group">
-                    <span class="input-group-addon">
-                        Reps
-                    </span>
-                    <input type="text" class="form-control" v-model="repeats">
+                    <input type="number" class="form-control" v-model="sets" placeholder="Sets">
                 </div>
             </div>
+
             <div class="col-md-1">
                 <button type="button" class="btn btn-default" @click="addMovement()">Add</button>
             </div>
