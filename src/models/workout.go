@@ -19,11 +19,11 @@ type WorkoutTemplate struct {
 }
 
 type Movement struct {
-	Id              int64
-	TargetMuscle    string
-	SecondaryMuscle string
-	Name            string
-	Description     string
+	Id              int64  `json:"id"`
+	TargetMuscle    string `json:"targetMuscle"`
+	SecondaryMuscle string `json:"secondarMuscle"`
+	Name            string `json:"name"`
+	Description     string `json:"description"`
 }
 
 type MovementTemplate struct {
