@@ -1,9 +1,10 @@
 package controllers
 
 import (
-	"models"
-
+	"encoding/json"
 	"github.com/astaxie/beego"
+	"log"
+	"models"
 )
 
 type MovementController struct {
@@ -24,5 +25,18 @@ func (this *MovementController) GetMovements() {
 		movements = append(movements, one)
 	}
 	this.Data["json"] = map[string]interface{}{"data": movements}
+	this.ServeJSON()
+}
+
+// @router /movement [put]
+func (this *MovementController) InsertMovement() {
+	newMovement := make([]models.Movement, 0)
+	log.Println("request body:", this.Ctx.Input.RequestBody)
+	err := json.Unmarshal(this.Ctx.Input.RequestBody, &newMovement)
+	if err != nil {
+		beego.Error(err)
+	}
+	models.BasicCRUD.Save("movement", newMovement)
+	this.Data["json"] = map[string]interface{}{"success": true}
 	this.ServeJSON()
 }
