@@ -2,9 +2,9 @@ package controllers
 
 import (
 	"encoding/json"
-	"github.com/astaxie/beego"
-	"log"
 	"models"
+
+	"github.com/astaxie/beego"
 )
 
 type MovementController struct {
@@ -28,15 +28,29 @@ func (this *MovementController) GetMovements() {
 	this.ServeJSON()
 }
 
-// @router /movement [put]
+// @router /movements [put]
 func (this *MovementController) InsertMovement() {
-	newMovement := make([]models.Movement, 0)
-	log.Println("request body:", this.Ctx.Input.RequestBody)
-	err := json.Unmarshal(this.Ctx.Input.RequestBody, &newMovement)
+	newMovement := new(models.Movement)
+	beego.Debug("request body:", this.Ctx.Input.RequestBody)
+	err := json.Unmarshal(this.Ctx.Input.RequestBody, newMovement)
 	if err != nil {
 		beego.Error(err)
 	}
-	models.BasicCRUD.Save("movement", newMovement)
+	beego.Debug(newMovement)
+	models.BasicCRUD.Save("movement", *newMovement)
+	this.Data["json"] = map[string]interface{}{"success": true}
+	this.ServeJSON()
+}
+
+// @router /movement/:id [post]
+func (this *MovementController) UpdateMovement() {
+	modifyMovement := new(models.Movement)
+	beego.Debug("request body:", this.Ctx.Input.RequestBody)
+	err := json.Unmarshal(this.Ctx.Input.RequestBody, modifyMovement)
+	if err != nil {
+		beego.Error(err)
+	}
+	models.BasicCRUD.BuildAndUpdateOne("movement", *modifyMovement)
 	this.Data["json"] = map[string]interface{}{"success": true}
 	this.ServeJSON()
 }

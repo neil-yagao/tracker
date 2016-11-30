@@ -10,9 +10,10 @@
                 </div>
             </div>
             <div class="col-md-1">
-                <button class="btn btn-success">Add</button>
+                <button class="btn btn-success" data-toggle="modal" data-target="#movement-modal">Add</button>
             </div>
         </div>
+        <movement-modal></movement-modal>
         <template v-for="(movement, index) in filtedMovement">
             <movement :movement="movement" :selected="selected" :editing="false" @selectingMovement="selecting"></movement>
         </template>
@@ -20,32 +21,29 @@
 </template>
 <script>
 import Movement from './Movement.vue'
+import MovementModal from './MovementAddModal.vue'
 export default {
     name: 'movement-list',
     data() {
         return {
-            movements: [{
-                id: 1,
-                name: 'Bench Press',
-                description: "Lie back on a flat bench.  Using a medium width grip (a grip that creates a 90-degree angle in the middle of the movement between the forearms and the upper arms), lift the bar from the rack and hold it straight over you with your arms locked.  This will be your starting position.",
-                targetMuscle: 'Chest; UpperBody'
-            }, {
-                id: 2,
-                name: 'Deadlift',
-                description: "Begin with a bar loaded on the ground. Approach the bar so that the bar intersects the middle of the feet. The feet should be set very wide, near the collars. Bend at the hips to grip the bar. The arms should be directly below the shoulders, inside the legs, and you can use a pronated grip, a mixed grip, or hook grip. Relax the shoulders, which in effect lengthens your arms",
-                targetMuscle: 'Back; Legs'
-            }],
-            selected: -1,
+            movements: [],
+            selected: -2,
             nameKey: ''
         }
     },
     created: function() {
-        console.info("movement list created")
+        console.info("movement list created");
+        this.$http.get('/movements').then((response) => {
+            console.info("get movements response:")
+            console.info(response)
+            this.$data.movements = response.body.data
+        })
+
     },
     methods: {
         selecting: function(index) {
             if (this.$data.selected == index) {
-                this.$data.selected = -1
+                this.$data.selected = -2
             } else {
                 this.$data.selected = index
             }
@@ -53,13 +51,18 @@ export default {
     },
     computed: {
         filtedMovement: function() {
-            return _.filter(this.$data.movements, (m) => {
-                return m.name.indexOf(this.$data.nameKey) > -1
+            var filtered = _.filter(this.$data.movements, (m) => {
+                var movementName = _.toLower(m.name)
+                var searchKey = _.toLower(this.$data.nameKey)
+                return movementName.indexOf(searchKey) > -1
             })
+            return _.slice(_.unionBy(filtered, 'name'),0 , 20)
         }
     },
     components: {
-        Movement
+        'movement':Movement,
+        'movement-modal': MovementModal
+
     }
 }
 </script>

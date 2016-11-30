@@ -18,7 +18,7 @@
         <!-- route outlet -->
         <!-- component matched by the route will render here -->
         <ul class="nav nav-pills">
-            <li role="presentation" :class="{'active': $route.path.indexOf('workout') >=0 }"><a href="#/workouts">Workouts</a></li>
+            <li role="presentation" :class="{'active': $route.path.indexOf('workout') >=0 }"><a href="#/workouts">Available Sessions</a></li>
             <li role="presentation" :class="{'active': $route.path.indexOf('movement') >=0 }"><a href="#/movements">Movements</a></li>
         </ul>
         <router-view class="container-fluid" style="margin-top: 2em"></router-view>

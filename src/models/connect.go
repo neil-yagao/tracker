@@ -138,11 +138,39 @@ func build(sql string, param map[string]interface{}) string {
 	return strings.TrimSpace(buildSQL)
 }
 
-func (query *queryBuilder) BuildInsert(table string, value interface{}) string {
+func (query *basicCRUD) BuildInsert(table string, value interface{}) string {
 	return buildInsert(table, value)
+}
+func (b *basicCRUD) BuildAndUpdateOne(table string, value interface{}) {
+	fields, values := ExtractToStringFromObject(value)
+	idFieldIndex := pos("id", fields)
+	updateSql := "update " + table + " set "
+	setArray := make([]string, 0)
+	for index, value := range fields {
+		setArray = append(setArray, value+" = "+values[index])
+	}
+	updateSql += strings.Join(setArray, ",")
+	updateSql += " where id = " + values[idFieldIndex]
+	_, err = db.Exec(updateSql)
+	checkErr(err)
+}
+
+func pos(value string, slice []string) int {
+	for p, v := range slice {
+		if strings.ToLower(v) == value {
+			return p
+		}
+	}
+	return -1
 }
 
 func buildInsert(table string, value interface{}) string {
+	fields, values := ExtractToStringFromObject(value)
+	insertSql := "INSERT INTO " + table + " (" + strings.Join(fields, ",") + ") values (" + strings.Join(values, ",") + ");"
+	return insertSql
+}
+
+func ExtractToStringFromObject(value interface{}) ([]string, []string) {
 	valueType := reflect.TypeOf(value)
 	valueValue := reflect.ValueOf(value)
 
@@ -165,8 +193,7 @@ func buildInsert(table string, value interface{}) string {
 		field := valueType.Field(i)
 		fields = append(fields, underscore(field.Name))
 	}
-	insertSql := "INSERT INTO " + table + " (" + strings.Join(fields, ",") + ") values (" + strings.Join(values, ",") + ");"
-	return insertSql
+	return fields, values
 }
 
 func CloseRowsAndCheckError(rows *sql.Rows) {
