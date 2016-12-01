@@ -19,6 +19,7 @@ func (this sessionService) GetWorkoutSession(workoutId int) []models.WorkingSet 
 	condition := make(map[string]interface{})
 	condition["workoutId"] = workoutId
 	rows := models.BasicCRUD.BuildAndQuery(QUERY_WORKOUT_SESSION_SQL, condition)
+	defer rows.Close()
 	sessions := make([]models.WorkingSet, 0)
 	for rows.Next() {
 		instance := models.WorkingSet{}

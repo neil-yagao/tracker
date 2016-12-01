@@ -138,7 +138,7 @@ func build(sql string, param map[string]interface{}) string {
 	return strings.TrimSpace(buildSQL)
 }
 
-func (query *basicCRUD) BuildInsert(table string, value interface{}) string {
+func (query *basicCRUD) BuildAndInsert(table string, value interface{}) string {
 	return buildInsert(table, value)
 }
 func (b *basicCRUD) BuildAndUpdateOne(table string, value interface{}) {
@@ -166,7 +166,14 @@ func pos(value string, slice []string) int {
 
 func buildInsert(table string, value interface{}) string {
 	fields, values := ExtractToStringFromObject(value)
+	//ignore id fields
+	idFieldIndex := pos("id", fields)
+	fields = append(fields[:idFieldIndex], fields[idFieldIndex+1:]...)
+	values = append(values[:idFieldIndex], values[idFieldIndex+1:]...)
 	insertSql := "INSERT INTO " + table + " (" + strings.Join(fields, ",") + ") values (" + strings.Join(values, ",") + ");"
+	beego.Debug("insertSql:" + insertSql)
+	_, err := db.Exec(insertSql)
+	checkErr(err)
 	return insertSql
 }
 

@@ -13,6 +13,7 @@ type MovementController struct {
 // @router /movements [get]
 func (this *MovementController) GetMovements() {
 	rows := models.BasicCRUD.Query("select id, target_muscle, secondary_muscle, name, description from movement")
+	defer rows.Close()
 	movements := make([]*models.Movement, 0)
 	for rows.Next() {
 		one := new(models.Movement)

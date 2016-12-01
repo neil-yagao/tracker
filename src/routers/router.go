@@ -12,6 +12,7 @@ func init() {
 	beego.Include(&controllers.WorkoutController{})
 	beego.Include(&controllers.MovementController{})
 	beego.Include(&controllers.WorkingSessionController{})
+	beego.Include(&controllers.UserControllers{})
 
 	beego.SetStaticPath("/", "webapp")
 	beego.SetStaticPath("/dist", "webapp/dist")

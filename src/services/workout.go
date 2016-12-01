@@ -34,6 +34,7 @@ const WORKOUT_QUERY string = "select w.id, w.name, w.target, w.perform_date, w.d
 
 func (this *WorkoutSerivces) FindUserWorkouts(user string) []*models.Workout {
 	rows := models.BasicCRUD.BuildAndQuery(WORKOUT_QUERY, map[string]interface{}{"useridentity": user})
+	defer rows.Close()
 	workouts := make([]*models.Workout, 0)
 	for rows.Next() {
 		one := new(models.Workout)
@@ -84,6 +85,7 @@ func getMovementId(movement models.Movement) int64 {
 	querySql := models.QueryBuilder.BuildQuery("select id from movement where name = :name",
 		map[string]interface{}{"name": movement.Name})
 	rows := models.BasicCRUD.Query(querySql)
+	defer rows.Close()
 	var id int64
 	if rows.Next() {
 

@@ -133,9 +133,11 @@ export default {
                 'description': this.description
             });
             console.info(requestBody)
+            var userIdentity = window.localStorage.getItem('user')
+            console.info("user:" + userIdentity)
             this.$http.put('/workouts', requestBody, {
                 'params': {
-                    'user': window.localStorage.getItem('user')
+                    'user': userIdentity
                 }
             })
         }

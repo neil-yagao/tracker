@@ -31,7 +31,7 @@ type testStruct struct {
 func TestInsertSql(t *testing.T) {
 	var tst testStruct
 	tst.SomeColumn = "something"
-	result := models.QueryBuilder.BuildInsert("table", tst)
+	result := models.QueryBuilder.BuildAndInsert("table", tst)
 	t.Log(result)
 }
 

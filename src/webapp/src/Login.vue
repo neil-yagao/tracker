@@ -3,18 +3,18 @@
     <div class="logo">login</div>
     <!-- Main Form -->
     <div class="login-form-1">
-        <form id="login-form" class="text-left">
+        <div id="login-form" class="text-left">
             <div class="login-form-main-message"></div>
             <div class="main-login-form">
                 <div class="login-group">
                     <div class="form-group">
                         <label for="lg_username" class="sr-only">Username</label>
-                        <input type="text" class="form-control" id="lg_username" v-model="user" placeholder="username">
+                        <input type="text" class="form-control" v-model="user" placeholder="username">
                     </div>
                 </div>
-                <button type="submit" class="login-button" @click="login"><i class="fa fa-chevron-right"></i></button>
+                <button class="login-button" @click="login"><i class="fa fa-chevron-right"></i></button>
             </div>
-        </form>
+        </div>
     </div>
     <!-- end:Main Form -->
 </div>
@@ -42,8 +42,21 @@ export default {
     methods: {
         login: function() {
             if (storage) {
-                window.localStorage.setItem('user', md5(this.$data.user));
+                var userIdentity = md5(this.$data.user);
+                console.info("username:" + this.$data.user)
+                window.localStorage.setItem('user', userIdentity);
+                this.$http.post('/login', {
+                    'username': this.$data.user,
+                    'useridentity': userIdentity
+                }).then((response) => {
+                    if(response.body.success){
+                        window.location.href = "#/lift/workouts"
+                    }
+                })
+            }else {
+                console.warn("enable to use this browser to login!")
             }
+
         }
     }
 }

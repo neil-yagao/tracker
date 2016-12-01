@@ -37,7 +37,7 @@ func (this *GeneralController) GetUserIdentity() string {
 func (this *GeneralController) ServeJson(data ...interface{}) {
 	wrappedResult := map[string]interface{}{"success": true}
 	if len(data) > 0 {
-		wrappedResult["data"] = data
+		wrappedResult["data"] = data[0]
 	}
 	this.Data["json"] = wrappedResult
 	this.ServeJSON()
