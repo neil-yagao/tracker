@@ -117,3 +117,22 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2016-11-22 16:25:22
+
+CREATE TABLE `powerlift`.`user` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `useridentity` VARCHAR(128) NOT NULL DEFAULT '',
+  `password` VARCHAR(45) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `useridentity_UNIQUE` (`useridentity` ASC));
+
+  ALTER TABLE `powerlift`.`user`
+  ADD COLUMN `username` VARCHAR(32) NOT NULL DEFAULT '' AFTER `useridentity`,
+  ADD UNIQUE INDEX `username_UNIQUE` (`username` ASC);
+
+  CREATE TABLE `powerlift`.`user_workout` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user` INT NOT NULL,
+  `workout` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC));

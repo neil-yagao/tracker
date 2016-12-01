@@ -29,6 +29,20 @@ func (this *WorkoutSerivces) CreateWorkoutsFromeTemplate(template models.Workout
 	}
 }
 
+const WORKOUT_QUERY string = "select w.id, w.name, w.target, w.perform_date, w.description from workout w, user_workout uw, user u " +
+	"where is_finalized = 0 and uw.user = u.id and uw.workout = w.id and u.useridentity = :useridentity order by perform_date ASC"
+
+func (this *WorkoutSerivces) FindUserWorkouts(user string) []*models.Workout {
+	rows := models.BasicCRUD.BuildAndQuery(WORKOUT_QUERY, map[string]interface{}{"useridentity": user})
+	workouts := make([]*models.Workout, 0)
+	for rows.Next() {
+		one := new(models.Workout)
+		rows.Scan(&one.Id, &one.Name, &one.Target, &one.PerformDate, &one.Description)
+		workouts = append(workouts, one)
+	}
+	return workouts
+}
+
 func generateWorkingSets(workout models.Workout, template models.WorkoutTemplate, extraWeight float32) {
 	var containMovements []models.MovementTemplate = template.Movements
 	for _, mv := range containMovements {

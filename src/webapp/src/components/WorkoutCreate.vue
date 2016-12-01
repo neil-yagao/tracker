@@ -1,6 +1,6 @@
 <template>
     <div id="workout-create">
-        <div class="row"><a class="btn btn-lick pull-right " href="#/workouts">Back to List</a></div>
+        <div class="row"><a class="btn btn-lick pull-right " href="#/lift/workouts">Back to List</a></div>
         <div class="row" style="margin-bottom:1em;text-align: center;">
             <div class="col-md-2" style="margin-top:6px">
                 <label>Workout Template Name</label>
@@ -133,7 +133,11 @@ export default {
                 'description': this.description
             });
             console.info(requestBody)
-            this.$http.put('/workouts', requestBody)
+            this.$http.put('/workouts', requestBody, {
+                'params': {
+                    'user': window.localStorage.getItem('user')
+                }
+            })
         }
     }
 }

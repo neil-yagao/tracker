@@ -7,20 +7,25 @@
     <title>webapp</title>
     <link rel="stylesheet" href="dist/build.css">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
     <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="node_modules/js-md5/build/md5.min.js"></script>
     <script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script type="text/javascript" src="node_modules/lodash/lodash.js"></script>
 </head>
+<style>
+    html,
+    body {
+        background: #efefef;
+        padding: 10px;
+        font-family: 'Varela Round';
+    }
+</style>
 
 <body>
     <div id="app" style="margin: 1em">
         <h1><a href="#/">Lifting Tracker</a></h1>
-        <!-- route outlet -->
-        <!-- component matched by the route will render here -->
-        <ul class="nav nav-pills">
-            <li role="presentation" :class="{'active': $route.path.indexOf('workout') >=0 }"><a href="#/workouts">Available Sessions</a></li>
-            <li role="presentation" :class="{'active': $route.path.indexOf('movement') >=0 }"><a href="#/movements">Movements</a></li>
-        </ul>
+
         <router-view class="container-fluid" style="margin-top: 2em"></router-view>
     </div>
     <script src="dist/build.js"></script>

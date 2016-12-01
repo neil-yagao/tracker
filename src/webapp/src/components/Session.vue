@@ -1,6 +1,6 @@
 <template>
     <div id="movement-list">
-        <div class="row"><a class="btn btn-lick pull-right " href="#/workouts">Back to List</a></div>
+        <div class="row"><a class="btn btn-lick pull-right " href="#/lift/workouts">Back to List</a></div>
         <div class="row">
             <workset v-for="movement in movements" :title="movement.name" :sets="movement.sets"></workset>
         </div>
@@ -19,7 +19,11 @@ export default {
         }
     },
     created: function() {
-        this.$http.get("/session/" + this.$route.params["id"]).then((response) => {
+        this.$http.get("/session/" + this.$route.params["id"], {
+            'params': {
+                'user': window.localStorage.getItem('user')
+            }
+        }).then((response) => {
             var sets = response.body.data;
             var movements = _.groupBy(sets, 'movementName')
             console.info(movements)

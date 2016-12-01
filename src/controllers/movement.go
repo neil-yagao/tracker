@@ -1,14 +1,9 @@
 package controllers
 
-import (
-	"encoding/json"
-	"models"
-
-	"github.com/astaxie/beego"
-)
+import "models"
 
 type MovementController struct {
-	beego.Controller
+	GeneralController
 }
 
 /*const MOVEMENT_QUERY string = "SELECT 'm.name' as movement, 'w.name' as workout, ws.target_weight as weight, " +
@@ -24,33 +19,21 @@ func (this *MovementController) GetMovements() {
 		rows.Scan(&one.Id, &one.TargetMuscle, &one.SecondaryMuscle, &one.Name, &one.Description)
 		movements = append(movements, one)
 	}
-	this.Data["json"] = map[string]interface{}{"data": movements}
-	this.ServeJSON()
+	this.ServeJson(movements)
 }
 
 // @router /movements [put]
 func (this *MovementController) InsertMovement() {
 	newMovement := new(models.Movement)
-	beego.Debug("request body:", this.Ctx.Input.RequestBody)
-	err := json.Unmarshal(this.Ctx.Input.RequestBody, newMovement)
-	if err != nil {
-		beego.Error(err)
-	}
-	beego.Debug(newMovement)
+	this.ParseRequestBody(newMovement)
 	models.BasicCRUD.Save("movement", *newMovement)
-	this.Data["json"] = map[string]interface{}{"success": true}
-	this.ServeJSON()
+	this.ServeJson()
 }
 
 // @router /movement/:id [post]
 func (this *MovementController) UpdateMovement() {
 	modifyMovement := new(models.Movement)
-	beego.Debug("request body:", this.Ctx.Input.RequestBody)
-	err := json.Unmarshal(this.Ctx.Input.RequestBody, modifyMovement)
-	if err != nil {
-		beego.Error(err)
-	}
+	this.ParseRequestBody(modifyMovement)
 	models.BasicCRUD.BuildAndUpdateOne("movement", *modifyMovement)
-	this.Data["json"] = map[string]interface{}{"success": true}
-	this.ServeJSON()
+	this.ServeJson()
 }
