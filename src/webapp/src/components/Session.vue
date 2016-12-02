@@ -63,7 +63,8 @@ export default {
                 return _.concat(arry, _.flatMap(value.sets, (set)=>{
                     return {
                         'id': set.id,
-                        'acheiveNumber': set.achieved
+                        'acheiveNumber': set.achieved,
+                        'acheiveWeight' : set.totalWeight
                     }
                 }))
 

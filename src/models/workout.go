@@ -39,6 +39,7 @@ type WorkingSet struct {
 	Movement      int64   `json:"movement"`
 	MovementName  string  `json:"movementName"`
 	TargetWeight  float64 `json:"targetWeight"`
+	AcheiveWeight float64 `json:"acheiveWeight"`
 	TargetNumber  int     `json:"targetNumber"`
 	AcheiveNumber int64   `json:"acheiveNumber"`
 	Sequence      int8    `json:"sequence"`

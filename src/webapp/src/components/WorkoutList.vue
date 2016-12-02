@@ -11,7 +11,7 @@
         </div>
         <div class="row">
             <div class="col-lg-1">
-                <a type="button" class="btn btn-default" href="#/workout/template/new">New Workout</a>
+                <a type="button" class="btn btn-default" href="#/lift/workout/template/new">New Workout</a>
             </div>
         </div>
     </div>
