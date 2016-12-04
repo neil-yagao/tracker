@@ -4,10 +4,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
-import Session from './components/Session.vue'
-import WorkoutList from './components/WorkoutList.vue'
-import WorkoutCreate from './components/WorkoutCreate.vue'
-import MovementList from './components/MovementList.vue'
+
+import Session from './components/workouts/Session.vue'
+import WorkoutList from './components/workouts/WorkoutList.vue'
+import WorkoutCreate from './components/workouts/WorkoutCreate.vue'
+
+
+import Movements from './components/movements/MovementGeneral.vue'
+import MovementCreate from './components/movements/MovementCreate.vue'
+import MovementList from  './components/movements/MovementList.vue'
+
 import Login from './Login.vue'
 import WorkingSpace from './WorkingPage.vue'
 
@@ -22,7 +28,17 @@ const routes = [{
                     component: WorkoutList
                 }, {
                     path: 'movements',
-                    component: MovementList
+                    component: Movements,
+                    children: [
+                        {
+                            path:'new-movement',
+                            component: MovementCreate
+                        },
+                        {
+                            path:'',
+                            component: MovementList
+                        }
+                    ]
                 }, {
                     path: 'workout/:id',
                     component: Session

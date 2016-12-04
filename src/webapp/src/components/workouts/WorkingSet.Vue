@@ -20,14 +20,8 @@
                         <td>{{set.sequence}}</td>
                         <td>{{set.repeat}}</td>
                         <td v-if="eachSide">{{set.eachSide}}</td>
-                        <td @click="editing = false" v-if="editing && !eachSide">{{set.totalWeight}}</td>
-                        <td v-if="!editing && !eachSide">
-                            <div class="input-group">
-                                <input type="text" class="form-control" v-model="set.totalWeight">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" @click="saveTotalWeight(set)">OK</button>
-                                </span>
-                            </div>
+                        <td>
+                            <editable-input :value="set.totalWeight" @save="changeTotalWeight($event, set)"></editable-input>
                         </td>
                         <td>
                             <button @click="handleAchieve(set)" :class="['btn', {'btn-success': set.achieved== set.repeat,
@@ -40,20 +34,19 @@
                     </tr>
                 </tbody>
             </table>
-            </div>
         </div>
-        <rest-modal rest="60" :startFlag="restingFlag"></rest-modal>
+    </div>
 </template>
 <script>
-import RestModal from './RestModal.vue'
+
+import EditableInput from '../../general/EditableInput.vue'
 var debounce
 export default {
     name: 'workset',
     data() {
         return {
-            restingFlag: false,
             editing: true,
-            eachSide:false
+            eachSide: false
         }
     },
     props: ['title', 'sets'],
@@ -64,32 +57,26 @@ export default {
             } else {
                 set.achieved -= 1
             }
-            let self = this
-            if (debounce) {
-                debounce.cancel()
+            this.$emit('finishOneSet')
+        },
+        changeTotalWeight: function(totalWeight, set) {
+            set.totalWeight = totalWeight + 0;
+            var eachSide = (totalWeight - 20) / 2;
+            var movementName = _.toLower(set.name)
+            if (movementName.indexOf('dumbbell') >= 0 || movementName.indexOf("body") >= 0) {
+                eachSide = "--"
             }
-            debounce = _.debounce(() => {
-                self.$data.restingFlag = !self.$data.restingFlag;
-                $('#rest-modal').modal({
-                    'show': true
-                })
-            }, 1000)
-            debounce()
+            set.eachSide = eachSide
         }
-        ,saveTotalWeight: function(set){
-            this.$data.editing = true
-        }
+
     },
     components: {
-        'rest-modal': RestModal
+        'editable-input': EditableInput
     }
 }
 </script>
 <style scoped>
 .btn {
     min-width: 40px
-}
-.input-group {
-    max-width: 200px
 }
 </style>

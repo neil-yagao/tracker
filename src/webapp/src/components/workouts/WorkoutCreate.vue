@@ -59,7 +59,9 @@
                         </tbody>
                     </table>
                 </div>
-                <movement-create @addMovement="updateMovement" :movement="{}"></movement-create>
+                <div class="row">
+                    <exercise-create @addMovement="updateMovement" :movement="{}"></exercise-create>
+                </div>
             </div>
             <div class="panel-footer">
                 <div class="row">
@@ -95,7 +97,7 @@
     </div>
 </template>
 <script>
-import MovementCreate from "./ExerciseCreate.vue"
+import ExerciseCreate from "./ExerciseCreate.vue"
 export default {
     name: 'workout',
     data() {
@@ -111,7 +113,7 @@ export default {
         }
     },
     components: {
-        'movement-create': MovementCreate
+        'exercise-create': ExerciseCreate
     },
     methods: {
         updateMovement: function(newMovement) {

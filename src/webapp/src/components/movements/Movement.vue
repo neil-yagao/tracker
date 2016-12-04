@@ -4,7 +4,7 @@
     <div class="panel-body" v-show="selected == movement.id || !movement.id ">
         <div class="thumbnail" v-show="!edited">
             <p>
-                <img src="http://www.bodybuilding.com/exercises/exerciseImages/sequences/722/Male/l/722_1.jpg" width="100" height="100" >
+                <img src="http://www.bodybuilding.com/exercises/exerciseImages/sequences/722/Male/l/722_1.jpg" width="100" height="100">
             </p>
             <div class="caption">
                 <h3>{{movement.name}}</h3>
@@ -51,8 +51,24 @@
                     <textarea class="form-control" v-model="mv.description"></textarea>
                 </p>
                 <p>
-                    <b>Target Muscle(split by";"):</b>
-                    <input v-model="mv.targetMuscle" class="form-control"></input>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <b>Target Muscle(split by";"):</b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <input v-model="mv.targetMuscle" class="form-control"></input>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="checkbox" >
+                                <label>
+                                    <input type="checkbox"> Calculate Each Side Weight
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
                 </p>
                 <p>
                     <button class="btn btn-success" role="button" @click="updateOrInsert">Save</button>

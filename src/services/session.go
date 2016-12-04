@@ -35,7 +35,7 @@ func (this *sessionService) FinalizeSession(workingsets []models.WorkingSet, wor
 	for _, set := range workingsets {
 		beego.Debug("debug:", set.AcheiveNumber, set.Id)
 		var completeSet = map[string]interface{}{"acheive_number": set.AcheiveNumber, "id": set.Id}
-		completeSet["acheive_weight"] = set.TargetWeight
+		completeSet["acheive_weight"] = set.AcheiveWeight
 		completedSets = append(completedSets, completeSet)
 	}
 	models.BasicCRUD.BuildAndUpdate("update working_set set acheive_number = :acheive_number , acheive_weight = :acheive_weight where id = :id", completedSets)

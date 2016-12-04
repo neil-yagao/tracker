@@ -1,20 +1,23 @@
 <template>
-    <div id="movement-list">
-        <div class="row"><a class="btn btn-lick pull-right " href="#/lift/workouts">Back to List</a></div>
-        <div class="row">
-            <workset v-for="movement in movements" :title="movement.name" :sets="movement.sets"></workset>
-        </div>
-        <div class="row">
-            <button type="button" class="btn btn-info" style="max-width:450px; width:100%" @click="finishSession">Finish</button>
-        </div>
+<div id="movement-list">
+    <div class="row"><a class="btn btn-lick pull-right " href="#/lift/workouts">Back to List</a></div>
+    <div class="row">
+        <workset v-for="movement in movements" :title="movement.name" :sets="movement.sets" @finishOneSet="finishOneSet"></workset>
     </div>
+    <div class="row">
+        <button type="button" class="btn btn-info" style="max-width:450px; width:100%" @click="finishSession">Finish</button>
+    </div>
+    <rest-modal rest="60" :startFlag="restingFlag"></rest-modal>
+</div>
 </template>
 <script>
+import RestModal from './RestModal.vue'
 import WorkSet from './WorkingSet.vue'
 export default {
     name: 'movement-list',
     data() {
         return {
+            restingFlag: false,
             movements: []
         }
     },
@@ -31,7 +34,7 @@ export default {
                 var sequence = 0;
                 var newSets = _.map(value, function(set) {
                     var eachSide = (set.targetWeight - 20) / 2;
-                    var movementName =_.toLower(key)
+                    var movementName = _.toLower(key)
                     if (movementName.indexOf('dumbbell') >= 0 || movementName.indexOf("body") >= 0) {
                         eachSide = "--"
                     }
@@ -59,24 +62,40 @@ export default {
     methods: {
         finishSession: function() {
             console.info(this.$data.movements)
-            var sessionData = _.reduce(this.$data.movements, function (arry, value){
-                return _.concat(arry, _.flatMap(value.sets, (set)=>{
+            var sessionData = _.reduce(this.$data.movements, function(arry, value) {
+                return _.concat(arry, _.flatMap(value.sets, (set) => {
                     return {
                         'id': set.id,
                         'acheiveNumber': set.achieved,
-                        'acheiveWeight' : set.totalWeight
+                        'acheiveWeight': set.totalWeight
                     }
                 }))
 
             }, [])
             console.info(sessionData)
-            this.$http.post('/session/'+  this.$route.params["id"], JSON.stringify(sessionData))
+            this.$http.post('/session/' + this.$route.params["id"], JSON.stringify(sessionData))
+        },
+        finishOneSet: function() {
+            let self = this
+            if (self.debounce) {
+                self.debounce.cancel()
+            }
+            self.debounce = _.debounce(() => {
+
+                $('#rest-modal').modal({
+                    'show': true
+                })
+                self.$data.restingFlag = !self.$data.restingFlag;
+            }, 1000)
+            self.debounce()
         }
     },
     components: {
-        'workset': WorkSet
+        'workset': WorkSet,
+        'rest-modal': RestModal
     }
 }
 </script>
 <style scoped>
+
 </style>
