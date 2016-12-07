@@ -27,3 +27,11 @@ func (this *WorkingSessionController) SaveSession() {
 	services.SessionService.FinalizeSession(achieved, workoutId)
 	this.ServeJson()
 }
+
+// @router /session/?:workout/movement [post]
+func (this *WorkingSessionController) UpdateSessionMovement() {
+	updateInfo := new(models.SessionUpdateInfo)
+	this.ParseRequestBody(updateInfo)
+	services.SessionService.UpdateSessionMovement(updateInfo)
+	this.ServeJson()
+}

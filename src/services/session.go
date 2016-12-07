@@ -12,7 +12,7 @@ type sessionService struct {
 var SessionService sessionService
 
 const QUERY_WORKOUT_SESSION_SQL = " select ws.id, ws.sequence, ws.target_number, " +
-	"ws.target_weight, ws.acheive_weight, ws.acheive_number, m.name from movement m, working_set ws, " +
+	"ws.target_weight, ws.acheive_weight, ws.acheive_number, m.name, m.dividable from movement m, working_set ws, " +
 	"workout w where w.id = :workoutId and ws.workout = w.id and m.id = ws.movement "
 
 func (this *sessionService) GetWorkoutSession(workoutId int) []models.WorkingSet {
@@ -24,7 +24,7 @@ func (this *sessionService) GetWorkoutSession(workoutId int) []models.WorkingSet
 	for rows.Next() {
 		instance := models.WorkingSet{}
 		rows.Scan(&instance.Id, &instance.Sequence, &instance.TargetNumber,
-			&instance.TargetWeight, &instance.AcheiveWeight, &instance.AcheiveNumber, &instance.MovementName)
+			&instance.TargetWeight, &instance.AcheiveWeight, &instance.AcheiveNumber, &instance.MovementName, &instance.Dividable)
 		sessions = append(sessions, instance)
 	}
 	return sessions
@@ -40,4 +40,12 @@ func (this *sessionService) FinalizeSession(workingsets []models.WorkingSet, wor
 	}
 	models.BasicCRUD.BuildAndUpdate("update working_set set acheive_number = :acheive_number , acheive_weight = :acheive_weight where id = :id", completedSets)
 	models.BasicCRUD.Update("update workout set is_finalized = 1  where id = " + workoutId)
+}
+
+func (this *sessionService) UpdateSessionMovement(updateInfo *models.SessionUpdateInfo) {
+	params := make([]map[string]interface{}, 0)
+	for _, id := range updateInfo.WorkSet {
+		params = append(params, map[string]interface{}{"movement": updateInfo.Movement, "id": id})
+	}
+	models.BasicCRUD.BuildAndUpdate("update working_set set movement = :movement where id = :id", params)
 }

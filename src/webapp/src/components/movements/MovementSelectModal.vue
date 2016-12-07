@@ -8,7 +8,6 @@
                 </div>
                 <div class="modal-body">
                     <movement-list @confirmSelection="confirmSelection"></movement-list>
-
                 </div>
             </div>
         </div>

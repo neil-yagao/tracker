@@ -2,7 +2,14 @@
 <div id="workset">
     <div class="panel panel-default" style="max-width:800px">
         <div class="panel-heading">
-            <h4>{{title}}</h4>
+            <div class="row">
+                <div class="col-md-2">
+                    <h4>{{movementTitle}}<h4>
+                </div>
+                <div class="col-md-2 col-md-offset-8">
+                    <button class="btn btn-link pull-right"  data-toggle="modal" data-target="#movement-select-modal">Switch Movement</button>
+                </div>
+            </div>
         </div>
         <div class="panel-body" style="padding-bottom:0px;">
             <table class="table table-hover table-condensed" style="margin-bottom:0px">
@@ -16,11 +23,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(set, index) in sets">
+                    <tr v-for="(set, index) in workingSets">
                         <td>{{set.sequence}}</td>
-                        <td>{{set.repeat}}</td>
+                        <td><editable-input :value="set.repeat" @save="set.repeat = $event"></editable-input></td>
                         <td v-if="eachSide">{{set.eachSide}}</td>
-                        <td>
+                        <td v-if="!eachSide">
                             <editable-input :value="set.totalWeight" @save="changeTotalWeight($event, set)"></editable-input>
                         </td>
                         <td>
@@ -36,17 +43,21 @@
             </table>
         </div>
     </div>
+    <movement-select-modal @movement-modal-selected="selected"></movement-select-modal>
 </template>
 <script>
 
 import EditableInput from '../../general/EditableInput.vue'
+import MovementSelectModal from '../movements/MovementSelectModal.vue'
 var debounce
 export default {
     name: 'workset',
     data() {
         return {
             editing: true,
-            eachSide: false
+            eachSide: false,
+            workingSets: this.sets,
+            movementTitle: this.title
         }
     },
     props: ['title', 'sets'],
@@ -62,16 +73,23 @@ export default {
         changeTotalWeight: function(totalWeight, set) {
             set.totalWeight = totalWeight + 0;
             var eachSide = (totalWeight - 20) / 2;
-            var movementName = _.toLower(set.name)
-            if (movementName.indexOf('dumbbell') >= 0 || movementName.indexOf("body") >= 0) {
+            if(!set.dividable){
                 eachSide = "--"
             }
             set.eachSide = eachSide
+        },
+        selected: function(movement){
+            this.$emit('changeMovement', movement)
         }
 
     },
+    beforeUpdate: function(){
+        this.$data.workingSets = this.sets;
+        this.$data.movementTitle = this.title;
+    },
     components: {
-        'editable-input': EditableInput
+        'editable-input': EditableInput,
+        'movement-select-modal': MovementSelectModal
     }
 }
 </script>

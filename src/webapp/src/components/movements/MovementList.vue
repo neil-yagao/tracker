@@ -37,7 +37,7 @@ export default {
                 var searchKey = _.toLower(this.$data.nameKey)
                 return movementName.indexOf(searchKey) > -1
             })
-            return _.slice(_.unionBy(filtered, 'name'),0 , 20)
+            return _.unionBy(filtered, 'name')
         }
     },
     methods: {

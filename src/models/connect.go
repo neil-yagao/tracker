@@ -102,10 +102,10 @@ func update(sql string, params []map[string]interface{}) {
 	for _, param := range params {
 		str := build(sql, param)
 		beego.Debug("update:", str)
-		db.Exec(str)
+		_, err = db.Exec(str)
+		checkErr(err)
 	}
 
-	checkErr(err)
 }
 
 func build(sql string, param map[string]interface{}) string {
@@ -138,9 +138,6 @@ func build(sql string, param map[string]interface{}) string {
 	return strings.TrimSpace(buildSQL)
 }
 
-func (query *basicCRUD) BuildAndInsert(table string, value interface{}) string {
-	return buildInsert(table, value)
-}
 func (b *basicCRUD) BuildAndUpdateOne(table string, value interface{}) {
 	fields, values := ExtractToStringFromObject(value)
 	idFieldIndex := pos("id", fields)
@@ -171,9 +168,6 @@ func buildInsert(table string, value interface{}) string {
 	fields = append(fields[:idFieldIndex], fields[idFieldIndex+1:]...)
 	values = append(values[:idFieldIndex], values[idFieldIndex+1:]...)
 	insertSql := "INSERT INTO " + table + " (" + strings.Join(fields, ",") + ") values (" + strings.Join(values, ",") + ");"
-	beego.Debug("insertSql:" + insertSql)
-	_, err := db.Exec(insertSql)
-	checkErr(err)
 	return insertSql
 }
 

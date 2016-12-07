@@ -24,6 +24,7 @@ type Movement struct {
 	SecondaryMuscle string `json:"secondarMuscle"`
 	Name            string `json:"name"`
 	Description     string `json:"description"`
+	Dividable       int8   `json:"dividable"`
 }
 
 type MovementTemplate struct {
@@ -43,4 +44,10 @@ type WorkingSet struct {
 	TargetNumber  int     `json:"targetNumber"`
 	AcheiveNumber int64   `json:"acheiveNumber"`
 	Sequence      int8    `json:"sequence"`
+	Dividable     int8    `json:"dividable"`
+}
+
+type SessionUpdateInfo struct {
+	Movement int64   `json:"movement"`
+	WorkSet  []int64 `json:"workset"`
 }

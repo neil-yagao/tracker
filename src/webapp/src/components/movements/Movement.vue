@@ -30,13 +30,13 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4">
-                            <input v-model="mv.name" class="form-control"></input>
+                            <input v-model="mv.name" class="form-control" ></input>
                         </div>
                         <div class="col-md-4 col-md-offset-2">
                             <div class="input-group" style="margin-bottom:1em">
-                                <input v-model="mv.src" class="form-control">
+                                <input v-model="mv.src" class="form-control" disabled="true">
                                 <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button">Upload Image</button>
+                                        <button class="btn btn-default" disabled="true" type="button">Upload Image</button>
                                     </span>
                             </div>
                         </div>
@@ -63,12 +63,11 @@
                         <div class="col-md-3">
                             <div class="checkbox" >
                                 <label>
-                                    <input type="checkbox"> Calculate Each Side Weight
+                                    <input type="checkbox" v-model="mv.dividable"> Calculate Each Side Weight
                                 </label>
                             </div>
                         </div>
                     </div>
-
                 </p>
                 <p>
                     <button class="btn btn-success" role="button" @click="updateOrInsert">Save</button>
@@ -104,7 +103,12 @@ export default {
             } else {
                 this.$http.put('/movements', requestBody)
             }
+            this.$emit('saveMovement', this.$data.mv)
         }
+    },
+    beforeUpdate: function(){
+        this.$data.mv = this.movement;
+        this.$data.edited = this.editing
     },
     computed: {
         eachMuscleGroup: function() {
