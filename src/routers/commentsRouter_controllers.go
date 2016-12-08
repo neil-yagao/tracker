@@ -48,6 +48,16 @@ func init() {
 			AllowHTTPMethods: []string{"post"},
 			Params: nil})
 
+<<<<<<< HEAD
+=======
+	beego.GlobalControllerRouter["controllers:WorkingSessionController"] = append(beego.GlobalControllerRouter["controllers:WorkingSessionController"],
+		beego.ControllerComments{
+			Method: "UpdateSessionMovement",
+			Router: `/session/?:workout/movement`,
+			AllowHTTPMethods: []string{"post"},
+			Params: nil})
+
+>>>>>>> 3b1011b7ed0b0ec91e9383bd1761c8be17f0ca0e
 	beego.GlobalControllerRouter["controllers:WorkoutController"] = append(beego.GlobalControllerRouter["controllers:WorkoutController"],
 		beego.ControllerComments{
 			Method: "GetWorkouts",

@@ -12,12 +12,12 @@ type MovementController struct {
 
 // @router /movements [get]
 func (this *MovementController) GetMovements() {
-	rows := models.BasicCRUD.Query("select id, target_muscle, secondary_muscle, name, description from movement")
+	rows := models.BasicCRUD.Query("select id, target_muscle, secondary_muscle, name, description, dividable from movement")
 	defer rows.Close()
 	movements := make([]*models.Movement, 0)
 	for rows.Next() {
 		one := new(models.Movement)
-		rows.Scan(&one.Id, &one.TargetMuscle, &one.SecondaryMuscle, &one.Name, &one.Description)
+		rows.Scan(&one.Id, &one.TargetMuscle, &one.SecondaryMuscle, &one.Name, &one.Description, &one.Dividable)
 		movements = append(movements, one)
 	}
 	this.ServeJson(movements)
