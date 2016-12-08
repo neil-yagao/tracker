@@ -58,7 +58,7 @@ func generateWorkingSets(workout models.Workout, template models.WorkoutTemplate
 		movement.SecondaryMuscle = ""
 		movement.Name = mv.Name
 		movementId := getMovementId(*movement)
-		if mv.NeedWarmSet {
+		if mv.NeedWarmSet > 0 {
 			generateWarmingSet(movementId, workout.Id, mv.Repeats,
 				mv.Weight+float64(extraWeight))
 		}

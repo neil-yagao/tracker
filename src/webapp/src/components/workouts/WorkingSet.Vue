@@ -3,11 +3,11 @@
     <div class="panel panel-default" style="max-width:800px">
         <div class="panel-heading">
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <h4>{{movementTitle}}<h4>
                 </div>
-                <div class="col-md-2 col-md-offset-8">
-                    <button class="btn btn-link pull-right"  data-toggle="modal" data-target="#movement-select-modal">Switch Movement</button>
+                <div class="col-md-2 col-md-offset-6">
+                    <button class="btn btn-link pull-right"  data-toggle="modal" data-target="#movement-select-modal">换训练动作</button>
                 </div>
             </div>
         </div>
@@ -16,10 +16,10 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Reps</th>
-                        <th @click="eachSide = false" v-if="eachSide">Each Side(KG)</th>
-                        <th @click="eachSide = true" v-if="!eachSide">Total Weight(KG)</th>
-                        <th>Finished</th>
+                        <th>每组目标</th>
+                        <th @click="eachSide = false" v-if="eachSide">每边重量(KG)</th>
+                        <th @click="eachSide = true" v-if="!eachSide">总重量(KG)</th>
+                        <th>完成</th>
                     </tr>
                 </thead>
                 <tbody>
