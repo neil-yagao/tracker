@@ -33,7 +33,7 @@ export default {
                     return {
                         'id': set.id,
                         'acheiveNumber': set.achieved,
-                        'acheiveWeight': set.totalWeight
+                        'acheiveWeight': set.totalWeight + 0
                     }
                 }))
 

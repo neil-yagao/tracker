@@ -25,10 +25,10 @@
                 <tbody>
                     <tr v-for="(set, index) in workingSets">
                         <td>{{set.sequence}}</td>
-                        <td><editable-input :value="set.repeat" @save="set.repeat = $event"></editable-input></td>
+                        <td><editable-input type="number" :value="set.repeat" @save="set.repeat = $event + 0"></editable-input></td>
                         <td v-if="eachSide">{{set.eachSide}}</td>
                         <td v-if="!eachSide">
-                            <editable-input :value="set.totalWeight" @save="changeTotalWeight($event, set)"></editable-input>
+                            <editable-input type="number" :value="set.totalWeight" @save="changeTotalWeight($event, set)"></editable-input>
                         </td>
                         <td>
                             <button @click="handleAchieve(set)" :class="['btn', {'btn-success': set.achieved== set.repeat,
@@ -71,7 +71,7 @@ export default {
             this.$emit('finishOneSet')
         },
         changeTotalWeight: function(totalWeight, set) {
-            set.totalWeight = totalWeight + 0;
+            set.totalWeight = Number(totalWeight);
             var eachSide = (totalWeight - 20) / 2;
             if(!set.dividable){
                 eachSide = "--"

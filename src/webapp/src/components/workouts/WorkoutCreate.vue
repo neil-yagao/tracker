@@ -6,19 +6,19 @@
                 <label>训练课名称</label>
             </div>
             <div class="col-md-2">
-                <input class="form-control" placeholder="Name" v-model="名称" type="text">
+                <input class="form-control" placeholder="名称" v-model="name" type="text">
             </div>
             <div class="col-md-2" style="margin-top:6px">
                 <label>训练目标肌群</label>
             </div>
             <div class="col-md-2">
-                <input class="form-control" placeholder="Target Muscle Group" v-model="目标肌群" type="text">
+                <input class="form-control" placeholder="Target Muscle Group" v-model="target" type="text">
             </div>
             <div class="col-md-2" style="margin-top:6px">
                 <label>训练起始日</label>
             </div>
             <div class="col-md-2">
-                <input class="form-control" placeholder="Start At" v-model="起始于" type="text">
+                <input class="form-control" placeholder="Start At" v-model="startAt" type="text">
             </div>
         </div>
         <div class="row" style="margin-bottom:1em;text-align: center;">
@@ -26,7 +26,7 @@
                 <label>训练课注意事项</label>
             </div>
             <div class="col-md-5">
-                <input class="form-control" placeholder="Notes during the workout..." v-model="注意事项" type="text">
+                <input class="form-control" placeholder="注意事项..." v-model="description" type="text">
             </div>
         </div>
         <div class="panel panel-default">

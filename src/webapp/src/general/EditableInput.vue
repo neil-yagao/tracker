@@ -4,7 +4,7 @@
             <p>{{value}}</p>
         </div>
         <div v-if="editing" style="max-width:40px">
-            <input type="text" class="form-control" v-model="toValue" @keyup.enter="save" @blur="save">
+            <input type=":type" class="form-control" v-model="toValue" @keyup.enter="save" @blur="save">
         </div>
     </div>
 </template>
@@ -18,7 +18,7 @@ export default {
             editing : false
         }
     },
-    props:['value'],
+    props:['value','type'],
     methods: {
         save: function(){
             this.$data.editing = false
