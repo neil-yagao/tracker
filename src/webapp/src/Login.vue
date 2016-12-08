@@ -1,6 +1,6 @@
 <template>
 <div class="text-center" style="padding:50px 0">
-    <div class="logo">login</div>
+    <div class="logo">登陆</div>
     <!-- Main Form -->
     <div class="login-form-1">
         <div id="login-form" class="text-left">
@@ -8,8 +8,8 @@
             <div class="main-login-form">
                 <div class="login-group">
                     <div class="form-group">
-                        <label for="lg_username" class="sr-only">Username</label>
-                        <input type="text" class="form-control" v-model="user" placeholder="username">
+                        <label for="lg_username" class="sr-only">用户名</label>
+                        <input type="text" class="form-control" v-model="user" placeholder="用户名" @keyup.enter="login">
                     </div>
                 </div>
                 <button class="login-button" @click="login"><i class="fa fa-chevron-right"></i></button>

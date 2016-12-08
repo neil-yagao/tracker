@@ -28,10 +28,11 @@ type Movement struct {
 }
 
 type MovementTemplate struct {
-	Name    string `json:"name"`
-	Repeats string `json:"repeats"`
-	Weight  string `json:"weight"`
-	Sets    string `json:"sets"`
+	Name        string  `json:"name"`
+	Repeats     int     `json:"repeats"`
+	Weight      float64 `json:"weight"`
+	Sets        int     `json:"sets"`
+	NeedWarmSet int8    `json:"needWarmSet"`
 }
 
 type WorkingSet struct {
@@ -44,7 +45,11 @@ type WorkingSet struct {
 	TargetNumber  int     `json:"targetNumber"`
 	AcheiveNumber int64   `json:"acheiveNumber"`
 	Sequence      int8    `json:"sequence"`
-	Dividable     int8    `json:"dividable"`
+}
+
+type DividableWorkingSet struct {
+	Dividable int8 `json:"dividable"`
+	WorkingSet
 }
 
 type SessionUpdateInfo struct {

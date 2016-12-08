@@ -1,12 +1,12 @@
 <template>
 <div id="movement-list">
-    <div class="row"><a class="btn btn-lick pull-right " href="#/lift/workouts">Back to List</a></div>
+    <div class="row"><a class="btn btn-lick pull-right " href="#/lift/workouts">回到列表</a></div>
     <div class="row">
         <workset v-for="movement in movements" :title="movement.name" :sets="movement.sets" @finishOneSet="finishOneSet"
         @changeMovement="changeMovement($event, movement)" :key="movement.name"></workset>
     </div>
     <div class="row">
-        <button type="button" class="btn btn-info" style="max-width:450px; width:100%" @click="finishSession">Finish</button>
+        <button type="button" class="btn btn-info" style="max-width:450px; width:100%" @click="finishSession">完成本次训练课</button>
     </div>
     <rest-modal rest="60" :startFlag="restingFlag"></rest-modal>
 </div>
@@ -58,10 +58,12 @@ export default {
                         if(!set.dividable){
                             eachSide = "--"
                         }
-                        sequence += 1
+                        if(set.sequence != 0){
+                            sequence += 1
+                        }
                         return {
                             'id': set.id,
-                            'sequence': sequence,
+                            'sequence': set.sequence == 0? "*":sequence,
                             'repeat': set.targetNumber,
                             'eachSide': eachSide,
                             'totalWeight': set.targetWeight,
@@ -73,8 +75,7 @@ export default {
                         "sets": newSets
                     }
                 })
-                console.info("beforeAssign");
-                console.info(beforeAssign);
+
                 this.$data.movements = beforeAssign
             }).bind(this)
         },

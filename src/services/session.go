@@ -15,14 +15,14 @@ const QUERY_WORKOUT_SESSION_SQL = " select ws.id, ws.sequence, ws.target_number,
 	"ws.target_weight, ws.acheive_weight, ws.acheive_number, m.name, m.dividable from movement m, working_set ws, " +
 	"workout w where w.id = :workoutId and ws.workout = w.id and m.id = ws.movement "
 
-func (this *sessionService) GetWorkoutSession(workoutId int) []models.WorkingSet {
+func (this *sessionService) GetWorkoutSession(workoutId int) []models.DividableWorkingSet {
 	condition := make(map[string]interface{})
 	condition["workoutId"] = workoutId
 	rows := models.BasicCRUD.BuildAndQuery(QUERY_WORKOUT_SESSION_SQL, condition)
 	defer rows.Close()
-	sessions := make([]models.WorkingSet, 0)
+	sessions := make([]models.DividableWorkingSet, 0)
 	for rows.Next() {
-		instance := models.WorkingSet{}
+		instance := models.DividableWorkingSet{}
 		rows.Scan(&instance.Id, &instance.Sequence, &instance.TargetNumber,
 			&instance.TargetWeight, &instance.AcheiveWeight, &instance.AcheiveNumber, &instance.MovementName, &instance.Dividable)
 		sessions = append(sessions, instance)

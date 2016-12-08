@@ -23,7 +23,8 @@ func (this *WorkoutController) GetWorkouts() {
 func (this *WorkoutController) InsertWorkout() {
 	template := new(models.WorkoutTemplate)
 	this.ParseRequestBody(template)
-	go services.WorkoutCreator.CreateWorkoutsFromeTemplate(*template)
+	user := this.GetUserIdentity()
+	go services.WorkoutCreator.CreateWorkoutsFromeTemplate(*template, user)
 	this.ServeJson()
 
 }

@@ -10,9 +10,9 @@ var UserService userService
 func (this *userService) HandleUserLogin(user models.LoginInfo) {
 	//currently just insert user info if not exsited
 	//do nothing if user exsited
-	//if !userExisted(user.Useridentity) {
-	models.BasicCRUD.Save("user", user)
-	//}
+	if !userExisted(user.Useridentity) {
+		models.BasicCRUD.Save("user", user)
+	}
 
 }
 
@@ -27,4 +27,22 @@ func userExisted(userIdentity string) bool {
 		return result > 0
 	}
 	return false
+}
+
+type UserWorkout struct {
+	User    int64
+	Workout int64
+}
+
+func (this *userService) AssignWorkoutToUser(user int64, workout int64) {
+	models.BasicCRUD.Save("user_workout", UserWorkout{user, workout})
+}
+
+func (this *userService) GetUserIdFromIdentity(user string) int64 {
+	rows := models.BasicCRUD.Query("select id from user where useridentity = '" + user + "'")
+	var id int64
+	for rows.Next() {
+		rows.Scan(&id)
+	}
+	return id
 }

@@ -10,13 +10,13 @@
                 <h3>{{movement.name}}</h3>
                 <p>{{movement.description}}</p>
                 <p>
-                    <b>Target Muscle:</b>
+                    <b>目标肌群:</b>
                     <ul>
                         <li v-for="muscle in eachMuscleGroup" class="active"><a href="#">{{muscle}}</a></li>
                     </ul>
                 </p>
                 <p>
-                    <button class="btn btn-warning" role="button" @click="edited=true">Edit</button>
+                    <button class="btn btn-warning" role="button" @click="edited=true">修改</button>
                 </p>
             </div>
         </div>
@@ -25,7 +25,7 @@
                 <p>
                     <div class="row">
                         <div class="col-md-4">
-                            <b>Name</b>
+                            <b>动作名称</b>
                         </div>
                     </div>
                     <div class="row">
@@ -36,7 +36,7 @@
                             <div class="input-group" style="margin-bottom:1em">
                                 <input v-model="mv.src" class="form-control" disabled="true">
                                 <span class="input-group-btn">
-                                        <button class="btn btn-default" disabled="true" type="button">Upload Image</button>
+                                        <button class="btn btn-default" disabled="true" type="button">上传图片</button>
                                     </span>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                 </p>
                 <div class="row">
                     <div class="col-md-4">
-                        <b>Description</b>
+                        <b>动作描述或步骤</b>
                     </div>
                 </div>
                 <p>
@@ -53,7 +53,7 @@
                 <p>
                     <div class="row">
                         <div class="col-md-4">
-                            <b>Target Muscle(split by";"):</b>
+                            <b>目标肌群(请用";"进行分割):</b>
                         </div>
                     </div>
                     <div class="row">
@@ -63,14 +63,14 @@
                         <div class="col-md-3">
                             <div class="checkbox" >
                                 <label>
-                                    <input type="checkbox" v-model="mv.dividable"> Calculate Each Side Weight
+                                    <input type="checkbox" v-model="mv.dividable">能否计算每边重量
                                 </label>
                             </div>
                         </div>
                     </div>
                 </p>
                 <p>
-                    <button class="btn btn-success" role="button" @click="updateOrInsert">Save</button>
+                    <button class="btn btn-success" role="button" @click="updateOrInsert">保存</button>
                 </p>
             </div>
         </div>

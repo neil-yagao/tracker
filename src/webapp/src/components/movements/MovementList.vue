@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="col-md-1">
-                <button class="btn btn-info" @click="confirm" data-dismiss="modal">Select</button>
+                <button class="btn btn-info" @click="confirm" data-dismiss="modal">选择</button>
             </div>
         </div>
         <template v-for="(movement, index) in filtedMovement">
@@ -55,7 +55,7 @@ export default {
         }
     },
     created: function() {
-        console.info("movement list created");
+        // console.info("movement list created");
         this.$http.get('/movements').then((response) => {
             this.$data.movements = response.body.data
         })

@@ -3,35 +3,35 @@
         <div class="row"><a class="btn btn-lick pull-right " href="#/lift/workouts">Back to List</a></div>
         <div class="row" style="margin-bottom:1em;text-align: center;">
             <div class="col-md-2" style="margin-top:6px">
-                <label>Workout Template Name</label>
+                <label>训练课名称</label>
             </div>
             <div class="col-md-2">
-                <input class="form-control" placeholder="Name" v-model="name" type="text">
+                <input class="form-control" placeholder="Name" v-model="名称" type="text">
             </div>
             <div class="col-md-2" style="margin-top:6px">
-                <label>Workout Target Muscle</label>
+                <label>训练目标肌群</label>
             </div>
             <div class="col-md-2">
-                <input class="form-control" placeholder="Target Muscle Group" v-model="target" type="text">
+                <input class="form-control" placeholder="Target Muscle Group" v-model="目标肌群" type="text">
             </div>
             <div class="col-md-2" style="margin-top:6px">
-                <label>Start Workout At</label>
+                <label>训练起始日</label>
             </div>
             <div class="col-md-2">
-                <input class="form-control" placeholder="Start At" v-model="startAt" type="text">
+                <input class="form-control" placeholder="Start At" v-model="起始于" type="text">
             </div>
         </div>
         <div class="row" style="margin-bottom:1em;text-align: center;">
             <div class="col-md-2" style="margin-top:6px">
-                <label>Workout Notes</label>
+                <label>训练课注意事项</label>
             </div>
             <div class="col-md-5">
-                <input class="form-control" placeholder="Notes during the workout..." v-model="description" type="text">
+                <input class="form-control" placeholder="Notes during the workout..." v-model="注意事项" type="text">
             </div>
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                Workout Content
+                训练课内容
             </div>
             <div class="panel-body">
                 <div class="col-md-6 col-md-offset-3">
@@ -39,10 +39,10 @@
                         <thead>
                             <tr>
                                 <td><b>#</b></td>
-                                <td>Name</td>
-                                <td>Weight</td>
-                                <td>Repeats</td>
-                                <td>Sets</td>
+                                <td>动作</td>
+                                <td>重量</td>
+                                <td>每组次数</td>
+                                <td>组数</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,7 +53,7 @@
                                 <td>{{movement.repeats}}</td>
                                 <td>{{movement.sets}}</td>
                                 <td>
-                                    <button type="button" class="btn btn-danger btn-xs" @click="remove(index)">X</button>
+                                    <button type="button" class="btn btn-danger btn-xs" @click="remove(index)">&times;</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -68,27 +68,27 @@
                     <div class="col-md-3">
                         <div class="input-group">
                             <div class="input-group-btn">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Weekly On<span class="caret"></span></button>
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">每周<span class="caret"></span></button>
                                 <ul class="dropdown-menu">
-                                    <li v-for="day in week" @click="weekly = day"><a>{{day}}</a>
+                                    <li v-for="day in week" @click="weekly = day"><a>{{day.show}}</a>
                                     </li>
                                 </ul>
                             </div>
-                            <input type="text" class="form-control" v-model="weekly">
+                            <input type="text" class="form-control" v-model="weekly.show">
                         </div>
                     </div>
-                    <div class="col-md-1">
-                        <h5>AND</h5>
+                    <div class="col-md-2">
+                        <h5>每次训练课增加</h5>
                     </div>
                     <div class="col-md-3">
                         <div class="input-group">
-                            <span class="input-group-addon">Weight Add Per Workout</span>
+                            <span class="input-group-addon">增加重量</span>
                             <input type="text" class="form-control" v-model="addition">
                             <span class="input-group-addon">KG</span>
                         </div>
                     </div>
-                    <div class="col-md-1 col-md-offset-4">
-                        <button class="btn btn-default" @click="createWorkoutTemplate">Create
+                    <div class="col-md-1 col-md-offset-2">
+                        <button class="btn btn-default" @click="createWorkoutTemplate">创建
                         </button>
                     </div>
                 </div>
@@ -105,7 +105,28 @@ export default {
             name: '',
             movements: [],
             startAt: new Date().toISOString().slice(0, 10),
-            week: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            week: [{
+                'show': '周一',
+                'value': 'Monday'
+            },{
+                'show': '周二',
+                'value': 'Tuesday'
+            } ,{
+                'show': '周三',
+                'value': 'Wednesday'
+            } ,{
+                'show': '周四',
+                'value': 'Thursday'
+            } ,{
+                'show': '周五',
+                'value': 'Friday'
+            } ,{
+                'show': '周六',
+                'value': 'Saturday'
+            } ,{
+                'show': '周日',
+                'value': 'Sunday'
+            } ],
             weekly: '',
             addition: '',
             target: '',
@@ -130,7 +151,7 @@ export default {
                 'movements': this.movements,
                 'startAt': this.startAt,
                 'addition': this.addition,
-                'weekly': this.weekly,
+                'weekly': this.weekly.value,
                 'targetMuscle': this.target,
                 'description': this.description
             });

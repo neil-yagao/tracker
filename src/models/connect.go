@@ -165,8 +165,10 @@ func buildInsert(table string, value interface{}) string {
 	fields, values := ExtractToStringFromObject(value)
 	//ignore id fields
 	idFieldIndex := pos("id", fields)
-	fields = append(fields[:idFieldIndex], fields[idFieldIndex+1:]...)
-	values = append(values[:idFieldIndex], values[idFieldIndex+1:]...)
+	if idFieldIndex != -1 {
+		fields = append(fields[:idFieldIndex], fields[idFieldIndex+1:]...)
+		values = append(values[:idFieldIndex], values[idFieldIndex+1:]...)
+	}
 	insertSql := "INSERT INTO " + table + " (" + strings.Join(fields, ",") + ") values (" + strings.Join(values, ",") + ");"
 	return insertSql
 }

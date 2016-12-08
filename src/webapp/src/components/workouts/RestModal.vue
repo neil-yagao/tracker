@@ -4,7 +4,7 @@
         <div class="modal-content" :class="{'flash':remaining < 10}">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4>Rest Period</h4>
+                <h4>休息倒计时</h4>
             </div>
             <p>
                 <span v-show="false">{{flag}}</span>
