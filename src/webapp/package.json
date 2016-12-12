@@ -21,7 +21,9 @@
     "browser": {
         "vue": "vue/dist/vue",
         "vue-router": "vue-router/dist/vue-router",
-        "vue-resource": "vue-resource/dist/vue-resource"
+        "vue-resource": "vue-resource/dist/vue-resource",
+        "bootstrap": "bootstrap/dist/js/bootstrap",
+        "lodash": "lodash/lodash.js"
     },
     "dependencies": {
         "bootstrap": "^3.3.7",

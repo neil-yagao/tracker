@@ -12,50 +12,47 @@ import WorkoutCreate from './components/workouts/WorkoutCreate.vue'
 
 import Movements from './components/movements/MovementGeneral.vue'
 import MovementCreate from './components/movements/MovementCreate.vue'
-import MovementList from  './components/movements/MovementList.vue'
+import MovementList from './components/movements/MovementList.vue'
 
 import Login from './Login.vue'
 import WorkingSpace from './WorkingPage.vue'
 
+import 'bootstrap'
+import 'lodash'
+
 Vue.use(VueRouter)
 Vue.use(VueResource)
 const routes = [{
-        path:"/lift",
-        component: WorkingSpace,
-        children: [
-            {
-                    path: 'workouts',
-                    component: WorkoutList
-                }, {
-                    path: 'movements',
-                    component: Movements,
-                    children: [
-                        {
-                            path:'new-movement',
-                            component: MovementCreate
-                        },
-                        {
-                            path:'',
-                            component: MovementList
-                        }
-                    ]
-                }, {
-                    path: 'workout/:id',
-                    component: Session
-                },
+    path: "/lift",
+    component: WorkingSpace,
+    children: [{
+            path: 'workouts',
+            component: WorkoutList
+        }, {
+            path: 'movements',
+            component: Movements,
+            children: [{
+                path: 'new-movement',
+                component: MovementCreate
+            }, {
+                path: '',
+                component: MovementList
+            }]
+        }, {
+            path: 'workout/:id',
+            component: Session
+        },
 
-                {
-                    path: 'workout/template/new',
-                    component: WorkoutCreate
-                },
-        ]
+        {
+            path: 'workout/template/new',
+            component: WorkoutCreate
+        },
+    ]
 
-    },
-    {
-        path:'/',
-        component : Login
-    }
-]
+}, {
+    path: '/',
+    component: Login
+}]
 
 
 const router = new VueRouter({
