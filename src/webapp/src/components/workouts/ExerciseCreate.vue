@@ -4,7 +4,7 @@
             <div class="col-md-2 col-md-offset-2">
                 <div class="input-group">
                     <input type="text" class="form-control" v-model="name" placeholder="训练动作">
-                     <span class="input-group-btn">
+                    <span class="input-group-btn">
                     <button class="btn btn-default" data-toggle="modal" data-target="#movement-select-modal"><i class="fa fa-search"  aria-hidden="true"></i></button
                     </span>
                 </div>
@@ -27,9 +27,8 @@
                     <input type="number" class="form-control" v-model="sets" placeholder="组数">
                 </div>
             </div>
-
             <div class="col-md-2">
-                <div class="checkbox" >
+                <div class="checkbox">
                     <label>
                         <input type="checkbox" v-model="needWarmSet">为动作添加热身组
                     </label>
@@ -39,7 +38,6 @@
                 <button type="button" class="btn btn-default" @click="addMovement()">添加</button>
             </div>
         </div>
-
         <movement-select-modal @movement-modal-selected="selected"></movement-select-modal>
     </div>
 </template>
@@ -56,6 +54,8 @@ export default {
             'needWarmSet': 0
         }
     },
+
+
     props: {
         'movement': {}
     },
@@ -66,14 +66,14 @@ export default {
                 'weight': this.$data.weight,
                 'repeats': this.$data.repeats,
                 'sets': this.$data.sets,
-                'needWarmSet' : this.$data.needWarmSet? 1 : 0
+                'needWarmSet': this.$data.needWarmSet ? 1 : 0
             })
             this.name = '';
             this.repeats = '';
             this.weight = '';
             this.sets = ''
         },
-        selected: function(movement){
+        selected: function(movement) {
             this.$data.name = movement.name
         }
     },

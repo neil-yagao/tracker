@@ -1,31 +1,30 @@
 <template>
-<div class="text-center" style="padding:50px 0">
-    <div class="logo">登陆</div>
-    <!-- Main Form -->
-    <div class="login-form-1">
-        <div id="login-form" class="text-left">
-            <div class="login-form-main-message"></div>
-            <div class="main-login-form">
-                <div class="login-group">
-                    <div class="form-group">
-                        <label for="lg_username" class="sr-only">用户名</label>
-                        <input type="text" class="form-control" v-model="user" placeholder="用户名" @keyup.enter="login">
+    <div class="text-center" style="padding:50px 0">
+        <div class="logo">登陆</div>
+        <!-- Main Form -->
+        <div class="login-form-1">
+            <div id="login-form" class="text-left">
+                <div class="login-form-main-message"></div>
+                <div class="main-login-form">
+                    <div class="login-group">
+                        <div class="form-group">
+                            <label for="lg_username" class="sr-only">用户名</label>
+                            <input type="text" class="form-control" v-model="user" placeholder="用户名" @keyup.enter="login">
+                        </div>
                     </div>
+                    <button class="login-button" @click="login"><i class="fa fa-chevron-right"></i></button>
                 </div>
-                <button class="login-button" @click="login"><i class="fa fa-chevron-right"></i></button>
             </div>
         </div>
+        <!-- end:Main Form -->
     </div>
-    <!-- end:Main Form -->
-</div>
 </template>
-
-
 <script>
 var storage;
 var fail;
 var uid;
 try {
+
     uid = new Date;
     (storage = window.localStorage).setItem(uid, uid);
     fail = storage.getItem(uid) != uid;
@@ -45,15 +44,18 @@ export default {
                 var userIdentity = md5(this.$data.user);
                 console.info("username:" + this.$data.user)
                 window.localStorage.setItem('user', userIdentity);
+
                 this.$http.post('/login', {
                     'username': this.$data.user,
                     'useridentity': userIdentity
                 }).then((response) => {
-                    if(response.body.success){
+                    if (response.body.success) {
                         window.location.href = "#/lift/workouts"
                     }
                 })
-            }else {
+
+
+            } else {
                 console.warn("enable to use this browser to login!")
             }
 
@@ -61,8 +63,6 @@ export default {
     }
 }
 </script>
-
-
 <style scoped>
 a {
     color: #aaaaaa;
