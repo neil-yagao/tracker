@@ -17,42 +17,56 @@ import MovementList from './components/movements/MovementList.vue'
 import Login from './Login.vue'
 import WorkingSpace from './WorkingPage.vue'
 
+/*-------------------------------mobile device content-------------------*/
+
+import MintUI from 'mint-ui'
+
+import MobileWorkingSpace from './MobileWorkingPage.vue'
+
 import 'bootstrap'
 import 'lodash'
+
+Vue.use(MintUI)
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
 const routes = [{
-    path: "/lift",
-    component: WorkingSpace,
-    children: [{
-            path: 'workouts',
-            component: WorkoutList
-        }, {
-            path: 'movements',
-            component: Movements,
-            children: [{
-                path: 'new-movement',
-                component: MovementCreate
+        path: "/lift",
+        component: WorkingSpace,
+        children: [{
+                path: 'workouts',
+                component: WorkoutList
             }, {
-                path: '',
-                component: MovementList
-            }]
-        }, {
-            path: 'workout/:id',
-            component: Session
-        },
+                path: 'movements',
+                component: Movements,
+                children: [{
+                    path: 'new-movement',
+                    component: MovementCreate
+                }, {
+                    path: '',
+                    component: MovementList
+                }]
+            }, {
+                path: 'workout/:id',
+                component: Session
+            },
 
-        {
-            path: 'workout/template/new',
-            component: WorkoutCreate
-        },
-    ]
+            {
+                path: 'workout/template/new',
+                component: WorkoutCreate
+            },
+        ]
 
-}, {
-    path: '/',
-    component: Login
-}]
+    }, {
+        path: '/',
+        component: Login
+    },
+    /* handle all mobile device connecting*/
+    {
+        path: '/mobile',
+        component: MobileWorkingSpace
+    }
+]
 
 
 const router = new VueRouter({
