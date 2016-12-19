@@ -15,8 +15,7 @@
     "browserify": {
         "transform": [
             "babelify",
-            "vueify",
-            "browserify-css"
+            "vueify"
         ]
     },
     "browser": {
