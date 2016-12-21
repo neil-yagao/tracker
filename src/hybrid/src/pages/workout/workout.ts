@@ -2,17 +2,6 @@ import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 
-<<<<<<< HEAD
-@Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
-})
-export class HomePage {
-
-  constructor(public navCtrl: NavController) {
-
-  }
-=======
 import { HttpBase } from '../../app/httpbase';
 import { URLSearchParams } from '@angular/http';
 import { WorkoutDetail } from './workout-detail'
@@ -46,6 +35,4 @@ export class WorkoutPage {
     goToDetail(workout) {
         this.navCtrl.push(WorkoutDetail, { workout: workout })
     }
->>>>>>> 509d4fa0bc794178ff4e28cc50578dd55784edbb
-
 }
