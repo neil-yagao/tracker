@@ -1,5 +1,6 @@
 <ion-header>
   <ion-navbar>
+<<<<<<< HEAD
     <ion-title>Home</ion-title>
   </ion-navbar>
 </ion-header>
@@ -14,4 +15,17 @@
     Take a look at the <code>src/pages/</code> directory to add or change tabs,
     update any existing page or create new pages.
   </p>
+=======
+    <ion-title>现有训练课</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="let workout of workouts" (click)="goToDetail(workout)">
+      <h2>{{workout.name}}</h2>
+      <p>{{workout.description}}</p>
+    </button>
+  </ion-list>
+>>>>>>> 509d4fa0bc794178ff4e28cc50578dd55784edbb
 </ion-content>

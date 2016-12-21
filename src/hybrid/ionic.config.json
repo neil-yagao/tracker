@@ -2,5 +2,11 @@
   "name": "hybrid",
   "app_id": "",
   "v2": true,
-  "typescript": true
+  "typescript": true,
+  "proxies": [
+    {
+      "path": "/workouts",
+      "proxyUrl": "http://localhost:8080/workouts"
+    }
+  ]
 }
