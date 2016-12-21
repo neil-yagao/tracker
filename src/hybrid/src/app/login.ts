@@ -1,22 +1,24 @@
-import { Component, ViewChild } from '@angular/core';
-import { Content ,NavController} from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController} from 'ionic-angular';
 import { TabsPage } from '../pages/tabs/tabs';
+import { HttpBase } from './httpbase';
 
 @Component({
-  templateUrl: 'login.html'
-  })
+	templateUrl: 'login.html'
+})
 
-export class LoginPage{
+export class LoginPage {
 
-	username:string
-	 constructor(public nav:NavController) {
-	 	this.nav = nav;
-  	}
+	username: string
+	constructor(public nav: NavController) {
+		this.nav = nav;
+	}
 
-  login() {
-    // set the scrollLeft to 0px, and scrollTop to 500px
-    // the scroll duration should take 200ms
-    console.debug("login!" + this.username)
-    this.nav.setRoot(TabsPage)
-  }
+	login() {
+		// set the scrollLeft to 0px, and scrollTop to 500px
+		// the scroll duration should take 200ms
+		window.localStorage.setItem('username', this.username)
+		console.debug("login!" + window.localStorage.getItem('username'))
+		this.nav.setRoot(TabsPage)
+	}
 }

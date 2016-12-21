@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>现有训练课</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="let workout of workouts" (click)="goToDetail(workout)">
+      <h2>{{workout.name}}</h2>
+      <p>{{workout.description}}</p>
+    </button>
+  </ion-list>
+</ion-content>

@@ -20,6 +20,7 @@ func (this *MovementController) GetMovements() {
 		rows.Scan(&one.Id, &one.TargetMuscle, &one.SecondaryMuscle, &one.Name, &one.Description, &one.Dividable)
 		movements = append(movements, one)
 	}
+
 	this.ServeJson(movements)
 }
 
