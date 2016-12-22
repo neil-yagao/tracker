@@ -28,5 +28,4 @@ export class WorkoutPage {
     goToDetail(workout) {
         this.navCtrl.push(WorkoutDetail, { workout: workout })
     }
-
 }
