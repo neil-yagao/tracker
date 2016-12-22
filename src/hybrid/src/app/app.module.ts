@@ -3,6 +3,9 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { FormsModule }   from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 
+//third party
+import { DEBUG_LOGGER_PROVIDERS } from "angular2-logger/core"
+
 import { MyApp } from './app.component';
 import { AboutPage } from '../pages/about/about';
 import { MovementPage } from '../pages/movement/movement';
@@ -39,6 +42,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 		LoginPage,
 		WorkoutDetail
 	],
-	providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }]
+	providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler },
+		DEBUG_LOGGER_PROVIDERS]
 })
 export class AppModule { }

@@ -7,6 +7,10 @@
     {
       "path": "/workouts",
       "proxyUrl": "http://localhost:8080/workouts"
+    },
+    {
+      "path": "/session",
+      "proxyUrl": "http://localhost:8080/session"
     }
   ]
 }

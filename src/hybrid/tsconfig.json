@@ -15,12 +15,13 @@
     },
     "include": [
         "src/**/*.ts",
-        "node_modules/**/*.ts"
+        "node_modules/**/*.ts",
+        "node_modules/@types/**/*.d.ts"
     ],
     "exclude": [
         "node_modules"
     ],
-    "compileOnSave": false,
+    "compileOnSave": true,
     "atom": {
         "rewriteTsconfig": false
     }
