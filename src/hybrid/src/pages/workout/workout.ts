@@ -19,13 +19,17 @@ export class WorkoutPage {
     workouts: Array<any>;
 	debounce = false;
 	constructor(public navCtrl: NavController, private httpBase: HttpBase) {
-        let param = new URLSearchParams();
-        param.set('user', String(Md5.hashStr('powerlift')));
-        this.httpBase.get('workouts', param).subscribe(
-			workouts => this.workouts = workouts)
+
 	}
 
     goToDetail(workout) {
         this.navCtrl.push(WorkoutDetail, { workout: workout })
     }
+
+	ionViewWillEnter() {
+		let param = new URLSearchParams();
+		param.set('user', String(Md5.hashStr('powerlift')));
+		this.httpBase.get('workouts', param).subscribe(
+			workouts => this.workouts = workouts)
+	}
 }

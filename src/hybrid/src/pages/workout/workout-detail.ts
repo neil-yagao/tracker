@@ -1,11 +1,12 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
-import { NavController, NavParams, Navbar } from 'ionic-angular';
+import { NavController, NavParams, Navbar, ModalController } from 'ionic-angular';
 
 import * as _ from "lodash";
 import {Md5} from 'ts-md5/dist/md5';
 
 import { HttpBase } from '../../app/httpbase';
+import { RestingModal } from './resting-modal';
 
 @Component({
 	selector: 'workout-detail',
@@ -17,7 +18,8 @@ export class WorkoutDetail implements AfterViewInit {
     @ViewChild(Navbar) navBar: Navbar;
 	private session: any;
 	private exercises: Array<any>;
-    constructor(public params: NavParams, private http: HttpBase) {
+	private debounce: any;
+    constructor(public params: NavParams, private http: HttpBase, public modalCtrl: ModalController) {
 		var workoutId = params.data.workout.id;
 		let param = new URLSearchParams();
 		param.set('user', String(Md5.hashStr('powerlift')));
@@ -62,6 +64,32 @@ export class WorkoutDetail implements AfterViewInit {
 		} else {
 			set.achieved -= 1
 		}
+
+		let self = this
+		if (self.debounce) {
+			self.debounce.cancel()
+		}
+		self.debounce = _.debounce(() => {
+			let resting = this.modalCtrl.create(RestingModal, { timeout: 60 }, { showBackdrop: false, enableBackdropDismiss: false });
+			resting.present();
+		}, 1000)
+		self.debounce()
+	}
+
+	finishSession() {
+		var sessionData = _.reduce(this.exercises, function(arry, value) {
+			return _.concat(arry, _.flatMap(value.sets, (set) => {
+				return {
+					'id': set.id,
+					'acheiveNumber': set.achieved,
+					'acheiveWeight': set.totalWeight + 0
+				}
+			}))
+
+		}, [])
+		console.info(sessionData)
+		this.http.post('session/' + this.params.data.workout.id, JSON.stringify(sessionData))
+			.subscribe(() => { })
 	}
 
 

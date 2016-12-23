@@ -30,13 +30,13 @@ export class HttpBase {
 
 	post(url: string, requestBody: Object): Observable<any> {
 		return this.http.post(this.baseUrl + url, requestBody, this.options)
-			.map(this.extractData)
+			.map(this.extractData.bind(this))
 			.catch(this.handleError);
 	}
 
 	put(url: string, requestBody: Object): Observable<any> {
 		return this.http.put(this.baseUrl + url, requestBody, this.options)
-			.map(this.extractData)
+			.map(this.extractData.bind(this))
 			.catch(this.handleError);
 	}
 

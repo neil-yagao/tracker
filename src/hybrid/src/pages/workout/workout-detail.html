@@ -28,7 +28,7 @@
 
       <ion-label color="primary" fixed *ngIf="exercise.eachSideShow">每边重量</ion-label>
       <ion-input type="number" [(ngModel)]="set.eachSide" *ngIf="exercise.eachSideShow"></ion-input>
-      <ion-badge item-right style="margin-right:25%">KG</ion-badge>
+      <ion-badge item-right style="margin-right:20%">KG</ion-badge>
       <button ion-fab mini item-right [color]="set.achieved == -1?'light':
                             set.achieved == set.repeat?'secondary':
                             set.achieved == 0 ? 'danger':'partial'" (click)="finishOneSet(set)">
@@ -37,3 +37,7 @@
     </ion-item>
 
   </ion-item-group>
+  <button ion-button block (click)="finishSession()">
+    完成本次训练课
+  </button>
+</ion-content>
