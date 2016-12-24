@@ -7,6 +7,18 @@
     {
       "path": "/workouts",
       "proxyUrl": "http://localhost:8080/workouts"
+    },
+    {
+      "path": "/session",
+      "proxyUrl": "http://localhost:8080/session"
+    },
+    {
+      "path":"/movements",
+      "proxyUrl": "http://localhost:8080/movements"
+    },
+    {
+      "path":"/movement",
+      "proxyUrl": "http://localhost:8080/movement"
     }
   ]
 }

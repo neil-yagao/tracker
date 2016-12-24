@@ -3,8 +3,41 @@
     <ion-title>训练课</ion-title>
   </ion-navbar>
 </ion-header>
+<style>
+  .item-content {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    margin-top: -4px;
+    margin-bottom: -4px;
+    height: 70px;
+  }
 
+</style>
 <ion-content>
   <h1>{{params.data.workout.name}}</h1>
-  <p>{{params.data.workout.description}}
+  <p>{{params.data.workout.description}}</p>
+  <ion-item-group *ngFor="let exercise of exercises">
+    <ion-item-divider color="light">{{exercise.name}}</ion-item-divider>
+    <ion-list-header>
+      <ion-label>显示每边重量</ion-label>
+      <ion-toggle [(ngModel)]="exercise.eachSideShow" item-right></ion-toggle>
+    </ion-list-header>
+    <ion-item *ngFor="let set of exercise.sets">
+      <ion-label color="primary" fixed *ngIf="!exercise.eachSideShow">总重量</ion-label>
+      <ion-input type="number" [(ngModel)]="set.totalWeight" *ngIf="!exercise.eachSideShow"></ion-input>
+
+      <ion-label color="primary" fixed *ngIf="exercise.eachSideShow">每边重量</ion-label>
+      <ion-input type="number" [(ngModel)]="set.eachSide" *ngIf="exercise.eachSideShow"></ion-input>
+      <ion-badge item-right style="margin-right:20%">KG</ion-badge>
+      <button ion-fab mini item-right [color]="set.achieved == -1?'light':
+                            set.achieved == set.repeat?'secondary':
+                            set.achieved == 0 ? 'danger':'partial'" (click)="finishOneSet(set)">
+          {{set.achieved == -1?'-':set.achieved}}
+        </button>
+    </ion-item>
+
+  </ion-item-group>
+  <button ion-button block (click)="finishSession()">
+    完成本次训练课
+  </button>
 </ion-content>

@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-
 import { NavController } from 'ionic-angular';
+
+import {Md5} from 'ts-md5/dist/md5';
 
 import { HttpBase } from '../../app/httpbase';
 import { URLSearchParams } from '@angular/http';
-import { WorkoutDetail } from './workout-detail'
+import { WorkoutDetail } from './workout-detail';
+
 
 
 @Component({
@@ -15,24 +17,19 @@ import { WorkoutDetail } from './workout-detail'
 export class WorkoutPage {
 
     workouts: Array<any>;
-
+	debounce = false;
 	constructor(public navCtrl: NavController, private httpBase: HttpBase) {
-        let param = new URLSearchParams();
-        param.set('user', window.localStorage.getItem('username'));
-        this.workouts = [
-            {
-                name: 'UppderBody',
-                description: 'this is a upperbody training session'
-            },
-            {
-                name: 'LowerBody',
-                description: 'this is a lowerbody training session'
-            }
-        ]
-        // this.httpBase.get('workouts', param).subscribe(workouts => this.workouts = workouts)
+
 	}
 
     goToDetail(workout) {
         this.navCtrl.push(WorkoutDetail, { workout: workout })
     }
+
+	ionViewWillEnter() {
+		let param = new URLSearchParams();
+		param.set('user', String(Md5.hashStr('powerlift')));
+		this.httpBase.get('workouts', param).subscribe(
+			workouts => this.workouts = workouts)
+	}
 }
