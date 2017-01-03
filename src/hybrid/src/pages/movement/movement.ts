@@ -4,7 +4,6 @@ import { NavController } from 'ionic-angular';
 
 import { HttpBase } from '../../app/httpbase';
 
-
 @Component({
 	selector: 'page-movement',
 	templateUrl: 'movement.html',
@@ -18,5 +17,9 @@ export class MovementPage {
             this.movements = movements
         })
     }
+
+	getMovements() {
+		return this.movements;
+	}
 
 }

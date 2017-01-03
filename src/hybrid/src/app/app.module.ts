@@ -7,7 +7,7 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { DEBUG_LOGGER_PROVIDERS } from "angular2-logger/core"
 
 import { MyApp } from './app.component';
-import { AboutPage } from '../pages/about/about';
+import { PlanPage } from '../pages/plan/plan';
 import { MovementPage } from '../pages/movement/movement';
 import { WorkoutPage } from '../pages/workout/workout';
 import { WorkoutDetail } from '../pages/workout/workout-detail';
@@ -19,7 +19,7 @@ import { RestingModal } from '../pages/workout/resting-modal';
 @NgModule({
 	declarations: [
 		MyApp,
-		AboutPage,
+		PlanPage,
 		MovementPage,
 		WorkoutPage,
 		TabsPage,
@@ -37,7 +37,7 @@ import { RestingModal } from '../pages/workout/resting-modal';
 	bootstrap: [IonicApp],
 	entryComponents: [
 		MyApp,
-		AboutPage,
+		PlanPage,
 		MovementPage,
 		WorkoutPage,
 		TabsPage,
