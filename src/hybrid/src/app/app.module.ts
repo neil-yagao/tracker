@@ -15,6 +15,8 @@ import { LoginPage} from './login';
 import { HttpBase } from './httpbase';
 import { TabsPage } from '../pages/tabs/tabs';
 import { RestingModal } from '../pages/workout/resting-modal';
+import { PlanBasicPage } from '../pages/plan/plan-basic';
+import { PlanExercisePage } from '../pages/plan/plan-exercise';
 
 @NgModule({
 	declarations: [
@@ -25,7 +27,9 @@ import { RestingModal } from '../pages/workout/resting-modal';
 		TabsPage,
 		LoginPage,
 		WorkoutDetail,
-		RestingModal
+		RestingModal,
+		PlanBasicPage,
+		PlanExercisePage
 	],
 	imports: [
 		FormsModule,
@@ -43,7 +47,9 @@ import { RestingModal } from '../pages/workout/resting-modal';
 		TabsPage,
 		LoginPage,
 		WorkoutDetail,
-		RestingModal
+		RestingModal,
+		PlanBasicPage,
+		PlanExercisePage
 	],
 	providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler },
 		DEBUG_LOGGER_PROVIDERS]

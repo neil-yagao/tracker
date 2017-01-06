@@ -1,13 +1,17 @@
 import { Exercise } from './exercise';
 export class WorkoutTemplate {
-    private _exercises: Array<Exercise> = [];
-    constructor() { }
+    exercises: Array<Exercise> = [];
+    name: string;
+    description: string;
+    startAt: string;
+	weekly: string;
+	addition: string;
+	targetMuscle: string;
 
-    addExercise(active: Exercise) {
-        this._exercises.push(active);
+    constructor() {
+        this.startAt = new Date().toString();
     }
-
-    get exercises(): Array<Exercise> {
-        return this._exercises;
+    addExercise(active: Exercise) {
+        this.exercises.push(active);
     }
 }

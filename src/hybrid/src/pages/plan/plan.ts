@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 
@@ -13,7 +13,7 @@ import { Exercise } from './exercise';
 	providers: [HttpBase]
 })
 export class PlanPage {
-
+	@ViewChild('planSlide') planSlide;
     private movements: Array<any>;
     private workoutTemplate: WorkoutTemplate;
     private activeExercise: Exercise;
@@ -24,6 +24,11 @@ export class PlanPage {
         this.activeExercise = new Exercise();
         this.workoutTemplate = new WorkoutTemplate();
 
+	}
+
+	goNextSlide(template: WorkoutTemplate) {
+		this.workoutTemplate = template;
+		this.planSlide.slideTo(2);
 	}
 
 }

@@ -1,0 +1,34 @@
+<h1>训练内容</h1>
+<ion-list>
+  <ion-item *ngFor=" let exercise of template.exercises">
+    <ion-label>{{exercise.name}}</ion-label>
+    <ion-note item-right>{{exercise.weight}} KG X {{exercise.sets}} X {{exercise.rep}}</ion-note>
+  </ion-item>
+</ion-list>
+<ion-list>
+  <ion-list-header style="text-align: left;
+    font-size: 20px;
+    font-weight: bold;">
+    添加训练内容
+  </ion-list-header>
+  <ion-item>
+    <ion-label>动作名称</ion-label>
+    <ion-select item-content [(ngModel)]="activeExercise.name">
+      <ion-option *ngFor="let movement of movements" (click)="activeExercise.name = movement.name">{{movement.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>重量</ion-label>
+    <ion-input item-content [(ngModel)]="activeExercise.weight"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>重复组数</ion-label>
+    <ion-input item-content [(ngModel)]="activeExercise.sets"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>每组次数</ion-label>
+    <ion-input item-content [(ngModel)]="activeExercise.rep"></ion-input>
+  </ion-item>
+
+  <button ion-button round (click)="addExercise()">添加</button>
+</ion-list>

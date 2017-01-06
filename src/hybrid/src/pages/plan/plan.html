@@ -7,26 +7,13 @@
 </ion-header>
 
 <ion-content>
-  <ion-item-group>
-    <ion-item-divider color="light">已添加动作</ion-item-divider>
-    <ion-item>Angola
-      <ion-item-options side="left">
-        <button ion-button color="primary">
-          <ion-icon name="text"></ion-icon>
-          Text
-        </button>
-      </ion-item-options>
-    </ion-item>
-    <ion-item>Argentina</ion-item>
-  </ion-item-group>
-  <ion-item-group>
-    <ion-item-divider color="light"></ion-item-divider>
-    <ion-item>
-      <ion-label>动作名称</ion-label>
-      <ion-select [(ngModel)]="activeExercise.name" mode="action-sheet-slide-in" item-content>
-        <ion-option *ngFor=" let movement of movements " (click)="activeExercise.name=movement.name ">
-          {{movement.name}}</ion-option>
-      </ion-select>
-    </ion-item>
-  </ion-item-group>
+  <ion-slides #planSlide pager="true">
+
+    <ion-slide>
+      <plan-basic (nextStep)="goNextSlide($event)"></plan-basic>
+    </ion-slide>
+    <ion-slide>
+      <plan-exercise [template]="workoutTemplate"></plan-exercise>
+    </ion-slide>
+  </ion-slides>
 </ion-content>
