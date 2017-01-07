@@ -27,6 +27,7 @@ window.mobilecheck = function() {
     })(navigator.userAgent || navigator.vendor || window.opera);
     return check;
 };
+
 var storage;
 var fail;
 var uid;
@@ -51,7 +52,6 @@ export default {
                 var userIdentity = md5(this.$data.user);
                 console.info("username:" + this.$data.user)
                 window.localStorage.setItem('user', userIdentity);
-
                 this.$http.post('/login', {
                     'username': this.$data.user,
                     'useridentity': userIdentity

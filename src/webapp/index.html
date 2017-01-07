@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>webapp</title>
@@ -11,22 +11,27 @@
     <link rel="stylesheet" type="text/css" href="node_modules/mint-ui/lib/style.css">
     <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="node_modules/js-md5/build/md5.min.js"></script>
-</head>
-<style>
-html,
-body {
-    background: #efefef;
-    padding: 10px;
-    font-family: 'Varela Round';
-}
-</style>
+    <script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="node_modules/lodash/lodash.min.js"></script>
+  </head>
+  <style>
+    html,
+    body {
+      background: #efefef;
+      padding: 10px;
+      font-family: 'Varela Round';
+    }
 
-<body>
+  </style>
+
+  <body>
     <div id="app" style="margin: 1em">
-        <h1><a href="#/">Lifting!</a></h1>
-        <router-view class="container-fluid" style="margin-top: 2em"></router-view>
+      <h1>
+        <a href="#/">Lifting!</a>
+      </h1>
+      <router-view class="container-fluid" style="margin-top: 2em"></router-view>
     </div>
     <script src="dist/build.js"></script>
-</body>
+  </body>
 
 </html>

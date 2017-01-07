@@ -17,10 +17,6 @@ import MovementList from './components/movements/MovementList.vue'
 import Login from './Login.vue'
 import WorkingSpace from './WorkingPage.vue'
 
-/*-------------------------------mobile device content-------------------*/
-import 'bootstrap'
-import 'lodash'
-
 
 Vue.use(VueRouter)
 Vue.use(VueResource)

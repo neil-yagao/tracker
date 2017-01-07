@@ -20,11 +20,11 @@ export class WorkoutPage {
 	debounce = false;
 	constructor(public navCtrl: NavController, private httpBase: HttpBase) {
 
-	}
+	};
 
     goToDetail(workout) {
         this.navCtrl.push(WorkoutDetail, { workout: workout })
-    }
+    };
 
 	ionViewWillEnter() {
 		let param = new URLSearchParams();
