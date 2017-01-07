@@ -7,7 +7,7 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { DEBUG_LOGGER_PROVIDERS } from "angular2-logger/core"
 
 import { MyApp } from './app.component';
-import { AboutPage } from '../pages/about/about';
+import { PlanPage } from '../pages/plan/plan';
 import { MovementPage } from '../pages/movement/movement';
 import { WorkoutPage } from '../pages/workout/workout';
 import { WorkoutDetail } from '../pages/workout/workout-detail';
@@ -15,17 +15,21 @@ import { LoginPage} from './login';
 import { HttpBase } from './httpbase';
 import { TabsPage } from '../pages/tabs/tabs';
 import { RestingModal } from '../pages/workout/resting-modal';
+import { PlanBasicPage } from '../pages/plan/plan-basic';
+import { PlanExercisePage } from '../pages/plan/plan-exercise';
 
 @NgModule({
 	declarations: [
 		MyApp,
-		AboutPage,
+		PlanPage,
 		MovementPage,
 		WorkoutPage,
 		TabsPage,
 		LoginPage,
 		WorkoutDetail,
-		RestingModal
+		RestingModal,
+		PlanBasicPage,
+		PlanExercisePage
 	],
 	imports: [
 		FormsModule,
@@ -37,13 +41,15 @@ import { RestingModal } from '../pages/workout/resting-modal';
 	bootstrap: [IonicApp],
 	entryComponents: [
 		MyApp,
-		AboutPage,
+		PlanPage,
 		MovementPage,
 		WorkoutPage,
 		TabsPage,
 		LoginPage,
 		WorkoutDetail,
-		RestingModal
+		RestingModal,
+		PlanBasicPage,
+		PlanExercisePage
 	],
 	providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler },
 		DEBUG_LOGGER_PROVIDERS]

@@ -27,5 +27,8 @@ export class MovementPage {
 		let movement = this.modalCtrl.create(MovementModal, { title: "从列表而来" }, { showBackdrop: false, enableBackdropDismiss: false });
 		movement.present();
 	}
+	getMovements() {
+		return this.movements;
+	}
 
 }

@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      创建训练计划
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-slides #planSlide pager="true">
+
+    <ion-slide>
+      <plan-basic (nextStep)="goNextSlide($event)"></plan-basic>
+    </ion-slide>
+    <ion-slide>
+      <plan-exercise [template]="workoutTemplate"></plan-exercise>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
