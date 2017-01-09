@@ -13,7 +13,7 @@
       <plan-basic (nextStep)="goNextSlide($event)"></plan-basic>
     </ion-slide>
     <ion-slide>
-      <plan-exercise [template]="workoutTemplate"></plan-exercise>
+      <plan-exercise [template]="workoutTemplate" (toMain)="toMain()"></plan-exercise>
     </ion-slide>
   </ion-slides>
 </ion-content>

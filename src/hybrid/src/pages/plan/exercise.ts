@@ -1,8 +1,9 @@
 export class Exercise {
-    name: string = "";
-    rep: number = 8;
-    weight: number = 0;
-    sets: number = 3;
+    name: String = "";
+    rep: Number = 8;
+    weight: Number = 0;
+    sets: Number = 3;
+
 
     constructor() {
 

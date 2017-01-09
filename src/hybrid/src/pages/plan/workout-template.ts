@@ -1,6 +1,6 @@
 import { Exercise } from './exercise';
 export class WorkoutTemplate {
-    exercises: Array<Exercise> = [];
+    movements: Array<Exercise> = [];
     name: string;
     description: string;
     startAt: string;
@@ -12,6 +12,6 @@ export class WorkoutTemplate {
         this.startAt = new Date().toString();
     }
     addExercise(active: Exercise) {
-        this.exercises.push(active);
+        this.movements.push(active);
     }
 }

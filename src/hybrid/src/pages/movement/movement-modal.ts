@@ -2,8 +2,8 @@ import { Component} from '@angular/core';
 import { NavParams, ViewController } from 'ionic-angular';
 
 @Component({
-	selector: 'resting-modal',
-	templateUrl: 'resting-modal.html'
+	selector: 'movement-modal',
+	templateUrl: 'movement-modal.html'
 })
 export class MovementModal {
 

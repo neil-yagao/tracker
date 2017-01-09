@@ -21,15 +21,15 @@
   <ion-item>
     <ion-label>每周重复</ion-label>
     <ion-select [(ngModel)]="template.weekly">
-      <ion-option value="0">周一</ion-option>
-      <ion-option value="1">周二</ion-option>
-      <ion-option value="2">周三</ion-option>
-      <ion-option value="3">周四</ion-option>
-      <ion-option value="4">周五</ion-option>
-      <ion-option value="5">周六</ion-option>
-      <ion-option value="6">周日</ion-option>
+      <ion-option value="Monday">周一</ion-option>
+      <ion-option value="Tuesday">周二</ion-option>
+      <ion-option value="Wednesday">周三</ion-option>
+      <ion-option value="Thursday">周四</ion-option>
+      <ion-option value="Friday">周五</ion-option>
+      <ion-option value="Saturday">周六</ion-option>
+      <ion-option value="Sunday">周日</ion-option>
     </ion-select>
   </ion-item>
 </ion-list>
 
-<button ion-button round (click)="generateSession()">开始制定训练课内容</button>
+<button ion-button round outline (click)="generateSession()">开始制定训练课内容</button>

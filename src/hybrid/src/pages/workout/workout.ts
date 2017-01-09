@@ -32,4 +32,13 @@ export class WorkoutPage {
 		this.httpBase.get('workouts', param).subscribe(
 			workouts => this.workouts = workouts)
 	}
+
+	getNoteColor(workout):any{
+		if(workout.perform_date < new Date().toISOString()){
+			return {'color': 'red'}
+		}
+		else {
+			return {}
+		}
+	}
 }
