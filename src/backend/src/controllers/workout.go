@@ -13,6 +13,7 @@ type WorkoutController struct {
 
 // @router /workouts [get]
 func (this *WorkoutController) GetWorkouts() {
+	defer this.RecoverFromError()
 	beego.Debug("query for workouts")
 	user := this.GetUserIdentity()
 	workouts := services.WorkoutCreator.FindUserWorkouts(user)
@@ -21,10 +22,11 @@ func (this *WorkoutController) GetWorkouts() {
 
 // @router /workouts [put]
 func (this *WorkoutController) InsertWorkout() {
+	defer this.RecoverFromError()
 	template := new(models.WorkoutTemplate)
 	this.ParseRequestBody(template)
 	user := this.GetUserIdentity()
-	go services.WorkoutCreator.CreateWorkoutsFromeTemplate(*template, user)
+	services.WorkoutCreator.CreateWorkoutsFromeTemplate(*template, user)
 	this.ServeJson()
 
 }

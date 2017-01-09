@@ -12,6 +12,7 @@ type MovementController struct {
 
 // @router /movements [get]
 func (this *MovementController) GetMovements() {
+	defer this.RecoverFromError()
 	rows := models.BasicCRUD.Query("select id, target_muscle, secondary_muscle, name, description, dividable from movement")
 	defer rows.Close()
 	movements := make([]*models.Movement, 0)
@@ -26,6 +27,7 @@ func (this *MovementController) GetMovements() {
 
 // @router /movements [put]
 func (this *MovementController) InsertMovement() {
+	defer this.RecoverFromError()
 	newMovement := new(models.Movement)
 	this.ParseRequestBody(newMovement)
 	models.BasicCRUD.Save("movement", *newMovement)
@@ -34,6 +36,7 @@ func (this *MovementController) InsertMovement() {
 
 // @router /movement/:id [post]
 func (this *MovementController) UpdateMovement() {
+	defer this.RecoverFromError()
 	modifyMovement := new(models.Movement)
 	this.ParseRequestBody(modifyMovement)
 	models.BasicCRUD.BuildAndUpdateOne("movement", *modifyMovement)
