@@ -16,11 +16,11 @@
                         </ul>
                     </p>
                     <p>
-                        <button class="btn btn-warning" role="button" @click="edited=true">修改</button>
+                        <button class="btn btn-warning" role="button" @click="edited = true">修改</button>
                     </p>
                 </div>
             </div>
-            <div class="thumbnail" v-show='edited'>
+            <div class="thumbnail" v-show="edited">
                 <div class="caption">
                     <p>
                         <div class="row">
@@ -82,7 +82,7 @@ export default {
     data() {
         return {
             mv: this.movement,
-            edited: this.editing
+            edited: this.editing?this.editing: false
         }
     },
     props: ['movement', 'selected', 'editing'],
@@ -91,7 +91,7 @@ export default {
             this.$emit('selectingMovement', id)
         },
         updateOrInsert: function() {
-            this.$data.edited = false
+            this.$data.edited = false;
             var movementId = this.$data.mv.id;
             var requestBody = JSON.stringify(this.$data.mv);
             if (movementId && movementId != -1) {
@@ -108,7 +108,7 @@ export default {
     },
     beforeUpdate: function() {
         this.$data.mv = this.movement;
-        this.$data.edited = this.editing
+        //this.$data.edited = this.editing
     },
     computed: {
         eachMuscleGroup: function() {

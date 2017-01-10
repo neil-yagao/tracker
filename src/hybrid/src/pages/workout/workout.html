@@ -9,6 +9,7 @@
     <button ion-item *ngFor="let workout of workouts" (click)="goToDetail(workout)">
       <h2>{{workout.name}}</h2>
       <p>{{workout.description}}</p>
+      <ion-note item-right [ngStyle]="getNoteColor(workout)">{{workout.perform_date}}</ion-note>
     </button>
   </ion-list>
 </ion-content>

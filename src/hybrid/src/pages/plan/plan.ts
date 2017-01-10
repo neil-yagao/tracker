@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import { NavController, Tabs } from 'ionic-angular';
 
 import { MovementPage } from '../movement/movement';
 import { HttpBase } from '../../app/httpbase';
@@ -28,7 +28,14 @@ export class PlanPage {
 
 	goNextSlide(template: WorkoutTemplate) {
 		this.workoutTemplate = template;
-		this.planSlide.slideTo(2);
+		this.planSlide.slideTo(1);
+	}
+
+	toMain(){
+		this.planSlide.slideTo(0);
+		this.workoutTemplate = new WorkoutTemplate();
+		var t: Tabs = this.navCtrl.parent;
+	   	t.select(0);
 	}
 
 }

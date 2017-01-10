@@ -20,16 +20,25 @@ export class WorkoutPage {
 	debounce = false;
 	constructor(public navCtrl: NavController, private httpBase: HttpBase) {
 
-	}
+	};
 
     goToDetail(workout) {
         this.navCtrl.push(WorkoutDetail, { workout: workout })
-    }
+    };
 
 	ionViewWillEnter() {
 		let param = new URLSearchParams();
 		param.set('user', String(Md5.hashStr('powerlift')));
 		this.httpBase.get('workouts', param).subscribe(
 			workouts => this.workouts = workouts)
+	}
+
+	getNoteColor(workout):any{
+		if(workout.perform_date < new Date().toISOString()){
+			return {'color': 'red'}
+		}
+		else {
+			return {}
+		}
 	}
 }

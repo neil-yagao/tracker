@@ -9,7 +9,7 @@ import 'rxjs/Rx';
 @Injectable()
 export class HttpBase {
 	private baseUrl = "/";
-	private headers = new Headers({ 'Content-Type': 'application/json' });
+	private headers = new Headers({ 'Content-Type': 'application/json', 'charset': 'UTF-8'  });
 	private options = new RequestOptions({ headers: this.headers });
 	constructor(private http: Http, private _logger: Logger) {
 	}
@@ -28,14 +28,22 @@ export class HttpBase {
 		}
 	}
 
-	post(url: string, requestBody: Object): Observable<any> {
-		return this.http.post(this.baseUrl + url, requestBody, this.options)
+	post(url: string, requestBody: Object, param?: URLSearchParams): Observable<any> {
+		if(param){
+			this.options.search = param;
+		}
+		this._logger.debug("post to url " + url + " with request " + JSON.stringify(requestBody));
+		return this.http.post(this.baseUrl + url, JSON.stringify(requestBody), this.options)
 			.map(this.extractData.bind(this))
 			.catch(this.handleError);
 	}
 
-	put(url: string, requestBody: Object): Observable<any> {
-		return this.http.put(this.baseUrl + url, requestBody, this.options)
+	put(url: string, requestBody: Object,param?: URLSearchParams): Observable<any> {
+		if(param){
+			this.options.search = param;
+		}
+		this._logger.debug("post to url " + url + " with request " + JSON.stringify(requestBody));
+		return this.http.put(this.baseUrl + url, JSON.stringify(requestBody), this.options)
 			.map(this.extractData.bind(this))
 			.catch(this.handleError);
 	}
@@ -43,7 +51,7 @@ export class HttpBase {
 	private extractData(res: Response) {
 		let body = res.json();
 		this._logger.debug("response:", body)
-		return body.data || {};
+		return body.data || body || {};
 	}
 
 	private handleError(error: Response | any): Observable<any> {
