@@ -9,10 +9,10 @@ import { DEBUG_LOGGER_PROVIDERS } from "angular2-logger/core"
 import { MyApp } from './app.component';
 import { PlanPage } from '../pages/plan/plan';
 import { MovementPage } from '../pages/movement/movement';
+import { MovementModal } from '../pages/movement/movement-modal';
 import { WorkoutPage } from '../pages/workout/workout';
 import { WorkoutDetail } from '../pages/workout/workout-detail';
 import { LoginPage} from './login';
-import { HttpBase } from './httpbase';
 import { TabsPage } from '../pages/tabs/tabs';
 import { RestingModal } from '../pages/workout/resting-modal';
 import { PlanBasicPage } from '../pages/plan/plan-basic';
@@ -29,7 +29,8 @@ import { PlanExercisePage } from '../pages/plan/plan-exercise';
 		WorkoutDetail,
 		RestingModal,
 		PlanBasicPage,
-		PlanExercisePage
+		PlanExercisePage,
+		MovementModal
 	],
 	imports: [
 		FormsModule,
@@ -49,7 +50,8 @@ import { PlanExercisePage } from '../pages/plan/plan-exercise';
 		WorkoutDetail,
 		RestingModal,
 		PlanBasicPage,
-		PlanExercisePage
+		PlanExercisePage,
+		MovementModal
 	],
 	providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler },
 		DEBUG_LOGGER_PROVIDERS]

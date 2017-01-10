@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController} from 'ionic-angular';
 import { TabsPage } from '../pages/tabs/tabs';
-import { HttpBase } from './httpbase';
 
 
 @Component({

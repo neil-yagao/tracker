@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 
 import { NavController, Tabs } from 'ionic-angular';
 
-import { MovementPage } from '../movement/movement';
 import { HttpBase } from '../../app/httpbase';
 import { WorkoutTemplate } from './workout-template';
 import { Exercise } from './exercise';
@@ -31,11 +30,11 @@ export class PlanPage {
 		this.planSlide.slideTo(1);
 	}
 
-	toMain(){
+	toMain() {
 		this.planSlide.slideTo(0);
 		this.workoutTemplate = new WorkoutTemplate();
 		var t: Tabs = this.navCtrl.parent;
-	   	t.select(0);
+		t.select(0);
 	}
 
 }

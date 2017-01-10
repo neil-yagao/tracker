@@ -1,6 +1,6 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
-import { NavController, NavParams, Navbar, ModalController } from 'ionic-angular';
+import { NavParams, Navbar, ModalController } from 'ionic-angular';
 
 import * as _ from "lodash";
 import {Md5} from 'ts-md5/dist/md5';
@@ -16,7 +16,6 @@ import { RestingModal } from './resting-modal';
 export class WorkoutDetail implements AfterViewInit {
 
     @ViewChild(Navbar) navBar: Navbar;
-	private session: any;
 	private exercises: Array<any>;
 	private debounce: any;
     constructor(public params: NavParams, private http: HttpBase, public modalCtrl: ModalController) {

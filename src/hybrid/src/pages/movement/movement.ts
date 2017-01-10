@@ -23,12 +23,16 @@ export class MovementPage {
         })
     }
 
-	showModal(mv:any) {
-		let movement = this.modalCtrl.create(MovementModal, { title: "从列表而来" }, { showBackdrop: false, enableBackdropDismiss: false });
+	showModal(mv: any, title?: string) {
+		let movement = this.modalCtrl.create(MovementModal, { movement: mv, 'title': (title ? "" : title) }, { showBackdrop: false, enableBackdropDismiss: false });
 		movement.present();
 	}
 	getMovements() {
 		return this.movements;
+	}
+
+	newMovement() {
+		this.showModal({}, "添加动作")
 	}
 
 }
