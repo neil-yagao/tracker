@@ -8,7 +8,10 @@
 
 <ion-content>
   <ion-list>
-    <ion-list-header>已有动作</ion-list-header>
+    <ion-list-header>
+      <ion-searchbar [(ngModel)]="criteria" (ionInput)="filter($event)">
+      </ion-searchbar>
+    </ion-list-header>
     <ion-item *ngFor="let movement of movements">
       <ion-icon name="expand" item-right (click)="selected = movement.id" *ngIf="selected != movement.id"></ion-icon>
       <ion-label item-content *ngIf="!movement.detailShow">{{movement.name}}</ion-label>

@@ -40,6 +40,38 @@ export class MovementModal {
 	}
 
 	saveOrUpdateMovement() {
+		if (this.movement.id) {
+			this.updateMovement();
+		} else {
+			this.createMovement();
+		}
+	}
+
+	createMovement() {
+		let confirm = this.alertCtrl.create({
+			title: '创建动作',
+			message: '是否保存动作',
+			buttons: [{
+				text: '确定',
+				handler: () => {
+					this.http.put('movements', this.movement)
+						.subscribe((respons) => {
+							console.info(respons);
+							this.viewCtrl.dismiss(true);
+						})
+				}
+			}, {
+					text: '取消',
+					handler: () => {
+
+					}
+				}]
+		})
+		confirm.present()
+	}
+
+	updateMovement() {
+
 		let confirm = this.alertCtrl.create({
 			title: '修改动作',
 			message: '是否更改动作？',
@@ -70,7 +102,6 @@ export class MovementModal {
 		})
 
 		confirm.present()
-
 	}
 
 	dividableChange(newValue) {

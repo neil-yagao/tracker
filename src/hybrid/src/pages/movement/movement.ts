@@ -5,7 +5,7 @@ import { NavController, ModalController } from 'ionic-angular';
 import { HttpBase } from '../../app/httpbase';
 
 import { MovementModal } from './movement-modal';
-
+import * as _ from "lodash";
 
 @Component({
 	selector: 'page-movement',
@@ -16,15 +16,35 @@ export class MovementPage {
 
     private movements: Array<any>;
 	private selected: string;
+	private criteria: string = "";
+	private allMovements: Array<any>;
 
     constructor(public navCtrl: NavController, public http: HttpBase, public modalCtrl: ModalController) {
-        http.get('movements').subscribe((movements) => {
-            this.movements = movements
-        })
+        this.refreshMovementFromBackend()
     }
 
+	refreshMovementFromBackend() {
+		this.http.get('movements').subscribe((movements) => {
+            this.movements = movements;
+			this.allMovements = movements;
+        })
+	}
+
+	filter(criteria) {
+		this.movements = this.allMovements;
+		this.movements = _.filter(this.movements, function(movement) {
+
+			return movement.name.indexOf(this.criteria) >= 0
+		}.bind(this))
+	}
+
 	showModal(mv: any, title?: string) {
-		let movement = this.modalCtrl.create(MovementModal, { movement: mv, 'title': (title ? "" : title) }, { showBackdrop: false, enableBackdropDismiss: false });
+		let movement = this.modalCtrl.create(MovementModal, { movement: mv, 'title': (title ? title : "") }, { showBackdrop: false, enableBackdropDismiss: false });
+		movement.onDidDismiss(needRefresh => {
+			if (needRefresh) {
+				this.refreshMovementFromBackend();
+			}
+		})
 		movement.present();
 	}
 	getMovements() {
