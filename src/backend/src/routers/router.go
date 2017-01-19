@@ -15,6 +15,7 @@ func init() {
 	beego.Include(&controllers.UserControllers{})
 
 	beego.SetStaticPath("/", "../../webapp")
+	beego.SetStaticPath("/mobile", "../../hybrid/www")
 	beego.SetStaticPath("/dist", "../../webapp/dist")
 	beego.SetStaticPath("/node_modules", "../../webapp/node_modules")
 }
