@@ -1,4 +1,4 @@
-import { Component, Input,EventEmitter, Output} from '@angular/core';
+import { Component, Input, EventEmitter, Output} from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { WorkoutTemplate } from './workout-template';
@@ -41,19 +41,19 @@ export class PlanExercisePage {
         }
     }
 
-	deleteExercise(exercise:Exercise){
-		_.remove(this.template.movements,function(e){
+	deleteExercise(exercise: Exercise) {
+		_.remove(this.template.movements, function(e) {
 			return e.name == exercise.name
 		});
 
 	}
 
-	createSession(){
+	createSession() {
 		let param = new URLSearchParams();
-		param.set('user', String(Md5.hashStr('powerlift')));
+		param.set('user', window.localStorage.getItem('username'));
 		this.template.startAt = this.template.startAt.slice(0, 10);
-		this.http.put('workouts',this.template,param).subscribe((res) => {
-			if(res.success){
+		this.http.put('workouts', this.template, param).subscribe((res) => {
+			if (res.success) {
 				this.toMain.emit(true);
 			}
 		});

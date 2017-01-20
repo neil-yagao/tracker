@@ -28,14 +28,14 @@ export class WorkoutPage {
 
 	ionViewWillEnter() {
 		let param = new URLSearchParams();
-		param.set('user', String(Md5.hashStr('powerlift')));
+		param.set('user', window.localStorage.getItem('username'));
 		this.httpBase.get('workouts', param).subscribe(
 			workouts => this.workouts = workouts)
 	}
 
-	getNoteColor(workout):any{
-		if(workout.perform_date < new Date().toISOString()){
-			return {'color': 'red'}
+	getNoteColor(workout): any {
+		if (workout.perform_date < new Date().toISOString()) {
+			return { 'color': 'red' }
 		}
 		else {
 			return {}
