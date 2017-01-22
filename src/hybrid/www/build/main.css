@@ -24411,6 +24411,10 @@ page-plan .slide-zoom {
   height: 100%;
 }
 
+page-plan ion-slides {
+  height: auto;
+}
+
 page-workout ion-note {
   font-size: small;
 }
