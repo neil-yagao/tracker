@@ -7,7 +7,7 @@ type userService struct {
 
 var UserService userService
 
-func (this *userService) HandleUserLogin(user models.LoginInfo) {
+func (this *userService) HandleUserLogin(user models.UserInfo) {
 	//currently just insert user info if not exsited
 	//do nothing if user exsited
 	if !userExisted(user.Useridentity) {
@@ -27,15 +27,6 @@ func userExisted(userIdentity string) bool {
 		return result > 0
 	}
 	return false
-}
-
-type UserWorkout struct {
-	User    int64
-	Workout int64
-}
-
-func (this *userService) AssignWorkoutToUser(user int64, workout int64) {
-	models.BasicCRUD.Save("user_workout", UserWorkout{user, workout})
 }
 
 func (this *userService) GetUserIdFromIdentity(user string) int64 {

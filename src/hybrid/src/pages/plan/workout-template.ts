@@ -7,6 +7,7 @@ export class WorkoutTemplate {
 	weekly: string;
 	addition: string;
 	targetMuscle: string;
+    template:string;
 
     constructor() {
         this.startAt = new Date().toString();

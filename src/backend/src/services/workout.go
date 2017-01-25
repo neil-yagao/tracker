@@ -1,10 +1,12 @@
 package services
 
 import (
+	"database/sql"
 	"fmt"
 	"math"
 	"models"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/astaxie/beego"
@@ -18,28 +20,29 @@ var WorkoutCreator WorkoutSerivces
 var week, _ = time.ParseDuration("168h")
 var day, _ = time.ParseDuration("24h")
 
+const MINIMAL_WEIGHT float64 = 2.5
+const DEFAULT_WORKOUT_REPEAT_TIME = 4
+
 /**
 * now we only generate workout for 4 times
  */
 
-func (this *WorkoutSerivces) CreateWorkoutsFromeTemplate(template models.WorkoutTemplate, userIdentity string) {
-	var extraWeight float32 = 0
-	addition, _ := strconv.ParseFloat(template.Addition, 32)
+func (this *WorkoutSerivces) CreateWorkoutsFromTemplate(template models.WorkoutTemplate, userIdentity string) {
+
 	workouts := createAndSaveWorkouts(template)
-	user := UserService.GetUserIdFromIdentity(userIdentity)
-	for _, workout := range workouts {
-		UserService.AssignWorkoutToUser(user, workout.Id)
-		generateWorkingSets(workout, template, extraWeight)
-		extraWeight += float32(addition)
+	if strings.TrimSpace(template.Template) == "" {
+		assignWorkoutsToUser(userIdentity, workouts)
+	} else {
+		assignWorkoutsToTemplate(template.Template, workouts)
 	}
 }
 
-const WORKOUT_QUERY string = "select w.id, w.name, w.target, w.perform_date, w.description from workout w, user_workout uw, user u " +
-	"where is_finalized = 0 and uw.user = u.id and uw.workout = w.id and u.useridentity = :useridentity order by perform_date ASC"
+const QUERY_UESER_WORKOUT_QUERY string = "select w.id, w.name, w.target, w.perform_date, w.description from workout w, user_workout uw, user u " +
+	"where w.is_finalized = 0 and uw.user = u.id and uw.workout = w.id and u.useridentity = :useridentity order by perform_date ASC"
+const QUERY_TEMPLATE_WORKOUT_SQL string = "select w.id, w.name, w.target, w.perform_date, w.description from workout w, template_workout tw, template t " +
+	"where w.is_finalized = 0 and tw.template = t.id and tw.workout = w.id and t.name = :template order by perform_date ASC"
 
-func (this *WorkoutSerivces) FindUserWorkouts(user string) []*models.Workout {
-	rows := models.BasicCRUD.BuildAndQuery(WORKOUT_QUERY, map[string]interface{}{"useridentity": user})
-	defer rows.Close()
+func scanWorkoutsResult(rows *sql.Rows) []*models.Workout {
 	workouts := make([]*models.Workout, 0)
 	for rows.Next() {
 		one := new(models.Workout)
@@ -49,7 +52,7 @@ func (this *WorkoutSerivces) FindUserWorkouts(user string) []*models.Workout {
 	return workouts
 }
 
-func generateWorkingSets(workout models.Workout, template models.WorkoutTemplate, extraWeight float32) {
+func generateWorkingSets(workout models.Workout, template models.WorkoutTemplate, extraWeight float64) {
 	var containMovements []models.MovementTemplate = template.Movements
 	for _, mv := range containMovements {
 		movement := new(models.Movement)
@@ -58,14 +61,13 @@ func generateWorkingSets(workout models.Workout, template models.WorkoutTemplate
 		movement.SecondaryMuscle = ""
 		movement.Name = mv.Name
 		movementId := getMovementId(*movement)
+		targetWeight := mv.Weight + float64(extraWeight)
 		if mv.NeedWarmSet > 0 {
-			generateWarmingSet(movementId, workout.Id, mv.Repeats,
-				mv.Weight+float64(extraWeight))
+			generateWarmingSet(movementId, workout.Id, mv.Repeats, targetWeight)
 		}
 		//generate working set for movement
 		for sequence := 1; sequence <= mv.Sets; sequence++ {
-			assignWorkingSet(movementId, workout.Id, mv.Repeats,
-				mv.Weight+float64(extraWeight), sequence)
+			assignWorkingSet(movementId, workout.Id, mv.Repeats, targetWeight, sequence)
 		}
 	}
 }
@@ -108,8 +110,8 @@ func generateWarmingSet(movementId int64, workout int64, targetNumber int, targe
 // return a weigth that round down to a integer times of 2.5
 
 func transferToUsableWeight(original float64) float64 {
-	integer := math.Floor(original / float64(2.5))
-	return integer * 2.5
+	integer := math.Floor(original / MINIMAL_WEIGHT)
+	return integer * MINIMAL_WEIGHT
 }
 
 func assignWorkingSet(movementId int64, workout int64, targetNumber int, targetWeight float64, sequence int) {
@@ -148,14 +150,16 @@ func getMovementId(movement models.Movement) int64 {
 	return id
 }
 
-func createAndSaveWorkouts(template models.WorkoutTemplate) []models.Workout {
+func createAndSaveWorkouts(template models.WorkoutTemplate) []*models.Workout {
 	var timePoint time.Time
 	timePoint, _ = time.Parse("2006-01-02", template.StartAt)
-	workouts := make([]models.Workout, 0)
+	workouts := make([]*models.Workout, 0)
 	timePoint = findNextWeekday(template.Weekly, timePoint)
 	//TODO remove hard code 4 in the future
 	//TODO let user input repeat times
-	for i := 0; i < 4; i++ {
+	addition, _ := strconv.ParseFloat(template.Addition, 32)
+	var i float64 = 0.0
+	for ; i < DEFAULT_WORKOUT_REPEAT_TIME; i++ {
 		logs.Info("current time Point:%v", timePoint)
 		workout := new(models.Workout)
 		workout.Name = template.Name
@@ -165,7 +169,8 @@ func createAndSaveWorkouts(template models.WorkoutTemplate) []models.Workout {
 		// add once perweek
 		timePoint = timePoint.Add(week)
 		workout.Id = models.BasicCRUD.Save("workout", *workout)
-		workouts = append(workouts, *workout)
+		generateWorkingSets(*workout, template, i*addition)
+		workouts = append(workouts, workout)
 	}
 	return workouts
 }

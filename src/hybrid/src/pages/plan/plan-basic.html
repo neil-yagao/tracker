@@ -1,35 +1,48 @@
 <h1>基本信息</h1>
 <ion-list>
-  <ion-item>
-    <ion-label floating>训练课名称</ion-label>
-    <ion-input [(ngModel)]="template.name"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label floating>主要肌肉群</ion-label>
-    <ion-input [(ngModel)]="template.targetMuscle"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label floating>训练课简介</ion-label>
-    <ion-textarea rows="6" [(ngModel)]="template.description"></ion-textarea>
-  </ion-item>
-  <ion-item>
-    <ion-label>从</ion-label>
-    <ion-datetime #dateTime item-content displayFormat="MMM DD,YYYY" [(ngModel)]="template.startAt"></ion-datetime>
-    <span item-right>开始训练</span>
-  </ion-item>
-
-  <ion-item>
-    <ion-label>每周重复</ion-label>
-    <ion-select [(ngModel)]="template.weekly">
-      <ion-option value="Monday">周一</ion-option>
-      <ion-option value="Tuesday">周二</ion-option>
-      <ion-option value="Wednesday">周三</ion-option>
-      <ion-option value="Thursday">周四</ion-option>
-      <ion-option value="Friday">周五</ion-option>
-      <ion-option value="Saturday">周六</ion-option>
-      <ion-option value="Sunday">周日</ion-option>
-    </ion-select>
-  </ion-item>
+    <ion-item>
+        <ion-label floating>训练课名称</ion-label>
+        <ion-input [(ngModel)]="template.name"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label floating>训练计划</ion-label>
+        <ion-input [(ngModel)]="template.template"></ion-input>
+        <ion-icon name="search" item-right style="margin-bottom: -30px" (click)="selectFromExistingTemplate()"></ion-icon>
+    </ion-item>
+    <ion-item>
+        <ion-label floating>主要肌肉群</ion-label>
+        <ion-select item-right type="text" [(ngModel)]="muscleGroup" (ngModelChange)="combinedMuscle($event)" multiple="true">
+            <ion-option value="肩">肩</ion-option>
+            <ion-option value="胸">胸</ion-option>
+            <ion-option value="背">背</ion-option>
+            <ion-option value="三头">三头</ion-option>
+            <ion-option value="二头">二头</ion-option>
+            <ion-option value="小臂">小臂</ion-option>
+            <ion-option value="腹">腹</ion-option>
+            <ion-option value="大腿">大腿</ion-option>
+            <ion-option value="小腿">小腿</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label floating>训练课简介</ion-label>
+        <ion-textarea rows="6" [(ngModel)]="template.description"></ion-textarea>
+    </ion-item>
+    <ion-item>
+        <ion-label>从</ion-label>
+        <ion-datetime #dateTime item-content displayFormat="MMM DD,YYYY" [(ngModel)]="template.startAt"></ion-datetime>
+        <span item-right>开始训练</span>
+    </ion-item>
+    <ion-item>
+        <ion-label>每周重复</ion-label>
+        <ion-select [(ngModel)]="template.weekly">
+            <ion-option value="Monday">周一</ion-option>
+            <ion-option value="Tuesday">周二</ion-option>
+            <ion-option value="Wednesday">周三</ion-option>
+            <ion-option value="Thursday">周四</ion-option>
+            <ion-option value="Friday">周五</ion-option>
+            <ion-option value="Saturday">周六</ion-option>
+            <ion-option value="Sunday">周日</ion-option>
+        </ion-select>
+    </ion-item>
 </ion-list>
-
 <button ion-button round outline (click)="generateSession()">开始制定训练课内容</button>

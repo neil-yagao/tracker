@@ -16,6 +16,7 @@ type WorkoutTemplate struct {
 	Addition     string             `json:"addition"`
 	TargetMuscle string             `json:"targetMuscle"`
 	Description  string             `json:"description"`
+	Template     string             `json:"template"`
 }
 
 type Movement struct {
@@ -55,4 +56,10 @@ type DividableWorkingSet struct {
 type SessionUpdateInfo struct {
 	Movement int64   `json:"movement"`
 	WorkSet  []int64 `json:"workset"`
+}
+
+type Template struct {
+	Id          int64  `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
 }

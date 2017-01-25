@@ -1,24 +1,28 @@
 {
-  "name": "hybrid",
-  "app_id": "",
-  "v2": true,
-  "typescript": true,
-  "proxies": [
-    {
-      "path": "/workouts",
-      "proxyUrl": "http://localhost:8080/workouts"
-    },
-    {
-      "path": "/session",
-      "proxyUrl": "http://localhost:8080/session"
-    },
-    {
-      "path":"/movements",
-      "proxyUrl": "http://localhost:8080/movements"
-    },
-    {
-      "path":"/movement",
-      "proxyUrl": "http://localhost:8080/movement"
-    }
-  ]
+    "name": "hybrid",
+    "app_id": "",
+    "v2": true,
+    "typescript": true,
+    "proxies": [{
+        "path": "/workouts",
+        "proxyUrl": "http://localhost:8080/workouts"
+    }, {
+        "path": "/session",
+        "proxyUrl": "http://localhost:8080/session"
+    }, {
+        "path": "/movements",
+        "proxyUrl": "http://localhost:8080/movements"
+    }, {
+        "path": "/movement",
+        "proxyUrl": "http://localhost:8080/movement"
+    }, {
+        "path": "/login",
+        "proxyUrl": "http://localhost:8080/login"
+    }, {
+        "path": "/template",
+        "proxyUrl": "http://localhost:8080/template"
+    }, {
+        "path": "/templates",
+        "proxyUrl": "http://localhost:8080/templates"
+    }]
 }

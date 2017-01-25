@@ -27,6 +27,13 @@ func init() {
 			AllowHTTPMethods: []string{"post"},
 			Params: nil})
 
+	beego.GlobalControllerRouter["controllers:TemplateController"] = append(beego.GlobalControllerRouter["controllers:TemplateController"],
+		beego.ControllerComments{
+			Method: "GetTemplates",
+			Router: `/templates`,
+			AllowHTTPMethods: []string{"get"},
+			Params: nil})
+
 	beego.GlobalControllerRouter["controllers:UserControllers"] = append(beego.GlobalControllerRouter["controllers:UserControllers"],
 		beego.ControllerComments{
 			Method: "UserLogin",

@@ -1,24 +1,47 @@
-import { Component } from '@angular/core';
-import { NavController} from 'ionic-angular';
+import { Component} from '@angular/core';
+import { URLSearchParams } from '@angular/http';
+import { NavController, AlertController } from 'ionic-angular';
 import { TabsPage } from '../pages/tabs/tabs';
 import {Md5} from 'ts-md5/dist/md5';
+import { HttpBase } from './httpbase';
 
 @Component({
-	templateUrl: 'login.html'
+	templateUrl: 'login.html',
+	providers: [HttpBase]
 })
 
 export class LoginPage {
 
-	username: string
-	constructor(public nav: NavController) {
+	username: string;
+	template: string; constructor(public nav: NavController, public http: HttpBase,
+								public alert: AlertController) {
 		this.nav = nav;
 	}
 
 	login() {
-		// set the scrollLeft to 0px, and scrollTop to 500px
-		// the scroll duration should take 200ms
-		window.localStorage.setItem('username', String(Md5.hashStr(this.username)));
-		console.debug("login!" + window.localStorage.getItem('username'))
-		this.nav.setRoot(TabsPage)
+
+		let usr: string = String(Md5.hashStr(this.username));
+		window.localStorage.setItem('username', usr);
+		window.localStorage.setItem('template', this.template);
+		let param = new URLSearchParams();
+		param.set('user', usr);
+		this.http.post('login', {
+			'username': this.username,
+			'userIdentity': usr,
+			'template': this.template
+		}, param).subscribe((response) => {
+			if (response.success) {
+				console.debug("login!" + window.localStorage.getItem('username'))
+				this.nav.setRoot(TabsPage)
+			}
+			else {
+				this.alert.create({
+					'title': '错误',
+					'subTitle': response.reason
+				}).present()
+			}
+		});
+
 	}
+
 }

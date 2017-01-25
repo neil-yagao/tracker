@@ -7,7 +7,7 @@ import { HttpBase } from '../../app/httpbase';
 import { URLSearchParams } from '@angular/http';
 import { WorkoutDetail } from './workout-detail';
 
-
+import * as _ from 'lodash'
 
 @Component({
 	selector: 'page-workout',
@@ -29,8 +29,9 @@ export class WorkoutPage {
 	ionViewWillEnter() {
 		let param = new URLSearchParams();
 		param.set('user', window.localStorage.getItem('username'));
+		param.set('template', window.localStorage.getItem('template'));
 		this.httpBase.get('workouts', param).subscribe(
-			workouts => this.workouts = workouts)
+			workouts => this.workouts = _.sortBy(workouts,"perform_date"))
 	}
 
 	getNoteColor(workout): any {

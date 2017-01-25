@@ -13,6 +13,7 @@ func init() {
 	beego.Include(&controllers.MovementController{})
 	beego.Include(&controllers.WorkingSessionController{})
 	beego.Include(&controllers.UserControllers{})
+	beego.Include(&controllers.TemplateController{})
 
 	beego.SetStaticPath("/", "../../webapp")
 	beego.SetStaticPath("/mobile", "../../hybrid/www")

@@ -16,7 +16,9 @@ func (this *WorkoutController) GetWorkouts() {
 	defer this.RecoverFromError()
 	beego.Debug("query for workouts")
 	user := this.GetUserIdentity()
-	workouts := services.WorkoutCreator.FindUserWorkouts(user)
+	template := this.GetString("template")
+	workouts := services.UserWorkoutService.FindUserWorkouts(user)
+	workouts = append(workouts, services.TemplateWorkoutService.FindTemplateWorkouts(template)...)
 	this.ServeJson(workouts)
 }
 
@@ -26,7 +28,7 @@ func (this *WorkoutController) InsertWorkout() {
 	template := new(models.WorkoutTemplate)
 	this.ParseRequestBody(template)
 	user := this.GetUserIdentity()
-	services.WorkoutCreator.CreateWorkoutsFromeTemplate(*template, user)
+	services.WorkoutCreator.CreateWorkoutsFromTemplate(*template, user)
 	this.ServeJson()
 
 }

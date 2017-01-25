@@ -59,6 +59,12 @@ func (b *basicCRUD) InsertOne(sql string) int64 {
 	return insertOne(sql)
 }
 
+func (b *basicCRUD) Delete(table string, id int64) {
+	executingSql := fmt.Sprintf("delete from %v where id = %d", table, id)
+	_, err := db.Exec(executingSql)
+	checkErr(err)
+}
+
 func insertOne(sql string) int64 {
 	result, err := db.Exec(sql)
 	checkErr(err)
