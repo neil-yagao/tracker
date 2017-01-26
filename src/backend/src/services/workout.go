@@ -88,7 +88,7 @@ func generateWarmingSet(movementId int64, workout int64, targetNumber int, targe
 		startWeight = targetWeight * 0.2
 	}
 	var assumeAddition float64 = targetWeight * 0.15
-	//if assume addition is larger than 10
+	// if assume addition is larger than 10
 	// then using 10 as real addition
 	// else if assume addtion is smaller than 10 but larger than 5
 	// then using 5 as real addition

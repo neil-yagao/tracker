@@ -9,10 +9,10 @@ type TemplateController struct {
 //@router /templates [get]
 func (this *TemplateController) GetTemplates() {
 	templates := make([]models.Template, 0)
-	rows := models.BasicCRUD.Query("select id, name, description from template")
+	rows := models.BasicCRUD.Query("select id, name from template")
 	for rows.Next() {
 		template := new(models.Template)
-		rows.Scan(&template.Id, &template.Name, &template.Description)
+		rows.Scan(&template.Id, &template.Name)
 		templates = append(templates, *template)
 	}
 	this.ServeJson(templates)

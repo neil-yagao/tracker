@@ -56,7 +56,7 @@ DROP TABLE IF EXISTS `template`;
 CREATE TABLE `template` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL DEFAULT '',
-  `description` varchar(1024) DEFAULT '',
+  `content` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='this is actually a template for workout. minium reusable unit';
@@ -139,6 +139,7 @@ CREATE TABLE `user_workout` (
   `user` int(11) NOT NULL,
   `workout` int(11) NOT NULL,
   `is_finalized` tinyint(2) NOT NULL DEFAULT '0',
+  `perform_date` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
@@ -150,7 +151,7 @@ CREATE TABLE `user_workout` (
 
 LOCK TABLES `user_workout` WRITE;
 /*!40000 ALTER TABLE `user_workout` DISABLE KEYS */;
-INSERT INTO `user_workout` VALUES (1,1,1,0),(2,1,2,0),(3,1,3,0),(4,1,4,0),(5,1,5,0),(6,1,6,0),(7,1,7,0),(8,1,8,0),(9,1,41,0),(10,1,42,0),(11,1,43,0),(12,1,44,0),(13,12,45,0),(14,12,46,0),(15,12,47,0),(16,12,48,0),(17,0,225,0),(18,0,226,0),(19,0,227,0),(20,0,228,0),(21,16,233,0),(22,16,234,0),(23,16,235,0),(24,16,236,0),(25,16,241,0),(26,16,242,0),(27,16,243,0),(28,16,244,0),(29,18,249,0),(30,18,250,0),(31,18,251,0),(32,18,252,0);
+INSERT INTO `user_workout` VALUES (1,1,1,0,NULL),(2,1,2,0,NULL),(3,1,3,0,NULL),(4,1,4,0,NULL),(5,1,5,0,NULL),(6,1,6,0,NULL),(7,1,7,0,NULL),(8,1,8,0,NULL),(9,1,41,0,NULL),(10,1,42,0,NULL),(11,1,43,0,NULL),(12,1,44,0,NULL),(13,12,45,0,NULL),(14,12,46,0,NULL),(15,12,47,0,NULL),(16,12,48,0,NULL),(17,0,225,0,NULL),(18,0,226,0,NULL),(19,0,227,0,NULL),(20,0,228,0,NULL),(21,16,233,0,NULL),(22,16,234,0,NULL),(23,16,235,0,NULL),(24,16,236,0,NULL),(25,16,241,0,NULL),(26,16,242,0,NULL),(27,16,243,0,NULL),(28,16,244,0,NULL),(29,18,249,0,NULL),(30,18,250,0,NULL),(31,18,251,0,NULL),(32,18,252,0,NULL);
 /*!40000 ALTER TABLE `user_workout` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -197,7 +198,7 @@ CREATE TABLE `workout` (
   `name` varchar(128) NOT NULL DEFAULT '',
   `target` varchar(128) DEFAULT '',
   `description` varchar(512) DEFAULT NULL,
-  `perform_date` varchar(32) NOT NULL DEFAULT '2016-11-11',
+  `perform_date` varchar(32) NOT NULL DEFAULT '2016-11-11' COMMENT 'deprecated',
   `is_finalized` tinyint(2) NOT NULL DEFAULT '0' COMMENT '@Deprecated',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
@@ -223,4 +224,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-25 17:04:04
+-- Dump completed on 2017-01-26 14:32:35

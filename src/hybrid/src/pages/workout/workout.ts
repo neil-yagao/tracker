@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, PopoverController  } from 'ionic-angular';
 
 import {Md5} from 'ts-md5/dist/md5';
 
 import { HttpBase } from '../../app/httpbase';
 import { URLSearchParams } from '@angular/http';
 import { WorkoutDetail } from './workout-detail';
+import { TemplatePopover } from './template-popover';
 
 import * as _ from 'lodash'
 
@@ -18,7 +19,8 @@ export class WorkoutPage {
 
     workouts: Array<any>;
 	debounce = false;
-	constructor(public navCtrl: NavController, private httpBase: HttpBase) {
+	constructor(public navCtrl: NavController, public pop:PopoverController ,
+		private httpBase: HttpBase) {
 
 	};
 
@@ -41,5 +43,12 @@ export class WorkoutPage {
 		else {
 			return {}
 		}
+	}
+
+	openPopover(event){
+		let popover =	this.pop.create(TemplatePopover)
+		popover.present({
+			ev:event
+		})
 	}
 }

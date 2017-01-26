@@ -1,4 +1,3 @@
-<h1>基本信息</h1>
 <ion-list>
     <ion-item>
         <ion-label floating>训练课名称</ion-label>
@@ -26,11 +25,6 @@
     <ion-item>
         <ion-label floating>训练课简介</ion-label>
         <ion-textarea rows="6" [(ngModel)]="template.description"></ion-textarea>
-    </ion-item>
-    <ion-item>
-        <ion-label>从</ion-label>
-        <ion-datetime #dateTime item-content displayFormat="MMM DD,YYYY" [(ngModel)]="template.startAt"></ion-datetime>
-        <span item-right>开始训练</span>
     </ion-item>
     <ion-item>
         <ion-label>每周重复</ion-label>

@@ -1,15 +1,17 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>现有训练课</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>现有训练课</ion-title>
+        <button ion-button icon-only (click)="openPopover($event)" small clear color="dark">
+            <ion-icon name="menu"></ion-icon>
+        </button>
+    </ion-navbar>
 </ion-header>
-
 <ion-content>
-  <ion-list>
-    <button ion-item *ngFor="let workout of workouts" (click)="goToDetail(workout)">
-      <h2>{{workout.name}}</h2>
-      <p>{{workout.description}}</p>
-      <ion-note item-right [ngStyle]="getNoteColor(workout)">{{workout.perform_date}}</ion-note>
-    </button>
-  </ion-list>
+    <ion-list>
+        <button ion-item *ngFor="let workout of workouts" (click)="goToDetail(workout)">
+            <h2>{{workout.name}}</h2>
+            <p>{{workout.description}}</p>
+            <ion-note item-right [ngStyle]="getNoteColor(workout)">{{workout.perform_date}}</ion-note>
+        </button>
+    </ion-list>
 </ion-content>

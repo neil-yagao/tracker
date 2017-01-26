@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, EventEmitter, Output} from '@angular/core';
+import { Component, ViewChild, EventEmitter, Output} from '@angular/core';
 import { AlertController } from 'ionic-angular';
 import { WorkoutTemplate} from './workout-template';
 import { HttpBase } from '../../app/httpbase';
@@ -13,10 +13,9 @@ import * as _ from "lodash";
 
 })
 
-export class PlanBasicPage implements AfterViewInit {
-    @ViewChild('dateTime') dateTime;
+export class PlanBasicPage {
     private template: WorkoutTemplate = new WorkoutTemplate();
-    private muscleGroup:any;
+    private muscleGroup:any = "";
     private templates:Array<any>;
 	@Output() nextStep: EventEmitter<WorkoutTemplate> = new EventEmitter<WorkoutTemplate>();
     constructor(public http:HttpBase, public alertCtrl: AlertController) {
@@ -24,12 +23,6 @@ export class PlanBasicPage implements AfterViewInit {
         this.http.get('templates').subscribe((templates) => {
         	this.templates = templates
         })
-    }
-
-    ngAfterViewInit() {
-        setTimeout(_ => {
-			this.dateTime.setValue(new Date().toISOString());
-		});
     }
 
 	generateSession() {
