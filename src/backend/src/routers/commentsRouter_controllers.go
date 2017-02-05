@@ -34,6 +34,27 @@ func init() {
 			AllowHTTPMethods: []string{"get"},
 			Params: nil})
 
+	beego.GlobalControllerRouter["controllers:TemplateController"] = append(beego.GlobalControllerRouter["controllers:TemplateController"],
+		beego.ControllerComments{
+			Method: "AssignTemplates",
+			Router: `/templates/user`,
+			AllowHTTPMethods: []string{"post"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["controllers:TemplateController"] = append(beego.GlobalControllerRouter["controllers:TemplateController"],
+		beego.ControllerComments{
+			Method: "UnasignTemplates",
+			Router: `/templates/user`,
+			AllowHTTPMethods: []string{"delete"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["controllers:TemplateController"] = append(beego.GlobalControllerRouter["controllers:TemplateController"],
+		beego.ControllerComments{
+			Method: "GetUserCurrentTemplates",
+			Router: `/templates/:useridentity`,
+			AllowHTTPMethods: []string{"get"},
+			Params: nil})
+
 	beego.GlobalControllerRouter["controllers:UserControllers"] = append(beego.GlobalControllerRouter["controllers:UserControllers"],
 		beego.ControllerComments{
 			Method: "UserLogin",

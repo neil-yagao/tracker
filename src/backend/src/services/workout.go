@@ -42,17 +42,17 @@ const QUERY_UESER_WORKOUT_QUERY string = "select w.id, w.name, w.target, w.perfo
 const QUERY_TEMPLATE_WORKOUT_SQL string = "select w.id, w.name, w.target, w.perform_date, w.description from workout w, template_workout tw, template t " +
 	"where w.is_finalized = 0 and tw.template = t.id and tw.workout = w.id and t.name = :template order by perform_date ASC"
 
-func scanWorkoutsResult(rows *sql.Rows) []*models.Workout {
-	workouts := make([]*models.Workout, 0)
+func scanWorkoutsResult(rows *sql.Rows) []*Workout {
+	workouts := make([]*Workout, 0)
 	for rows.Next() {
-		one := new(models.Workout)
+		one := new(Workout)
 		rows.Scan(&one.Id, &one.Name, &one.Target, &one.PerformDate, &one.Description)
 		workouts = append(workouts, one)
 	}
 	return workouts
 }
 
-func generateWorkingSets(workout models.Workout, template models.WorkoutTemplate, extraWeight float64) {
+func generateWorkingSets(workout Workout, template models.WorkoutTemplate, extraWeight float64) {
 	var containMovements []models.MovementTemplate = template.Movements
 	for _, mv := range containMovements {
 		movement := new(models.Movement)
@@ -150,10 +150,10 @@ func getMovementId(movement models.Movement) int64 {
 	return id
 }
 
-func createAndSaveWorkouts(template models.WorkoutTemplate) []*models.Workout {
+func createAndSaveWorkouts(template models.WorkoutTemplate) []*Workout {
 	var timePoint time.Time
 	timePoint, _ = time.Parse("2006-01-02", template.StartAt)
-	workouts := make([]*models.Workout, 0)
+	workouts := make([]*Workout, 0)
 	timePoint = findNextWeekday(template.Weekly, timePoint)
 	//TODO remove hard code 4 in the future
 	//TODO let user input repeat times
@@ -161,7 +161,7 @@ func createAndSaveWorkouts(template models.WorkoutTemplate) []*models.Workout {
 	var i float64 = 0.0
 	for ; i < DEFAULT_WORKOUT_REPEAT_TIME; i++ {
 		logs.Info("current time Point:%v", timePoint)
-		workout := new(models.Workout)
+		workout := new(Workout)
 		workout.Name = template.Name
 		workout.PerformDate = timePoint.String()[0:10]
 		workout.Description = template.Description

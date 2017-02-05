@@ -1,13 +1,5 @@
 package models
 
-type Workout struct {
-	Id          int64  `json:"id"`
-	Name        string `json:"name"`
-	Target      string `json:"target"`
-	PerformDate string `json:"perform_date"`
-	Description string `json:"description"`
-}
-
 type WorkoutTemplate struct {
 	Name         string             `json:"name"`
 	Movements    []MovementTemplate `json:"movements"`

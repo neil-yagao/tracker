@@ -80,7 +80,7 @@ func TestCreateAndSaveWorkoutNoTemplateCase(t *testing.T) {
 
 }
 
-func assertWorkoutsMatching(workouts []*models.Workout, workoutForCompare []*models.Workout) bool {
+func assertWorkoutsMatching(workouts []*Workout, workoutForCompare []*Workout) bool {
 	matching := 0
 	for _, workout := range workouts {
 		if workout.Id == 0 {

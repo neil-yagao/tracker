@@ -26,7 +26,7 @@ func (this *GeneralController) ParseRequestBody(parseTo interface{}) {
 
 func (this *GeneralController) RecoverFromError() {
 	if x := recover(); x != nil {
-		beego.Error("run time panic: %v", x)
+		beego.Error("run time panic:", x)
 		this.Data["json"] = map[string]interface{}{"success": false, "reason": fmt.Sprintf("run time panic: %v", x)}
 		this.ServeJSON()
 		this.StopRun()

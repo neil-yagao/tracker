@@ -7,7 +7,7 @@ type userService struct {
 
 var UserService userService
 
-func (this *userService) HandleUserLogin(user models.UserInfo) {
+func (this *userService) HandleUserLogin(user models.LoginInfo) {
 	//currently just insert user info if not exsited
 	//do nothing if user exsited
 	if !userExisted(user.Useridentity) {

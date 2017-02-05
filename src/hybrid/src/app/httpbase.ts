@@ -48,6 +48,14 @@ export class HttpBase {
 			.catch(this.handleError);
 	}
 
+	delete(url:string,  param?:URLSearchParams):Observable<any>{
+		if(param){
+			this.options.search = param;
+		}
+		this._logger.debug("post to url " + url + " with request " + JSON.stringify(param));
+		return this.http.delete(url,this.options)
+	}
+
 	private extractData(res: Response) {
 		let body = res.json();
 		this._logger.debug("response:", body)

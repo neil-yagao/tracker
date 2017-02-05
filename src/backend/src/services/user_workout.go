@@ -5,20 +5,28 @@ import "models"
 type userWorkoutService struct {
 }
 
+type Workout struct {
+	Id          int64  `json:"id"`
+	Name        string `json:"name"`
+	Target      string `json:"target"`
+	PerformDate string `json:"perform_date"`
+	Description string `json:"description"`
+}
+
 var UserWorkoutService userWorkoutService
 
-func (this *userWorkoutService) FindUserWorkouts(user string) []*models.Workout {
+func (this *Workout) FindUserWorkouts(user string) []*Workout {
 	return findUserWorkouts(user)
 
 }
 
-func findUserWorkouts(user string) []*models.Workout {
+func findUserWorkouts(user string) []*Workout {
 	rows := models.BasicCRUD.BuildAndQuery(QUERY_UESER_WORKOUT_QUERY, map[string]interface{}{"useridentity": user})
 	defer rows.Close()
 	return scanWorkoutsResult(rows)
 }
 
-func assignWorkoutsToUser(userIdentity string, workouts []*models.Workout) {
+func assignWorkoutsToUser(userIdentity string, workouts []*Workout) {
 	//templateName :=
 	user := UserService.GetUserIdFromIdentity(userIdentity)
 	for _, workout := range workouts {

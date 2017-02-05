@@ -11,6 +11,7 @@ import { PlanPage } from '../pages/plan/plan';
 import { MovementPage } from '../pages/movement/movement';
 import { MovementModal } from '../pages/movement/movement-modal';
 import { WorkoutPage } from '../pages/workout/workout';
+import { WorkoutTemplate } from '../pages/workout/workout-template';
 import { WorkoutDetail } from '../pages/workout/workout-detail';
 import { TemplatePopover } from '../pages/workout/template-popover';
 import { LoginPage} from './login';
@@ -32,7 +33,8 @@ import { PlanExercisePage } from '../pages/plan/plan-exercise';
 		PlanBasicPage,
 		PlanExercisePage,
 		MovementModal,
-		TemplatePopover
+		TemplatePopover,
+		WorkoutTemplate
 	],
 	imports: [
 		FormsModule,
@@ -54,7 +56,8 @@ import { PlanExercisePage } from '../pages/plan/plan-exercise';
 		PlanBasicPage,
 		PlanExercisePage,
 		MovementModal,
-		TemplatePopover
+		TemplatePopover,
+		WorkoutTemplate
 	],
 	providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler },
 		DEBUG_LOGGER_PROVIDERS]

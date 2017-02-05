@@ -34,9 +34,9 @@ var OPERATION_PATTERN = regexp.MustCompile(OPERATION)
 var WHERE_CLAUSE_MATCHING_PATTERN = regexp.MustCompile("\\S+\\s*(" + OPERATION + ")\\s*:\\S+")
 
 var db *sql.DB
-var err error
 
 func init() {
+	var err error
 	db, err = sql.Open("mysql", "powerlift:password@tcp(127.0.0.1:3306)/powerlift")
 	checkErr(err)
 }
@@ -105,13 +105,18 @@ func (b *basicCRUD) Update(sql string) {
 }
 
 func update(sql string, params []map[string]interface{}) {
+	tx, err := db.Begin()
+	checkErr(err)
 	for _, param := range params {
 		str := build(sql, param)
 		beego.Debug("update:", str)
-		_, err = db.Exec(str)
-		checkErr(err)
+		_, err = tx.Exec(str)
+		if err != nil {
+			tx.Rollback()
+			break
+		}
 	}
-
+	tx.Commit()
 }
 
 func build(sql string, param map[string]interface{}) string {
@@ -154,7 +159,7 @@ func (b *basicCRUD) BuildAndUpdateOne(table string, value interface{}) {
 	}
 	updateSql += strings.Join(setArray, ",")
 	updateSql += " where id = " + values[idFieldIndex]
-	_, err = db.Exec(updateSql)
+	_, err := db.Exec(updateSql)
 	checkErr(err)
 }
 
@@ -168,7 +173,12 @@ func pos(value string, slice []string) int {
 }
 
 func buildInsert(table string, value interface{}) string {
-	fields, values := ExtractToStringFromObject(value)
+	var fields, values []string
+	if reflect.TypeOf(value).Kind() == reflect.Map {
+		fields, values = ExtractToStringFromMap(value.(map[string]interface{}))
+	} else {
+		fields, values = ExtractToStringFromObject(value)
+	}
 	//ignore id fields
 	idFieldIndex := pos("id", fields)
 	if idFieldIndex != -1 {
@@ -176,13 +186,34 @@ func buildInsert(table string, value interface{}) string {
 		values = append(values[:idFieldIndex], values[idFieldIndex+1:]...)
 	}
 	insertSql := "INSERT INTO " + table + " (" + strings.Join(fields, ",") + ") values (" + strings.Join(values, ",") + ");"
+	beego.Debug("insert sql:" + insertSql)
 	return insertSql
 }
 
+func ExtractToStringFromMap(json map[string]interface{}) ([]string, []string) {
+	fields := make([]string, 0)
+	values := make([]string, 0)
+	for key, value := range json {
+		fields = append(fields, key)
+		switch value := value.(type) {
+		case string:
+			if len(value) == 0 {
+				continue
+			}
+			values = append(values, "'"+value+"'")
+		case nil:
+			continue
+		default:
+			values = append(values, fmt.Sprint(value))
+		}
+	}
+	return fields, values
+}
+
 func ExtractToStringFromObject(value interface{}) ([]string, []string) {
+
 	valueType := reflect.TypeOf(value)
 	valueValue := reflect.ValueOf(value)
-
 	fields := make([]string, 0)
 	values := make([]string, 0)
 	for i := 0; i < valueType.NumField(); i++ {

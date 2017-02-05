@@ -8,7 +8,7 @@ import (
 func TestSaveTemplate(t *testing.T) {
 	template := new(models.Template)
 	template.Name = "testingTemplateName"
-	template.Description = "this is description for testing template."
+	template.Content = "this is description for testing template."
 	id := saveTemplate(*template)
 	if id != -1 {
 		defer models.BasicCRUD.Delete("template", id)

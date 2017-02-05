@@ -37,7 +37,10 @@ export class WorkoutPage {
 	}
 
 	getNoteColor(workout): any {
-		if (workout.perform_date < new Date().toISOString()) {
+		var today:string =  new Date().toISOString();
+		if (today.startsWith(workout.perform_date)){
+			return {'color':'RoyalBlue'}
+		}else if (workout.perform_date < today) {
 			return { 'color': 'red' }
 		}
 		else {
@@ -47,8 +50,12 @@ export class WorkoutPage {
 
 	openPopover(event){
 		let popover =	this.pop.create(TemplatePopover)
+		popover.onDidDismiss(_ => {
+			this.ionViewWillEnter()
+		})
 		popover.present({
 			ev:event
 		})
+
 	}
 }

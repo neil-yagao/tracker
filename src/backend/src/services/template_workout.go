@@ -10,13 +10,13 @@ type templateWorkoutService struct {
 
 var TemplateWorkoutService templateWorkoutService
 
-func (this *templateWorkoutService) FindTemplateWorkouts(template string) []*models.Workout {
+func (this *Workout) FindTemplateWorkouts(template string) []*Workout {
 	return findTemplateWorkouts(template)
 }
 
-func findTemplateWorkouts(name string) []*models.Workout {
+func findTemplateWorkouts(name string) []*Workout {
 	if strings.TrimSpace(name) == "" {
-		return make([]*models.Workout, 0)
+		return make([]*Workout, 0)
 	}
 	rows := models.BasicCRUD.BuildAndQuery(QUERY_TEMPLATE_WORKOUT_SQL, map[string]interface{}{"template": name})
 	defer rows.Close()
@@ -30,10 +30,12 @@ type TemplateWorkout struct {
 	Workout  int64
 }
 
-func assignWorkoutsToTemplate(template string, workouts []*models.Workout) {
+func assignWorkoutsToTemplate(template string, workouts []*Workout) {
 	templateId := findTemplateId(template)
 	if templateId == -1 {
-		saveTemplate(models.Template{0, template, " "})
+		newTemplate := new(models.Template)
+		newTemplate.Name = template
+		saveTemplate(*newTemplate)
 	}
 	for _, workout := range workouts {
 		models.BasicCRUD.Save("template_workout", TemplateWorkout{templateId, workout.Id})
