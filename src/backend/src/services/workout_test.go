@@ -28,9 +28,9 @@ var username = []byte("testing")
 var USER_INDENTITY string = fmt.Sprintf("%x", md5.Sum(username))
 
 func TestCreateAndSaveWorkoutTemplateGivenCase(t *testing.T) {
-	var result models.WorkoutTemplate
+	var result WorkoutTemplate
 	json.Unmarshal([]byte(TEST_TEMPLATE_RAW), &result)
-	workouts := createAndSaveWorkouts(result)
+	workouts := createAndSaveWorkouts(&result)
 	if len(workouts) > 0 {
 		defer cleanUp("workout", workouts)
 	}
@@ -44,8 +44,8 @@ func TestCreateAndSaveWorkoutTemplateGivenCase(t *testing.T) {
 		defer cleanUp("template", templateId)
 	}
 
-	assignWorkoutsToTemplate("testing", workouts)
-	workoutsFromTemplate := findTemplateWorkouts("testing")
+	assignWorkoutsToTemplate(&result, workouts)
+	workoutsFromTemplate := findTemplateWorkouts([]string{"testing"})
 	if len(workoutsFromTemplate) > 0 {
 		defer cleanUp("workout", workoutsFromTemplate)
 	}
@@ -59,10 +59,10 @@ func TestCreateAndSaveWorkoutTemplateGivenCase(t *testing.T) {
 }
 
 func TestCreateAndSaveWorkoutNoTemplateCase(t *testing.T) {
-	var result models.WorkoutTemplate
+	var result WorkoutTemplate
 	json.Unmarshal([]byte(TEST_TEMPLATE_RAW), &result)
 	result.Template = ""
-	workouts := createAndSaveWorkouts(result)
+	workouts := createAndSaveWorkouts(&result)
 	if len(workouts) > 0 {
 		defer cleanUp("workout", workouts)
 	}
@@ -78,6 +78,23 @@ func TestCreateAndSaveWorkoutNoTemplateCase(t *testing.T) {
 		t.Error("Test case create workout with no template failed.\n")
 	}
 
+}
+
+func TestFindWorkouts(t *testing.T) {
+
+	//save testing workouts
+	var result WorkoutTemplate
+	json.Unmarshal([]byte(TEST_TEMPLATE_RAW), &result)
+	workoutsToSave := createAndSaveWorkouts(&result)
+
+	templateId := assignWorkoutsToTemplate(&result, workoutsToSave)
+	assignTempalteToUser([]int64{templateId}, USER_INDENTITY)
+
+	workout := new(Workout)
+	workouts := workout.FindUserWorkouts(USER_INDENTITY)
+	userAssignedTemplateWorkouts := findTemplateWorkouts([]string{"testing"})
+	userOnlyWorkouts := findUserWorkouts(USER_INDENTITY)
+	assertWorkoutsMatching(workouts, append(userAssignedTemplateWorkouts, userOnlyWorkouts...))
 }
 
 func assertWorkoutsMatching(workouts []*Workout, workoutForCompare []*Workout) bool {

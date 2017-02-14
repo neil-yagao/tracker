@@ -3,6 +3,8 @@ package controllers
 import (
 	"models"
 	"services"
+
+	"github.com/astaxie/beego"
 )
 
 /**
@@ -16,10 +18,10 @@ type TemplateController struct {
 //@router /templates [get]
 func (this *TemplateController) GetTemplates() {
 	defer this.RecoverFromError()
-	templates := make([]models.Template, 0)
+	templates := make([]services.Template, 0)
 	rows := models.BasicCRUD.Query("select id, name from template")
 	for rows.Next() {
-		template := new(models.Template)
+		template := new(services.Template)
 		rows.Scan(&template.Id, &template.Name)
 		templates = append(templates, *template)
 	}
@@ -41,6 +43,7 @@ func (this *TemplateController) UnasignTemplates() {
 	useridentity := this.GetUserIdentity()
 	templateId, err := this.GetInt("templatesid")
 	if err != nil {
+		beego.Error(err)
 		panic(err)
 	}
 	template := new(services.UserTemplate)

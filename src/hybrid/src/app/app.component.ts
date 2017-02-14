@@ -8,7 +8,7 @@ import { LoginPage } from './login';
 	templateUrl: 'app.html'
 })
 export class MyApp {
-	rootPage = TabsPage;//LoginPage;
+	rootPage = /*TabsPage;//*/LoginPage;
 
 	constructor(platform: Platform, private config:Config) {
 		platform.ready().then(() => {

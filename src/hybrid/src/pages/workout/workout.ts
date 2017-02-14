@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, PopoverController  } from 'ionic-angular';
+import { NavController, PopoverController,LoadingController ,ModalController  } from 'ionic-angular';
 
 import {Md5} from 'ts-md5/dist/md5';
 
 import { HttpBase } from '../../app/httpbase';
 import { URLSearchParams } from '@angular/http';
 import { WorkoutDetail } from './workout-detail';
+import { WorkoutTemplate } from './workout-template';
 import { TemplatePopover } from './template-popover';
 
 import * as _ from 'lodash'
@@ -20,7 +21,8 @@ export class WorkoutPage {
     workouts: Array<any>;
 	debounce = false;
 	constructor(public navCtrl: NavController, public pop:PopoverController ,
-		private httpBase: HttpBase) {
+		private httpBase: HttpBase,  public modalCtrl:ModalController,
+		private loading:LoadingController) {
 
 	};
 
@@ -29,11 +31,19 @@ export class WorkoutPage {
     };
 
 	ionViewWillEnter() {
+		let loader = this.loading.create({
+		      content: "Please wait...",
+		      duration: 3000
+		    });
+		loader.present()
 		let param = new URLSearchParams();
 		param.set('user', window.localStorage.getItem('username'));
-		param.set('template', window.localStorage.getItem('template'));
 		this.httpBase.get('workouts', param).subscribe(
-			workouts => this.workouts = _.sortBy(workouts,"perform_date"))
+			workouts => {
+				this.workouts = _.sortBy(workouts,"perform_date")
+				loader.dismiss()
+		})
+
 	}
 
 	getNoteColor(workout): any {
@@ -49,10 +59,19 @@ export class WorkoutPage {
 	}
 
 	openPopover(event){
-		let popover =	this.pop.create(TemplatePopover)
-		popover.onDidDismiss(_ => {
+		let popover = this.pop.create(TemplatePopover)
+		let template = this.modalCtrl.create(WorkoutTemplate,{}, { showBackdrop: false, enableBackdropDismiss: false });
+		template.onDidDismiss( _ => {
 			this.ionViewWillEnter()
 		})
+		popover.onDidDismiss((data) => {
+			if(data){
+				if(data.action == "add"){
+					template.present();
+				}
+				this.ionViewWillEnter()
+			}
+		});
 		popover.present({
 			ev:event
 		})

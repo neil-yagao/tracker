@@ -1,18 +1,18 @@
 <ion-list>
-  <ion-list-header>
-    执行中的计划：{{currentTemplate}}
-  </ion-list-header>
-  <ion-item-sliding *ngFor="let template of userTemplate.templates; let i = index">
-    <ion-item>
-      <ion-label>{{template}}</ion-label>
-    </ion-item>
-    <ion-item-options side="right">
-      <button ion-button expandable color="danger" (click)="unassignTemplate(i)">
-        删除
-      </button>
-    </ion-item-options>
-  </ion-item-sliding>
+    <ion-list-header>
+        执行中的计划：{{currentTemplate}}
+    </ion-list-header>
+    <ion-item-sliding *ngFor="let template of userTemplate.templates; let i = index">
+        <ion-item>
+            <ion-label>{{template}}</ion-label>
+        </ion-item>
+        <ion-item-options side="right">
+            <button ion-button expandable color="danger" (click)="unassignTemplate(i)">
+                删除
+            </button>
+        </ion-item-options>
+    </ion-item-sliding>
 </ion-list>
 <ion-item>
-  <button ion-button clear (click)="showModal()">添加计划</button>
+    <button ion-button clear (click)="showModal()">添加计划</button>
 </ion-item>

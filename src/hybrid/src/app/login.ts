@@ -22,13 +22,11 @@ export class LoginPage {
 
 		let usr: string = String(Md5.hashStr(this.username));
 		window.localStorage.setItem('username', usr);
-		window.localStorage.setItem('template', this.template);
 		let param = new URLSearchParams();
 		param.set('user', usr);
 		this.http.post('login', {
 			'username': this.username,
-			'userIdentity': usr,
-			'template': this.template
+			'userIdentity': usr
 		}, param).subscribe((response) => {
 			if (response.success) {
 				console.debug("login!" + window.localStorage.getItem('username'))

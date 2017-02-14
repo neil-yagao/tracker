@@ -1,21 +1,24 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>添加计划</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>添加计划</ion-title>
+        <button ion-button icon-only color="royal" (click)="dismiss()">
+            <ion-icon name="arrow-back"></ion-icon>
+        </button>
+    </ion-navbar>
 </ion-header>
 <ion-content>
-  <ion-list>
-    <ion-item>
-      <ion-label floating>现有计划</ion-label>
-      <ion-input [(ngModel)]="selectedTemplate"></ion-input>
-      <ion-icon name="search" item-right style="margin-bottom: -30px" (click)="selectFromExistingTemplate()"></ion-icon>
-    </ion-item>
-    <ion-item>
-      <ion-label>开始时间</ion-label>
-      <ion-datetime displayFormat="MMM D" pickerFormat="MMM D" [(ngModel)]="timeStarts" doneText="选择" cancelText="取消"></ion-datetime>
-    </ion-item>
-    <ion-item>
-      <button ion-button clear (click)="assignTemplate()">开始执行</button>
-    </ion-item>
-  </ion-list>
+    <ion-list>
+        <ion-item>
+            <ion-label floating>现有计划</ion-label>
+            <ion-input [(ngModel)]="selectedTemplate"></ion-input>
+            <ion-icon name="search" item-right style="margin-bottom: -30px" (click)="selectFromExistingTemplate()"></ion-icon>
+        </ion-item>
+        <ion-item>
+            <ion-label>开始时间</ion-label>
+            <ion-datetime displayFormat="MMM D" pickerFormat="MMM D" [(ngModel)]="timeStarts" doneText="选择" cancelText="取消"></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <button ion-button clear (click)="assignTemplate()">开始执行</button>
+        </ion-item>
+    </ion-list>
 </ion-content>

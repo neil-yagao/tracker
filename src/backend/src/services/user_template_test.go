@@ -1,20 +1,13 @@
 package services
 
-import "services"
 import "testing"
-import "fmt"
-import "crypto/md5"
-
-var username = []byte("testing")
-
-var USER_INDENTITY string = fmt.Sprintf("%x", md5.Sum(username))
 
 func TestAssignTemplateToUser(t *testing.T) {
-	template := new(services.UserTemplate)
+	template := new(UserTemplate)
 	template.UserIdentity = USER_INDENTITY
 	template.TemplatesId = append(make([]int64, 0), 21)
 	template.AssignTemplate()
-	confirmTemplate := new(services.UserTemplate)
+	confirmTemplate := new(UserTemplate)
 	confirmTemplate.UserIdentity = USER_INDENTITY
 	confirmTemplate.GetUserTemplate()
 	if len(confirmTemplate.TemplatesId) != 1 && len(confirmTemplate.Templates) != 1 {
@@ -26,11 +19,11 @@ func TestAssignTemplateToUser(t *testing.T) {
 }
 
 func TestUnassignTemplateToUser(t *testing.T) {
-	template := new(services.UserTemplate)
+	template := new(UserTemplate)
 	template.UserIdentity = USER_INDENTITY
 	template.TemplatesId = append(make([]int64, 0), 21)
 	template.UnassignTemplate()
-	confirmTemplate := new(services.UserTemplate)
+	confirmTemplate := new(UserTemplate)
 	confirmTemplate.UserIdentity = USER_INDENTITY
 	confirmTemplate.GetUserTemplate()
 	var contains bool = false

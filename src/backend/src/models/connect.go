@@ -82,11 +82,19 @@ func (s *basicCRUD) Save(table string, value interface{}) int64 {
 	return insertOne(insertSql)
 }
 
+func (s *basicCRUD) IgnoreSave(table string, value interface{}) int64 {
+	insertSql := buildInsert(table, value)
+	insertSql = strings.Replace(insertSql, "INSERT ", "INSERT IGNORE ", 1)
+	beego.Debug("saving sql:" + insertSql)
+	return insertOne(insertSql)
+}
+
 func checkErr(err error) {
 	if err != nil {
 		beego.Error(err)
 	}
 }
+
 func (query *queryBuilder) BuildQuery(sql string, param map[string]interface{}) string {
 	return build(sql, param)
 }
@@ -99,9 +107,9 @@ func (b *basicCRUD) Update(sql string) {
 	rs, err := db.Exec(sql)
 	beego.Debug("executing sql:", sql)
 	checkErr(err)
-	if rows, _ := rs.RowsAffected(); rows > 1 {
-		beego.Warning("update sql:%v has affected more than one row.", sql)
-	}
+	number, err := rs.RowsAffected()
+	checkErr(err)
+	beego.Debug("update affected:", number)
 }
 
 func update(sql string, params []map[string]interface{}) {
@@ -129,20 +137,29 @@ func build(sql string, param map[string]interface{}) string {
 		operator := OPERATION_PATTERN.FindString(criteria)
 		operator = strings.TrimSpace(operator)
 		paramValue := param[variable]
-		beego.Debug("build variable:" + variable)
-		beego.Debug("build criteria" + criteria)
+
 		switch paramValue := paramValue.(type) {
 		case string:
 			replaceCriteria = column + " " + operator + " '" + paramValue + "'"
-			beego.Debug("replaceCriteria:", replaceCriteria, "!")
+
 			buildSQL = strings.Replace(buildSQL, criteria, replaceCriteria, -1)
 		case nil:
 			buildSQL = strings.Replace(buildSQL, criteria, "1=1", -1)
-		//case []string
-		//slice current not support yet
+		case []string:
+			appendedStr := "("
+			for index, k := range []string(paramValue) {
+				if index == len(paramValue)-1 {
+					appendedStr = appendedStr + "'" + k + "'"
+				} else {
+					appendedStr = appendedStr + "'" + k + "',"
+				}
+			}
+			appendedStr = appendedStr + ")"
+			replaceCriteria = column + " " + operator + " " + appendedStr
+			buildSQL = strings.Replace(buildSQL, criteria, replaceCriteria, -1)
 		default:
 			replaceCriteria = column + " " + operator + " " + fmt.Sprint(paramValue)
-			beego.Debug("replaceCriteria:", replaceCriteria, "!")
+
 			buildSQL = strings.Replace(buildSQL, criteria, replaceCriteria, -1)
 		}
 	}
@@ -174,9 +191,11 @@ func pos(value string, slice []string) int {
 
 func buildInsert(table string, value interface{}) string {
 	var fields, values []string
+	beego.Debug("insert parameter:", value)
+	beego.Debug("insert parameter type:", reflect.TypeOf(value).Kind())
 	if reflect.TypeOf(value).Kind() == reflect.Map {
 		fields, values = ExtractToStringFromMap(value.(map[string]interface{}))
-	} else {
+	} else if reflect.TypeOf(value).Kind() == reflect.Struct {
 		fields, values = ExtractToStringFromObject(value)
 	}
 	//ignore id fields

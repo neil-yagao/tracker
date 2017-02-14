@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import { ViewController, AlertController } from 'ionic-angular';
+import { ViewController, AlertController,LoadingController} from 'ionic-angular';
 import { HttpBase } from '../../app/httpbase';
 
 
@@ -12,11 +12,11 @@ import * as _ from "lodash";
 })
 export class WorkoutTemplate {
     templates:Array<any>;
-    timeStarts:string;
+    timeStarts:string = new Date().toISOString()
     selectedTemplate:Array<string>;
     selectedTemplateId:Array<any> = [];
     constructor(public viewCtrl:ViewController, public http:HttpBase,
-        public alertCtrl:AlertController){
+        public alertCtrl:AlertController, private loading:LoadingController){
         http.get('templates').subscribe((templates)=>{
             this.templates = templates;
         })
@@ -68,13 +68,21 @@ export class WorkoutTemplate {
         console.info(this.selectedTemplateId)
         var requestBody = {
             'userid':window.localStorage.getItem("username"),
-            'templatesId':this.selectedTemplateId
+            'templatesId':this.selectedTemplateId,
+            'startDate': this.timeStarts.substring(0,10)
         }
+        let loader = this.loading.create({
+              content: "Please wait...",
+              duration: 5000
+            });
+        loader.present()
         this.http.post('templates/user',requestBody).subscribe(_ =>{
-            this.viewCtrl.dismiss({
-                ids: this.selectedTemplateId,
-                names:this.selectedTemplate
-            })
+            this.viewCtrl.dismiss()
+            loader.dismiss()
         })
+    }
+
+    dismiss(){
+         this.viewCtrl.dismiss()
     }
 }

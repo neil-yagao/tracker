@@ -1,16 +1,5 @@
 package models
 
-type WorkoutTemplate struct {
-	Name         string             `json:"name"`
-	Movements    []MovementTemplate `json:"movements"`
-	StartAt      string             `json:"startAt"`
-	Weekly       string             `json:"weekly"`
-	Addition     string             `json:"addition"`
-	TargetMuscle string             `json:"targetMuscle"`
-	Description  string             `json:"description"`
-	Template     string             `json:"template"`
-}
-
 type Movement struct {
 	Id              int64  `json:"id"`
 	TargetMuscle    string `json:"targetMuscle"`
@@ -48,10 +37,4 @@ type DividableWorkingSet struct {
 type SessionUpdateInfo struct {
 	Movement int64   `json:"movement"`
 	WorkSet  []int64 `json:"workset"`
-}
-
-type Template struct {
-	Id      int64  `json:"id"`
-	Name    string `json:"name"`
-	Content string `json:"content"`
 }

@@ -5,26 +5,28 @@ import (
 	"strings"
 )
 
-type templateService struct{}
+type Template struct {
+	Id      int64  `json:"id"`
+	Name    string `json:"name"`
+	Content string `json:"content"`
+}
 
-var TemplateService templateService
-
-func findTemplateId(template string) int64 {
+func findTemplate(template string) *Template {
+	var result *Template
 	if len(strings.TrimSpace(template)) == 0 {
-		return -1
+		return nil
 	} else {
 
-		rows := models.BasicCRUD.BuildAndQuery("select id from template where name = :name",
+		rows := models.BasicCRUD.BuildAndQuery("select id, name, content from template where name = :name",
 			map[string]interface{}{"name": template})
 		defer rows.Close()
-		var templateId int64 = -1
 		if rows.Next() {
-			rows.Scan(&templateId)
+			rows.Scan(&result.Id, &result.Name, &result.Content)
 		}
-		return templateId
+		return result
 	}
 }
 
-func saveTemplate(template models.Template) int64 {
+func saveTemplate(template Template) int64 {
 	return models.BasicCRUD.Save("template", template)
 }
