@@ -1,6 +1,14 @@
 package services
 
-import "testing"
+import (
+	"crypto/md5"
+	"fmt"
+	"testing"
+)
+
+var username = []byte("testing")
+
+var USER_INDENTITY string = fmt.Sprintf("%x", md5.Sum(username))
 
 func TestAssignTemplateToUser(t *testing.T) {
 	template := new(UserTemplate)

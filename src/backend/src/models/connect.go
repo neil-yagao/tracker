@@ -157,6 +157,18 @@ func build(sql string, param map[string]interface{}) string {
 			appendedStr = appendedStr + ")"
 			replaceCriteria = column + " " + operator + " " + appendedStr
 			buildSQL = strings.Replace(buildSQL, criteria, replaceCriteria, -1)
+		case []int64:
+			appendedStr := "("
+			for index, k := range []int64(paramValue) {
+				if index == len(paramValue)-1 {
+					appendedStr = appendedStr + fmt.Sprint(k)
+				} else {
+					appendedStr = appendedStr + fmt.Sprint(k)
+				}
+			}
+			appendedStr = appendedStr + ")"
+			replaceCriteria = column + " " + operator + " " + appendedStr
+			buildSQL = strings.Replace(buildSQL, criteria, replaceCriteria, -1)
 		default:
 			replaceCriteria = column + " " + operator + " " + fmt.Sprint(paramValue)
 
@@ -191,8 +203,6 @@ func pos(value string, slice []string) int {
 
 func buildInsert(table string, value interface{}) string {
 	var fields, values []string
-	beego.Debug("insert parameter:", value)
-	beego.Debug("insert parameter type:", reflect.TypeOf(value).Kind())
 	if reflect.TypeOf(value).Kind() == reflect.Map {
 		fields, values = ExtractToStringFromMap(value.(map[string]interface{}))
 	} else if reflect.TypeOf(value).Kind() == reflect.Struct {

@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"log"
 	"models"
 	"services"
 	"strconv"
@@ -24,9 +23,9 @@ func (this *WorkingSessionController) SaveSession() {
 	defer this.RecoverFromError()
 	achieved := make([]models.WorkingSet, 0)
 	this.ParseRequestBody(&achieved)
-	log.Println(achieved)
 	workoutId := this.Ctx.Input.Param(":workout")
-	services.SessionService.FinalizeSession(achieved, workoutId)
+	userIdentify := this.GetUserIdentity()
+	services.SessionService.FinalizeSession(achieved, workoutId, userIdentify)
 	this.ServeJson()
 }
 

@@ -12,7 +12,7 @@ type Template struct {
 }
 
 func findTemplate(template string) *Template {
-	var result *Template
+	var result Template
 	if len(strings.TrimSpace(template)) == 0 {
 		return nil
 	} else {
@@ -23,8 +23,20 @@ func findTemplate(template string) *Template {
 		if rows.Next() {
 			rows.Scan(&result.Id, &result.Name, &result.Content)
 		}
-		return result
+		return &result
 	}
+}
+
+func findTemplateById(id int64) *Template {
+	var result Template
+
+	rows := models.BasicCRUD.BuildAndQuery("select id, name, content from template where id = :id",
+		map[string]interface{}{"id": id})
+	defer rows.Close()
+	if rows.Next() {
+		rows.Scan(&result.Id, &result.Name, &result.Content)
+	}
+	return &result
 }
 
 func saveTemplate(template Template) int64 {

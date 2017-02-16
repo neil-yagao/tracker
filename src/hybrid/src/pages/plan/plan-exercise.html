@@ -1,43 +1,41 @@
 <h1>训练内容</h1>
 <ion-list>
-  <ion-item-sliding *ngFor=" let exercise of template.movements">
-    <ion-item>
-      <ion-label>{{exercise.name}}</ion-label>
-      <ion-note item-right>{{exercise.weight}} KG X {{exercise.sets}} X {{exercise.rep}}</ion-note>
-    </ion-item>
-    <ion-item-options side="right">
-      <button ion-button expandable color="danger" (click)="deleteExercise(exercise)">
-        删除
-      </button>
-    </ion-item-options>
-  </ion-item-sliding>
-
-  <button ion-button outline (click)="createSession()" *ngIf="template.movements.length> 0">创建训练计划</button>
+    <ion-item-sliding *ngFor=" let exercise of template.movements">
+        <ion-item>
+            <ion-label>{{exercise.name}}</ion-label>
+            <ion-note item-right>{{exercise.weight}} KG X {{exercise.sets}} X {{exercise.repeats}}</ion-note>
+        </ion-item>
+        <ion-item-options side="right">
+            <button ion-button expandable color="danger" (click)="deleteExercise(exercise)">
+                删除
+            </button>
+        </ion-item-options>
+    </ion-item-sliding>
+    <button ion-button outline (click)="createSession()" *ngIf="template.movements.length> 0">创建训练计划</button>
 </ion-list>
 <ion-list>
-  <ion-list-header style="text-align: left;
+    <ion-list-header style="text-align: left;
     font-size: 20px;
     font-weight: bold;">
-    添加训练内容
+        添加训练内容
     </ion-list-header>
     <ion-item>
-      <ion-label floating>动作名称</ion-label>
-      <ion-select item-content [(ngModel)]="activeExercise.name">
-        <ion-option *ngFor="let movement of movements" (click)="activeExercise.name = movement.name">{{movement.name}}</ion-option>
-      </ion-select>
+        <ion-label floating>动作名称</ion-label>
+        <ion-select item-content [(ngModel)]="activeExercise.name">
+            <ion-option *ngFor="let movement of movements" (click)="activeExercise.name = movement.name">{{movement.name}}</ion-option>
+        </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label floating>重量</ion-label>
-      <ion-input item-content type="number" [(ngModel)]="activeExercise.weight"></ion-input>
+        <ion-label floating>重量</ion-label>
+        <ion-input item-content type="number" [(ngModel)]="activeExercise.weight"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label floating>重复组数</ion-label>
-      <ion-input item-content type="number" [(ngModel)]="activeExercise.sets"></ion-input>
+        <ion-label floating>重复组数</ion-label>
+        <ion-input item-content type="number" [(ngModel)]="activeExercise.sets"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label floating>每组次数</ion-label>
-      <ion-input item-content type="number" [(ngModel)]="activeExercise.rep"></ion-input>
+        <ion-label floating>每组次数</ion-label>
+        <ion-input item-content type="number" [(ngModel)]="activeExercise.repeats"></ion-input>
     </ion-item>
-
     <button ion-button round outline color="dark" (click)="addExercise()">添加动作</button>
 </ion-list>

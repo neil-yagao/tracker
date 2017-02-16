@@ -23,7 +23,7 @@ func (this *WorkoutDefinition) AssignWorkoutsToTemplate() {
 	template := findTemplate(this.Template)
 	var id int64
 	workouts := createAndSaveWorkouts(this)
-	if template == nil {
+	if template == nil || template.Id == 0 {
 		newTemplate := new(Template)
 		newTemplate.Name = this.Template
 		content, _ := json.Marshal(this)
@@ -40,11 +40,11 @@ func (this *WorkoutDefinition) AssignWorkoutsToTemplate() {
 
 func findWorkoutsFromTemplates(templatesId []int64) []*Workout {
 	workouts := make([]*Workout, 0)
-	rows := models.BasicCRUD.BuildAndQuery("select w.id , w.name, w.target, w.sequence, w.repeat from workout w, template_workout tw where tw.template in :template and tw.workout = w.id",
+	rows := models.BasicCRUD.BuildAndQuery("select w.id , w.name, w.target, w.sequence, w.repeating from workout w, template_workout tw where tw.template in :template and tw.workout = w.id",
 		map[string]interface{}{"template": templatesId})
 	for rows.Next() {
 		workout := new(Workout)
-		rows.Scan(&workout.Id, &workout.Name, &workout.Target, &workout.Sequence, &workout.Repeat)
+		rows.Scan(&workout.Id, &workout.Name, &workout.Target, &workout.Sequence, &workout.Repeating)
 		workouts = append(workouts, workout)
 	}
 	return workouts

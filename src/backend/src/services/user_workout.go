@@ -1,6 +1,7 @@
 package services
 
 import (
+	"database/sql"
 	"fmt"
 	"models"
 	"time"
@@ -14,7 +15,8 @@ type Workout struct {
 	Target      string `json:"target"`
 	Description string `json:"description"`
 	Sequence    int64  `json:"sequence"`
-	Repeat      string `json:"repeat"`
+	Repeating   string `json:"repeating"`
+	PerformDate string `json:"perform_date"`
 }
 
 const WEEK_HOUR = 168
@@ -29,6 +31,16 @@ func (this *Workout) FindUserWorkouts(user string) []*Workout {
 
 }
 
+func scanWorkoutsResult(rows *sql.Rows) []*Workout {
+	workouts := make([]*Workout, 0)
+	for rows.Next() {
+		var one Workout
+		rows.Scan(&one.Id, &one.Name, &one.Target, &one.PerformDate, &one.Description)
+		workouts = append(workouts, &one)
+	}
+	return workouts
+}
+
 func findUserWorkouts(user string) []*Workout {
 	rows := models.BasicCRUD.BuildAndQuery(QUERY_UESER_WORKOUT_QUERY, map[string]interface{}{"useridentity": user})
 	defer rows.Close()
@@ -41,7 +53,7 @@ func assignWorkoutsToUser(userIdentity string, workouts []*Workout, startDate st
 	startTimePoint, _ := time.Parse("2006-01-02", startDate)
 	for _, workout := range workouts {
 		var timeSpan, _ = time.ParseDuration(fmt.Sprint(workout.Sequence*WEEK_HOUR) + "h")
-		timePoint := findNextWeekday(workout.Repeat, startTimePoint.Add(timeSpan))
+		timePoint := findNextWeekday(workout.Repeating, startTimePoint.Add(timeSpan))
 		assignWorkoutToUser(user, workout.Id, timePoint.String()[0:10])
 	}
 }

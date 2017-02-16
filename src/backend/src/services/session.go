@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	"models"
 
 	"github.com/astaxie/beego"
@@ -30,7 +31,7 @@ func (this *sessionService) GetWorkoutSession(workoutId int) []models.DividableW
 	return sessions
 }
 
-func (this *sessionService) FinalizeSession(workingsets []models.WorkingSet, workoutId string) {
+func (this *sessionService) FinalizeSession(workingsets []models.WorkingSet, workoutId string, userIdentify string) {
 	completedSets := make([]map[string]interface{}, 0)
 	for _, set := range workingsets {
 		beego.Debug("debug:", set.AcheiveNumber, set.Id)
@@ -39,7 +40,11 @@ func (this *sessionService) FinalizeSession(workingsets []models.WorkingSet, wor
 		completedSets = append(completedSets, completeSet)
 	}
 	models.BasicCRUD.BuildAndUpdate("update working_set set acheive_number = :acheive_number , acheive_weight = :acheive_weight where id = :id", completedSets)
-	models.BasicCRUD.Update("update workout set is_finalized = 1  where id = " + workoutId)
+	userId := getUserId(userIdentify)
+	models.BasicCRUD.Update("update user_workout set is_finalized = 1  where workout = " + workoutId + " and user = " + fmt.Sprint(userId))
+
+	// TODO judge template is completed or not
+
 }
 
 func (this *sessionService) UpdateSessionMovement(updateInfo *models.SessionUpdateInfo) {

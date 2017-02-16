@@ -6,14 +6,14 @@ import (
 )
 
 func TestSaveTemplate(t *testing.T) {
-	template := new(models.Template)
+	template := new(Template)
 	template.Name = "testingTemplateName"
 	template.Content = "this is description for testing template."
 	id := saveTemplate(*template)
 	if id != -1 {
 		defer models.BasicCRUD.Delete("template", id)
 	}
-	if id != findTemplateId(template.Name) {
+	if id != findTemplate(template.Name).Id {
 		t.Error("unable to handle save and read template!")
 	}
 }

@@ -30,6 +30,10 @@ func userExisted(userIdentity string) bool {
 }
 
 func (this *userService) GetUserIdFromIdentity(user string) int64 {
+	return getUserId(user)
+}
+
+func getUserId(user string) int64 {
 	rows := models.BasicCRUD.Query("select id from user where useridentity = '" + user + "'")
 	var id int64
 	for rows.Next() {
