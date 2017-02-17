@@ -12,8 +12,8 @@ import (
 )
 
 const USER_WORKOUT_DEFINITION string = "{\"movements\":" +
-	"[{\"name\":\"卧推\",\"rep\":8,\"weight\":85,\"sets\":3}," +
-	"{\"name\":\"上斜板哑铃卧推\",\"rep\":8,\"weight\":25,\"sets\":3}]," +
+	"[{\"name\":\"卧推\",\"repeats\":8,\"weight\":85,\"sets\":3}," +
+	"{\"name\":\"上斜板哑铃卧推\",\"repeats\":8,\"weight\":25,\"sets\":3}]," +
 	"\"name\":\"测试训练胸部\"," +
 	"\"template\":\"测试训练计划\"," +
 	"\"targetMuscle\":\"胸\"," +
@@ -21,8 +21,8 @@ const USER_WORKOUT_DEFINITION string = "{\"movements\":" +
 	"\"weekly\":\"Monday\"}"
 
 const UPDATE_WORKOUT_DEFINITION string = "{\"movements\":" +
-	"[{\"name\":\"杠铃划船\",\"rep\":8,\"weight\":60,\"sets\":3}," +
-	"{\"name\":\"反手引体向上\",\"rep\":8,\"weight\":0,\"sets\":3}]," +
+	"[{\"name\":\"杠铃划船\",\"repeats\":8,\"weight\":60,\"sets\":3}," +
+	"{\"name\":\"反手引体向上\",\"repeats\":8,\"weight\":0,\"sets\":3}]," +
 	"\"name\":\"测试背部训练\",\"template\":\"测试训练计划\",\"targetMuscle\":\"背,二头\",\"description\":\"测试训练计划，背部训练\",\"weekly\":\"Tuesday\"}"
 	/**
 	 * User create new template
@@ -99,6 +99,7 @@ func TestIntegrationUserCreateNewTemplate(t *testing.T) {
 			sequenceMatching[key] = true
 		}
 	}
+
 	cleanUp("template", template.Id)
 	cleanUp("workout", workouts)
 	models.BasicCRUD.Update("delete from template_workout where template = " + fmt.Sprint(template.Id))
@@ -132,12 +133,12 @@ func TestIntegrationUserUpdateExistingTemplate(t *testing.T) {
 			sequenceMatching[key] = true
 		}
 	}
-	cleanUp("template", template.Id)
-	cleanUp("workout", workouts)
-	for _, workout := range workouts {
-		models.BasicCRUD.Update("delete from working_set where workout = " + fmt.Sprint(workout.Id))
-	}
-	models.BasicCRUD.Update("delete from template_workout where template = " + fmt.Sprint(template.Id))
+	// cleanUp("template", template.Id)
+	// cleanUp("workout", workouts)
+	// for _, workout := range workouts {
+	// 	models.BasicCRUD.Update("delete from working_set where workout = " + fmt.Sprint(workout.Id))
+	// }
+	// models.BasicCRUD.Update("delete from template_workout where template = " + fmt.Sprint(template.Id))
 	t.Log("-------------------------------------------TestIntegrationUserUpdateExistingTemplate Passed-------------------------------")
 }
 
@@ -168,6 +169,11 @@ func TestIntegrationAssignTemplateToUser(t *testing.T) {
 				matching++
 			}
 		}
+		sessionContent := SessionService.GetWorkoutSession(int(template.Id))
+		if len(sessionContent) != 6 {
+			t.Error("Unable to generate proper working set during assign")
+			t.Fail()
+		}
 	}
 
 	if matching != len(templateWorkouts) {
@@ -176,7 +182,7 @@ func TestIntegrationAssignTemplateToUser(t *testing.T) {
 
 	cleanUp("template", template.Id)
 	cleanUp("workout", templateWorkouts)
-	for _, workout := range workouts {
+	for _, workout := range userWorkouts {
 		models.BasicCRUD.Update("delete from working_set where workout = " + fmt.Sprint(workout.Id))
 	}
 	models.BasicCRUD.Update("delete from template_workout where template = " + fmt.Sprint(template.Id))
@@ -213,7 +219,7 @@ func TestIntegrationUnassignTemplateToUser(t *testing.T) {
 
 	cleanUp("template", template.Id)
 	cleanUp("workout", templateWorkouts)
-	for _, workout := range workouts {
+	for _, workout := range templateWorkouts {
 		models.BasicCRUD.Update("delete from working_set where workout = " + fmt.Sprint(workout.Id))
 	}
 	models.BasicCRUD.Update("delete from template_workout where template = " + fmt.Sprint(template.Id))

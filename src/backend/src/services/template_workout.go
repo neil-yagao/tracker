@@ -33,9 +33,13 @@ func (this *WorkoutDefinition) AssignWorkoutsToTemplate() {
 	} else {
 		id = template.Id
 	}
+	batchInsert := new(models.BatchSqls)
 	for _, workout := range workouts {
-		models.BasicCRUD.Save("template_workout", TemplateWorkout{id, workout.Id})
+		batchInsert.Params = append(batchInsert.Params, map[string]interface{}{
+			"template": id,
+			"workout":  workout.Id})
 	}
+	batchInsert.BatchInsert("template_workout")
 }
 
 func findWorkoutsFromTemplates(templatesId []int64) []*Workout {

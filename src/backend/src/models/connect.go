@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"reflect"
 	"regexp"
@@ -290,4 +291,15 @@ func underscore(s string) string {
 		}
 	}
 	return strings.ToLower(strings.Join(a, "_"))
+}
+
+func InterfaceToJSONObject(value interface{}) map[string]interface{} {
+	var result map[string]interface{}
+	byt, _ := json.Marshal(value)
+	beego.Debug("translate to string,", string(byt))
+	err := json.Unmarshal(byt, &result)
+	if err != nil {
+		checkErr(err)
+	}
+	return result
 }
