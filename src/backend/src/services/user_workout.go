@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"models"
 	"time"
-
-	"github.com/astaxie/beego"
 )
 
 type Workout struct {
@@ -75,7 +73,6 @@ func findNextWeekday(weekday string, startPoint time.Time) time.Time {
 	var loop int = 0
 	for timePoint = startPoint; loop < 8; timePoint = timePoint.Add(day) {
 		if timePoint.Weekday().String() == weekday {
-			beego.Debug("find next weekday:" + timePoint.Weekday().String())
 			return timePoint
 		}
 		loop++

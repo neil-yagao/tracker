@@ -216,7 +216,6 @@ func buildInsert(table string, value interface{}) string {
 		values = append(values[:idFieldIndex], values[idFieldIndex+1:]...)
 	}
 	insertSql := "INSERT INTO " + table + " (" + strings.Join(fields, ",") + ") values (" + strings.Join(values, ",") + ");"
-	beego.Debug("insert sql:" + insertSql)
 	return insertSql
 }
 
@@ -296,7 +295,6 @@ func underscore(s string) string {
 func InterfaceToJSONObject(value interface{}) map[string]interface{} {
 	var result map[string]interface{}
 	byt, _ := json.Marshal(value)
-	beego.Debug("translate to string,", string(byt))
 	err := json.Unmarshal(byt, &result)
 	if err != nil {
 		checkErr(err)
