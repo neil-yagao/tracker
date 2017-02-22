@@ -1,0 +1,15 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>现有训练计划</ion-title>
+        <button ion-button small (click)="openPopover($event)" outline>
+            创建计划
+        </button>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list>
+        <button ion-item *ngFor="let template of templates" (click)="goToDetail(template)">
+            {{template.name}}
+        </button>
+    </ion-list>
+</ion-content>

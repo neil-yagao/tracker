@@ -1,0 +1,12 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{template.name}}的课程</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list>
+        <button ion-item *ngFor="let workout of workouts" (click)="goToDetail(template)">
+            {{workout.name}}
+        </button>
+    </ion-list>
+</ion-content>

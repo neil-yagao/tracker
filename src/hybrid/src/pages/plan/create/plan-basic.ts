@@ -1,7 +1,7 @@
 import { Component, ViewChild, EventEmitter, Output } from '@angular/core';
 import { AlertController } from 'ionic-angular';
-import { WorkoutTemplate } from './workout-template';
-import { HttpBase } from '../../app/httpbase';
+import { WorkoutTemplate } from '../workout-template';
+import { HttpBase } from '../../../app/httpbase';
 
 
 import * as _ from "lodash";

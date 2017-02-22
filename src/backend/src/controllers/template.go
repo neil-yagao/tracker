@@ -3,6 +3,7 @@ package controllers
 import (
 	"models"
 	"services"
+	"strconv"
 
 	"github.com/astaxie/beego"
 )
@@ -60,4 +61,14 @@ func (this *TemplateController) GetUserCurrentTemplates() {
 	template := new(services.UserTemplate)
 	template.UserIdentity = userIdentity
 	this.ServeJson(template.GetUserTemplate())
+}
+
+//@router /templates/：id/workouts [get]
+func (this *TemplateController) GetTemplateWorkouts() {
+	defer this.RecoverFromError()
+	templateId := this.Ctx.Input.Param(":id")
+	template := new(services.TemplateWorkout)
+	id, _ := strconv.Atoi(templateId)
+	template.Template = int64(id)
+	this.ServeJson(template.FindWorkouts())
 }

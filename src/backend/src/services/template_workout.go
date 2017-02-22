@@ -42,6 +42,10 @@ func (this *WorkoutDefinition) AssignWorkoutsToTemplate() {
 	batchInsert.BatchInsert("template_workout")
 }
 
+func (this *TemplateWorkout) FindWorkouts() []*Workout {
+	return findWorkoutsFromTemplates([]int64{this.Template})
+}
+
 func findWorkoutsFromTemplates(templatesId []int64) []*Workout {
 	workouts := make([]*Workout, 0)
 	rows := models.BasicCRUD.BuildAndQuery("select w.id , w.name, w.target, w.sequence, w.repeating from workout w, template_workout tw where tw.template in :template and tw.workout = w.id",
