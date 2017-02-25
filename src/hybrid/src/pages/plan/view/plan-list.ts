@@ -4,6 +4,9 @@ import { NavController /*, PopoverController */ } from 'ionic-angular';
 
 import { HttpBase } from '../../../app/httpbase';
 import { PlanPage } from '../create/plan';
+import { TemplateDetail } from './template-detail';
+
+
 
 @Component({
     selector: 'template-list',
@@ -23,7 +26,7 @@ export class PlanList {
     }
 
     goToDetail(template) {
-
+        this.navCtrl.push(TemplateDetail, { 'template': template })
     }
 
     openPopover(template) {

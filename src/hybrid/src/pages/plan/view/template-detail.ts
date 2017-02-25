@@ -9,7 +9,7 @@ import { PlanPage } from '../create/plan';
     selector: 'template-detail',
     templateUrl: 'template-detail.html'
 })
-export class PlanList {
+export class TemplateDetail {
     workouts: Array < any > ;
     template: any;
     constructor(public navCtrl: NavController, public params: NavParams,
@@ -25,7 +25,7 @@ export class PlanList {
         })
     }
 
-    goToDetail(template) {
+    goToDetail(workout) {
 
     }
 
