@@ -5,8 +5,10 @@
 </ion-header>
 <ion-content>
     <ion-list>
-        <button ion-item *ngFor="let workout of workouts" (click)="goToDetail(template)">
+        <button ion-item *ngFor="let workout of workouts" (click)="goToDetail(workout)">
             {{workout.name}}
+            <ion-note item-right>{{workout.repeating}}</ion-note>
         </button>
+
     </ion-list>
 </ion-content>

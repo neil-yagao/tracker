@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"services"
+	"strconv"
 
 	"github.com/astaxie/beego"
 )
@@ -26,4 +27,15 @@ func (this *WorkoutController) InsertWorkout() {
 	this.ParseRequestBody(template)
 	template.AssignWorkoutsToTemplate()
 	this.ServeJson()
+}
+
+// @router /workout/:id/movements [get]
+func (this *WorkoutController) GetWorkoutMovements() {
+	defer this.RecoverFromError()
+	workoutId := this.Ctx.Input.Param(":id")
+
+	workout := new(services.WorkoutMovement)
+	id, _ := strconv.Atoi(workoutId)
+	workout.Workout = int64(id)
+	this.ServeJson(workout.GetWorkoutMovements())
 }

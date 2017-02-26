@@ -23,3 +23,7 @@ func getWorkoutMovements(workoutId int64) []WorkoutMovement {
 	}
 	return movements
 }
+
+func (this *WorkoutMovement) GetWorkoutMovements() []WorkoutMovement {
+	return getWorkoutMovements(this.Workout)
+}

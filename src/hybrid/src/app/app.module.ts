@@ -20,6 +20,8 @@ import { RestingModal } from '../pages/workout/resting-modal';
 import { PlanBasicPage } from '../pages/plan/create/plan-basic';
 import { PlanExercisePage } from '../pages/plan/create/plan-exercise';
 import { PlanList } from '../pages/plan/view/plan-list';
+import { TemplateDetail } from '../pages/plan/view/template-detail';
+import { SessionMovements } from '../pages/plan/view/session-movements';
 
 import { HttpBase } from './httpbase'
 
@@ -38,14 +40,15 @@ import { HttpBase } from './httpbase'
         MovementModal,
         TemplatePopover,
         WorkoutTemplate,
-        PlanList
+        PlanList,
+        TemplateDetail,
+        SessionMovements
     ],
     imports: [
         FormsModule,
         IonicModule.forRoot(MyApp),
         HttpModule,
         JsonpModule
-
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -62,7 +65,9 @@ import { HttpBase } from './httpbase'
         MovementModal,
         TemplatePopover,
         WorkoutTemplate,
-        PlanList
+        PlanList,
+        TemplateDetail,
+        SessionMovements
     ],
     providers: [
         HttpBase,

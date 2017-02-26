@@ -63,7 +63,7 @@ func (this *TemplateController) GetUserCurrentTemplates() {
 	this.ServeJson(template.GetUserTemplate())
 }
 
-//@router /templates/：id/workouts [get]
+//@router /templates/:id/workouts [get]
 func (this *TemplateController) GetTemplateWorkouts() {
 	defer this.RecoverFromError()
 	templateId := this.Ctx.Input.Param(":id")

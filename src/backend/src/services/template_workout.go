@@ -48,7 +48,7 @@ func (this *TemplateWorkout) FindWorkouts() []*Workout {
 
 func findWorkoutsFromTemplates(templatesId []int64) []*Workout {
 	workouts := make([]*Workout, 0)
-	rows := models.BasicCRUD.BuildAndQuery("select w.id , w.name, w.target, w.sequence, w.repeating from workout w, template_workout tw where tw.template in :template and tw.workout = w.id",
+	rows := models.BasicCRUD.BuildAndQuery("select w.id , w.name, w.target, w.sequence, w.repeating from workout w, template_workout tw where tw.template in :template and tw.workout = w.id and w.sequence = 0",
 		map[string]interface{}{"template": templatesId})
 	for rows.Next() {
 		workout := new(Workout)

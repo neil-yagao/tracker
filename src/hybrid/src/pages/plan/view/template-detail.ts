@@ -4,6 +4,7 @@ import { NavController, NavParams /*, PopoverController */ } from 'ionic-angular
 
 import { HttpBase } from '../../../app/httpbase';
 import { PlanPage } from '../create/plan';
+import { SessionMovements} from './session-movements';
 
 @Component({
     selector: 'template-detail',
@@ -26,7 +27,7 @@ export class TemplateDetail {
     }
 
     goToDetail(workout) {
-
+        this.navCtrl.push(SessionMovements, {'workout': workout, 'workouts': this.workouts})
     }
 
     openPopover(event) {
