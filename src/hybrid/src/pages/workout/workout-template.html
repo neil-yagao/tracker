@@ -1,7 +1,7 @@
 <ion-header>
     <ion-navbar>
         <ion-title>添加计划</ion-title>
-        <button ion-button icon-only color="royal" (click)="dismiss()">
+        <button ion-button icon-only color="royal" (click)="dismiss()" small menuToggle>
             <ion-icon name="arrow-back"></ion-icon>
         </button>
     </ion-navbar>
@@ -9,9 +9,11 @@
 <ion-content>
     <ion-list>
         <ion-item>
-            <ion-label floating>现有计划</ion-label>
-            <ion-input [(ngModel)]="selectedTemplate"></ion-input>
-            <ion-icon name="search" item-right style="margin-bottom: -30px" (click)="selectFromExistingTemplate()"></ion-icon>
+            <ion-label fixed>选择计划</ion-label>
+            <ion-select [(ngModel)]="selectedTemplate" (ngModelChange)="selectTemplate($event)" multiple="true">
+                <ion-option *ngFor="let template of templates" [value]="template.id">{{template.name}}
+                </ion-option>
+            </ion-select>
         </ion-item>
         <ion-item>
             <ion-label>开始时间</ion-label>

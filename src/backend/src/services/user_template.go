@@ -62,7 +62,7 @@ func (this *UserTemplate) UnassignTemplate() {
 	for _, t := range this.TemplatesId {
 		deletingParams = append(deletingParams, map[string]interface{}{"user": id, "template": t})
 	}
-	models.BasicCRUD.BuildAndUpdate("delete from user_template where user := user and template := template", deletingParams)
+	models.BasicCRUD.BuildAndUpdate("delete from user_template where user = :user and template = :template", deletingParams)
 	templateWorkouts := findWorkoutsFromTemplates(this.TemplatesId)
 	deletingMap := make([]map[string]interface{}, len(templateWorkouts))
 	for i, workout := range templateWorkouts {
