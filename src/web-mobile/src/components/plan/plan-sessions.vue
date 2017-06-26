@@ -128,6 +128,10 @@ export default {
         editSesssions(rowIndex){
     		window.location.href = "#/working/plan/per-session/" + rowIndex;
         }
-	}
+	},
+    mounted:function(){
+        this.sessions = this.$store.state.newSession.sessions || [];
+        
+    }
 }
 </script>

@@ -65,7 +65,10 @@
                 <md-input type="number" v-model="activeExercise.repeats"></md-input>
             </md-input-container>
         </md-list-item>
-        <md-button class="md-raised md-warn" v-on:click.native="addExercise()">添加动作</md-button>
+        <md-list-item>
+            <md-button class="md-raised" v-on:click.native="addExercise()">添加动作</md-button>
+            <md-button class="md-raised md-accent" v-on:click.native="doneEdit()">课程编辑完成</md-button>
+        </md-list-item>
     </md-list>
 </div>
 
@@ -86,12 +89,25 @@ import _ from 'lodash';
 	    methods: {
 	        addExercise: function() {
 	        	this.exercises.push(_.clone(this.activeExercise));
-	        	this.activeExercise = {};
+	        	this.activeExercise.name = '';
+                this.activeExercise.weight = '';
+                this.activeExercise.sets = '';
+                this.activeExercise.repeats = '';
+
+
 	        },
 	        removeExercise(row){
 	        	console.info(row)
         		this.exercises = _.without(this.exercises, row);
-	        }
-	    }
+	        },
+            doneEdit(){
+                this.$store.state.newSession.sessisons[this.$route.params.id].workouts = _.clone(this.exercises);
+                window.location.href = "#/working/plan/sessions"
+            }
+	    },
+        mounted:function(){
+            var key = this.$route.params.id
+            this.exercises = this.$store.state.newSession.sessisons[key].workouts || []
+        }
 	}
 </script>
