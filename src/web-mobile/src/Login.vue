@@ -1,6 +1,5 @@
 <template>
-    <div class="row vcenter">
-        <div class="jumbotron">
+        <div class="jumbotron" >
             <h1>我们应该怎么称呼您?</h1>
             <p>
                 <div class="row padding-top">
@@ -13,7 +12,7 @@
                 </div>
             </p>
         </div>
-    </div>
+
 </template>
 <script>
 import md5 from 'md5'
@@ -43,6 +42,10 @@ export default {
 <style scoped>
 .jumbotron {
     padding-left: 3%;
+    position: absolute;
+    width: 100%;
+    top:40%;
+    left:1%;
 }
 
 .vcenter {

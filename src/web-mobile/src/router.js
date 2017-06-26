@@ -1,6 +1,6 @@
 import Login from './Login.vue'
 import WorkingSpace from './WorkingPage.vue'
-import Plan from './components/plan/plan.vue'
+import PlanRouter from './components/plan/plan-router.js'
 
 import VueRouter from 'vue-router'
 
@@ -8,10 +8,7 @@ import VueRouter from 'vue-router'
 const routes = [{
     path: "/working",
     component: WorkingSpace,
-    children: [{
-        'path': 'plan',
-        component: Plan
-    }]
+    children: [PlanRouter]
 }, {
     path: '/',
     component: Login

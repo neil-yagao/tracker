@@ -1,0 +1,133 @@
+<template>
+<div>
+	 <md-table-card>
+        <md-toolbar>
+            <h1 class="md-title">{{$store.state.newSession.plan}}现有的训练课</h1>
+        </md-toolbar>
+        <md-table>
+            <md-table-header>
+                <md-table-row>
+                    <md-table-head style="width:25%">训练课名称</md-table-head>
+                    <md-table-head>训练肌群</md-table-head>
+                    <md-table-head>训练时间</md-table-head>
+                    <md-table-head>重复次数</md-table-head>
+                    <md-table-head style="width:20%"></md-table-head>
+                </md-table-row>
+            </md-table-header>
+             <md-table-body>
+		      <md-table-row v-for="(row, rowIndex) in sessions" :key="rowIndex" :md-item="row">
+
+		        <md-table-cell>
+		          {{ row.name }}
+		        </md-table-cell>
+		        <md-table-cell>
+		          {{ row.muscle }}
+		        </md-table-cell>
+		        <md-table-cell>
+		          {{ timeMapping[row.weekly] }}
+		        </md-table-cell>
+		        <md-table-cell md-numeric>
+		          {{ row.repeats }}
+		        </md-table-cell>
+		        <md-table-cell>
+		        	<md-button class="md-fab md-primary"  v-on:click.native="editSesssions(rowIndex)">
+	         			<md-icon>edit</md-icon>
+	         		</md-button>
+	         		<md-button class="md-fab md-accent" v-on:click.native="removeSession(row)">
+	         		<md-icon>remove circle outline</md-icon>
+	         		</md-button>
+		        </md-table-cell>
+		      </md-table-row>
+		    </md-table-body>
+        </md-table>
+    </md-table-card>
+     <hr>
+    <md-list>
+        <md-list-item>
+            <md-input-container>
+                <label>训练课名称</label>
+                <md-input v-model="activeSession.name"></md-input>
+            </md-input-container>
+        </md-list-item>
+        <md-list-item>
+            <md-input-container>
+                <label>目标肌群</label>
+                <md-select name="muscle" id="muscle" v-model="activeSession.muscle">
+                    <md-option value="肩部">肩部</md-option>
+                    <md-option value="胸部">胸部</md-option>
+                    <md-option value="背部">背部</md-option>
+                    <md-option value="手臂">手臂</md-option>
+                    <md-option value="核心">核心</md-option>
+                    <md-option value="腿部">腿部</md-option>
+                    <md-option value="体能">体能(HIIT)</md-option>
+                </md-select>
+            </md-input-container>
+        </md-list-item>
+        <md-list-item>
+                <md-input-container>
+                <label>训练时间</label>
+                <md-select name="weekly" id="weekly" v-model="activeSession.weekly">
+                    <md-option value="Monday">周一</md-option>
+                    <md-option value="Tuesday">周二</md-option>
+                    <md-option value="Wednesday">周三</md-option>
+                    <md-option value="Thursday">周四</md-option>
+                    <md-option value="Friday">周五</md-option>
+                    <md-option value="Saturday">周六</md-option>
+                    <md-option value="Sunday">周日</md-option>
+                </md-select>
+            </md-input-container>
+        </md-list-item>
+        <md-list-item>
+            <md-input-container>
+                <label>重复次数</label>
+                <md-input type="number" v-model="activeSession.repeats"></md-input>
+            </md-input-container>
+        </md-list-item>
+        <md-list-item>
+        <md-button class="md-raised" v-on:click.native="addSessions()">添加至现有训练课</md-button>
+        <md-button class="md-raised md-accent" v-on:click.native="addSessions()">创建计划</md-button>
+        </md-list-item>
+    </md-list>
+</div>
+</template>
+<script>
+export default {
+	name:'plan-sessions',
+	data(){
+		return {
+			sessions: [],
+			activeSession:{},
+			timeMapping:{
+				'Monday': '周一',
+				'Tuesday': '周二',
+				'Wednesday': '周三',
+				'Thursday': '周四',
+				'Friday': '周五',
+				'Saturday': '周六',
+				'Sunday': '周日'
+			}
+		}
+	},
+	methods:{
+		addSessions: function() {
+			this.sessions.push(_.clone(this.activeSession));
+
+        	this.activeSession.name = '';
+        	this.activeSession.muscle = '';
+        	this.activeSession.weekly = '';
+        	this.activeSession.repeats = '';
+        	this.$store.state.newSession.sessisons = this.sessions;
+        	var index = (this.sessions.length - 1) 
+			this.$store.state.newSession.sessisons[index].workouts = [];
+
+        },
+        removeSession(row){
+        	console.info(row)
+    		this.sessions = _.without(this.sessions, row);
+        },
+        editSesssions(rowIndex){
+    		window.location.href = "#/working/plan/per-session/" + rowIndex;
+        }
+	}
+}
+</script>

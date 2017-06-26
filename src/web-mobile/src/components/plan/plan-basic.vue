@@ -1,19 +1,20 @@
 <template>
-<div>
+<div class="vertical-center">
     <md-list>
         <md-list-item>
             <md-input-container>
-                <label>课程名称</label>
-                <md-input v-model="$store.state.newSession.name"></md-input>
-            </md-input-container>
-        </md-list-item>
-        <md-list-item>
-            <md-input-container>
-                <label>所属计划</label>
+                <label>计划名称</label>
                 <md-input v-model="$store.state.newSession.plan"></md-input>
             </md-input-container>
         </md-list-item>
+
+
         <md-list-item>
+            <md-input-container>
+                <md-textarea v-model="$store.state.newSession.planDescription" placeholder="简要的介绍一下你的计划吧！"></md-textarea>
+            </md-input-container>
+        </md-list-item>
+        <!-- <md-list-item>
             <md-input-container>
                 <label>目标肌群</label>
                 <md-select name="muscle" id="muscle" v-model="$store.state.newSession.muscle">
@@ -28,18 +29,11 @@
             </md-input-container>
         </md-list-item>
         <md-list-item>
-            <md-input-container>
-                <label>每周重复</label>
-                <md-select name="repeat" id="repeat" v-model="$store.state.newSession.repeat">
-                    <md-option value="Monday">周一</md-option>
-                    <md-option value="Tuesday">周二</md-option>
-                    <md-option value="Wednesday">周三</md-option>
-                    <md-option value="Thursday">周四</md-option>
-                    <md-option value="Friday">周五</md-option>
-                    <md-option value="Saturday">周六</md-option>
-                    <md-option value="Sunday">周日</md-option>
-                </md-select>
-            </md-input-container>
+            
+        </md-list-item> -->
+        <md-list-item>
+        	<md-button class="md-raised md-accent" v-on:click.native="startCreatePlan()">开始创建全新的计划吧</md-button>
+        	</md-button>
         </md-list-item>
     </md-list>
 </div>
@@ -53,8 +47,17 @@ export default {
 		}
 	},
 	methods:{
-		
+		startCreatePlan(){
+			window.location.href = '#/working/plan/sessions'
+		}
 	}
 }
 	
 </script>
+<style type="text/css">
+.vertical-center {
+	position: absolute;
+	top:30%;
+	width: 100%
+}
+</style>

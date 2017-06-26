@@ -8,9 +8,12 @@ import router from './router.js'
 import Vuex from 'vuex'
 window.jQuery = require("jquery");
 require("bootstrap")
-import Vuetify from 'vuetify'
+require('../node_modules/bootstrap/dist/css/bootstrap.css')
+import VueMaterial from 'vue-material'
 
-Vue.use(Vuetify)
+
+
+Vue.use(VueMaterial)
 Vue.use(VueRouter)
 Vue.use(VueResource)
 Vue.use(Vuex)

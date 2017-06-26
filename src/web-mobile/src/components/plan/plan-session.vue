@@ -2,7 +2,7 @@
 <div style="margin-top:1em">
     <md-table-card>
         <md-toolbar>
-            <h1 class="md-title">已添加的动作</h1>
+            <h1 class="md-title">{{$store.state.newSession.sessisons[$route.params.id].name}}已添加的动作</h1>
         </md-toolbar>
         <md-table>
             <md-table-header>
