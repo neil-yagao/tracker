@@ -95,7 +95,6 @@ export default {
 	name:'plan-sessions',
 	data(){
 		return {
-			sessions: [],
 			activeSession:{},
 			timeMapping:{
 				'Monday': '周一',
@@ -110,28 +109,26 @@ export default {
 	},
 	methods:{
 		addSessions: function() {
-			this.sessions.push(_.clone(this.activeSession));
-
-        	this.activeSession.name = '';
-        	this.activeSession.muscle = '';
-        	this.activeSession.weekly = '';
-        	this.activeSession.repeats = '';
-        	this.$store.state.newSession.sessisons = this.sessions;
-        	var index = (this.sessions.length - 1) 
-			this.$store.state.newSession.sessisons[index].workouts = [];
-
+            this.activeSession.workouts = [];
+			this.$store.commit('pushSession', _.clone(this.activeSession));
+            this.activeSession.name = '';
+            this.activeSession.repeats = '';
+            this.activeSession.weekly = '';
+            this.activeSession.muscle = '';
+            this.activeSession = {}
         },
         removeSession(row){
-        	console.info(row)
-    		this.sessions = _.without(this.sessions, row);
+    		this.$store.commit('removeSession', row);
         },
         editSesssions(rowIndex){
+            this.$store.commit('editSession', rowIndex);
     		window.location.href = "#/working/plan/per-session/" + rowIndex;
         }
 	},
-    mounted:function(){
-        this.sessions = this.$store.state.newSession.sessions || [];
-        
+    computed:{
+        sessions: function(){
+            return this.$store.state.sessions;
+        }
     }
 }
 </script>

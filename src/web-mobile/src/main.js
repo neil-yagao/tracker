@@ -23,25 +23,28 @@ const store = new Vuex.Store({
 	state: {
 		username: '',
 		newSession: {
-			sessions: []
-		}
+
+		},
+		sessions: [],
+		editingSession: 0
 	},
 	mutations: {
 		pushSession(state, session) {
-			state.newSession.sessions.push(sessions);
+			state.sessions.push(session);
 		},
-		removeSessions(state, session) {
-			state.newSession.sessions = _.without(state.newSession.sessions, session);
+		removeSession(state, session) {
+			state.sessions = _.without(state.newSession.sessions, session);
 		},
-		pushExercise(state, index, exercise) {
-			if (state.newSession.sessions[index].workouts) {
-				state.newSession.sessions[index].workouts.push(exercise)
-			} else {
-				state.newSession.sessions[index].workouts = [exercise]
-			}
-		}，
-		removeExercise(state, index, exercise) {
-			state.newSession.sessions[index].workouts = _.without(state.newSession.sessions[index].workouts, exercise)
+		pushExercise(state, exercise) {
+			var preAdd = state.sessions[state.index];
+			preAdd.workouts.push(exercise)
+			state.sessions.splice(state.index, 1, preAdd);
+		},
+		removeExercise(state, exercise) {
+			state.sessions[state.index].workouts = _.without(state.sessions[state.index].workouts, exercise)
+		},
+		editSession(state, index) {
+			state.index = index;
 		}
 	}
 })

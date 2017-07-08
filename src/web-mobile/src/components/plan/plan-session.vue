@@ -2,7 +2,7 @@
 <div style="margin-top:1em">
     <md-table-card>
         <md-toolbar>
-            <h1 class="md-title">{{$store.state.newSession.sessisons[$route.params.id].name}}已添加的动作</h1>
+            <h1 class="md-title">{{}}已添加的动作</h1>
         </md-toolbar>
         <md-table>
             <md-table-header>
@@ -81,33 +81,34 @@ import _ from 'lodash';
 	    name: 'session-exercise',
 	    data() {
 	        return {
-	            activeExercise: {},
-	            exercises:[],
-	            selectedExercise:{}
+	            activeExercise: {}
 	        }
 	    },
 	    methods: {
 	        addExercise: function() {
-	        	this.exercises.push(_.clone(this.activeExercise));
-	        	this.activeExercise.name = '';
+                console.info(this.activeExercise)
+                this.$store.commit('pushExercise',  _.clone(this.activeExercise))
+                this.activeExercise.name = '';
                 this.activeExercise.weight = '';
                 this.activeExercise.sets = '';
                 this.activeExercise.repeats = '';
 
-
 	        },
 	        removeExercise(row){
-	        	console.info(row)
-        		this.exercises = _.without(this.exercises, row);
+	        	this.$store.commit('removeExercise', row )
 	        },
             doneEdit(){
-                this.$store.state.newSession.sessisons[this.$route.params.id].workouts = _.clone(this.exercises);
                 window.location.href = "#/working/plan/sessions"
             }
 	    },
-        mounted:function(){
-            var key = this.$route.params.id
-            this.exercises = this.$store.state.newSession.sessisons[key].workouts || []
+        computed:{
+            sessionIndex: function(){
+                return this.$route.params.id;
+            },
+            exercises: function(){
+                console.info(this.$store.state.sessions)
+                return this.$store.state.sessions[this.sessionIndex].workouts;
+            }
         }
 	}
 </script>
