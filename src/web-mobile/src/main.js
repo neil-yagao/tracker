@@ -12,7 +12,6 @@ require('../node_modules/bootstrap/dist/css/bootstrap.css')
 import VueMaterial from 'vue-material'
 
 
-
 Vue.use(VueMaterial)
 Vue.use(VueRouter)
 Vue.use(VueResource)
@@ -20,16 +19,16 @@ Vue.use(Vuex)
 window._ = require('lodash');
 
 const store = new Vuex.Store({
-    state: {
-        username: '',
-        newSession: {}
-    },
-    mutations: {
+	state: {
+		username: '',
+		newSession: {}
+	},
+	mutations: {
 
-    }
+	}
 })
 
 window.Vue = new Vue({ // eslint-disable-line no-new
-    store,
-    router
+	store,
+	router
 }).$mount('#app')

@@ -42,25 +42,25 @@
     <hr>
     <md-list>
         <md-list-item>
-            <md-input-container md-clearable="true">
+            <md-input-container :md-clearable="true">
                 <label>动作名称</label>
                 <md-input v-model="activeExercise.name"></md-input>
             </md-input-container>
         </md-list-item>
         <md-list-item>
-            <md-input-container md-clearable="true">
+            <md-input-container :md-clearable="true">
                 <label>重量</label>
                 <md-input type="number" v-model="activeExercise.weight"></md-input>
             </md-input-container>
         </md-list-item>
         <md-list-item>
-            <md-input-container md-clearable="true">
+            <md-input-container :md-clearable="true">
                 <label>重复组数</label>
                 <md-input type="number" v-model="activeExercise.sets"></md-input>
             </md-input-container>
         </md-list-item>
         <md-list-item>
-            <md-input-container md-clearable="true">
+            <md-input-container :md-clearable="true">
                 <label>每组次数</label>
                 <md-input type="number" v-model="activeExercise.repeats"></md-input>
             </md-input-container>
