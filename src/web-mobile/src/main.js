@@ -19,12 +19,30 @@ Vue.use(Vuex)
 window._ = require('lodash');
 
 const store = new Vuex.Store({
+
 	state: {
 		username: '',
-		newSession: {}
+		newSession: {
+			sessions: []
+		}
 	},
 	mutations: {
-
+		pushSession(state, session) {
+			state.newSession.sessions.push(sessions);
+		},
+		removeSessions(state, session) {
+			state.newSession.sessions = _.without(state.newSession.sessions, session);
+		},
+		pushExercise(state, index, exercise) {
+			if (state.newSession.sessions[index].workouts) {
+				state.newSession.sessions[index].workouts.push(exercise)
+			} else {
+				state.newSession.sessions[index].workouts = [exercise]
+			}
+		}，
+		removeExercise(state, index, exercise) {
+			state.newSession.sessions[index].workouts = _.without(state.newSession.sessions[index].workouts, exercise)
+		}
 	}
 })
 
