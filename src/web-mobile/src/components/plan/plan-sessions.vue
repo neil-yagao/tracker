@@ -2,7 +2,7 @@
 <div>
 	 <md-table-card>
         <md-toolbar>
-            <h1 class="md-title">{{$store.state.newSession.plan}}现有的训练课</h1>
+            <h1 class="md-title">{{$store.state.plan.planName}}的训练课</h1>
         </md-toolbar>
         <md-table>
             <md-table-header>
@@ -42,7 +42,7 @@
         </md-table>
     </md-table-card>
      <hr>
-    <md-list>
+    <md-list v-if="$store.state.plan.planEditing">
         <md-list-item>
             <md-input-container>
                 <label>训练课名称</label>
@@ -84,10 +84,19 @@
             </md-input-container>
         </md-list-item>
         <md-list-item>
-        <md-button class="md-raised" v-on:click.native="addSessions()">添加至现有训练课</md-button>
-        <md-button class="md-raised md-accent" v-on:click.native="addSessions()">创建计划</md-button>
+        <md-button class="md-raised" v-on:click.native="addSessions()">添加并开始编辑训练课</md-button>
+        <md-button class="md-raised md-accent" v-on:click.native="openReturnConfirm()">返回列表</md-button>
+        <md-button class="md-raised md-primary" v-on:click.native="addSessions()">创建计划</md-button>
         </md-list-item>
     </md-list>
+    <md-dialog-confirm
+      md-title=""
+      md-content="未保存的计划，返回会丢失现有数据，确认放弃么？"
+      md-ok-text="确认放弃"
+      md-cancel-text="返回继续"
+      @close="onClose"
+      ref="confirmReturn">
+    </md-dialog-confirm>
 </div>
 </template>
 <script>
@@ -104,18 +113,16 @@ export default {
 				'Friday': '周五',
 				'Saturday': '周六',
 				'Sunday': '周日'
-			}
+			},
+            editing: true
 		}
 	},
 	methods:{
 		addSessions: function() {
             this.activeSession.workouts = [];
 			this.$store.commit('pushSession', _.clone(this.activeSession));
-            this.activeSession.name = '';
-            this.activeSession.repeats = '';
-            this.activeSession.weekly = '';
-            this.activeSession.muscle = '';
             this.activeSession = {}
+            this.editSesssions(this.$store.state.plan.sessions.length - 1)
         },
         removeSession(row){
     		this.$store.commit('removeSession', row);
@@ -123,11 +130,21 @@ export default {
         editSesssions(rowIndex){
             this.$store.commit('editSession', rowIndex);
     		window.location.href = "#/working/plan/per-session/" + rowIndex;
+        },
+        openReturnConfirm(){
+            this.$refs['confirmReturn'].open();
+        },
+        onClose(type){
+            if(type == 'ok'){
+                this.$store.commit('reset')
+                this.$router.replace('/working/plan')
+            }
         }
+
 	},
     computed:{
         sessions: function(){
-            return this.$store.state.sessions;
+            return this.$store.state.plan.sessions;
         }
     }
 }

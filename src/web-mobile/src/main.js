@@ -10,7 +10,7 @@ window.jQuery = require("jquery");
 require("bootstrap")
 require('../node_modules/bootstrap/dist/css/bootstrap.css')
 import VueMaterial from 'vue-material'
-
+import planState from './components/plan/plan-state.js'
 
 Vue.use(VueMaterial)
 Vue.use(VueRouter)
@@ -21,31 +21,10 @@ window._ = require('lodash');
 const store = new Vuex.Store({
 
 	state: {
-		username: '',
-		newSession: {
-
-		},
-		sessions: [],
-		editingSession: 0
+		username: ''
 	},
-	mutations: {
-		pushSession(state, session) {
-			state.sessions.push(session);
-		},
-		removeSession(state, session) {
-			state.sessions = _.without(state.newSession.sessions, session);
-		},
-		pushExercise(state, exercise) {
-			var preAdd = state.sessions[state.index];
-			preAdd.workouts.push(exercise)
-			state.sessions.splice(state.index, 1, preAdd);
-		},
-		removeExercise(state, exercise) {
-			state.sessions[state.index].workouts = _.without(state.sessions[state.index].workouts, exercise)
-		},
-		editSession(state, index) {
-			state.index = index;
-		}
+	modules:{
+		plan:planState
 	}
 })
 

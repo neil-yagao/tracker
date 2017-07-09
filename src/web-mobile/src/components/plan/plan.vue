@@ -3,9 +3,8 @@
   <router-view class="margin-top"></router-view>
 
 <footer>
-<pre>
-    	{{$store.state.newSession}}
-    </pre></footer>
+
+</footer>
     
 </div>	
 </template>
@@ -26,5 +25,6 @@ export default{
 .margin-top{
 	margin-top:10px;
 }
+
 </style>
 

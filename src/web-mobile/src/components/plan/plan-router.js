@@ -1,6 +1,6 @@
-import PlanBasic from './plan-basic.vue'
 import PlanSession from './plan-session.vue'
 import PlanSessions from './plan-sessions.vue'
+import PlanList from './plan-list.vue'
 import Plan from './plan.vue'
 
 var router = {
@@ -8,7 +8,7 @@ var router = {
     component: Plan,
     children: [{
         path: "",
-        component: PlanBasic
+        component: PlanList
     }, {
         path: "sessions",
         component: PlanSessions

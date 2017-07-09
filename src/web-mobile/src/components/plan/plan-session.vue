@@ -2,7 +2,7 @@
 <div style="margin-top:1em">
     <md-table-card>
         <md-toolbar>
-            <h1 class="md-title">{{}}已添加的动作</h1>
+            <h1 class="md-title">{{title}}已添加的动作</h1>
         </md-toolbar>
         <md-table>
             <md-table-header>
@@ -33,7 +33,7 @@
 		          {{ row.repeats }}
 		        </md-table-cell>
 		        <md-table-cell>
-			        <md-button style="width:100%" class="md-raised md-accent" v-on:click.native="removeExercise(row)">从课程中删除</md-button>
+                    <md-icon class="md-accent"  v-on:click.native="removeExercise(row)">delete</md-icon>
 		        </md-table-cell>
 		      </md-table-row>
 		    </md-table-body>
@@ -67,7 +67,7 @@
         </md-list-item>
         <md-list-item>
             <md-button class="md-raised" v-on:click.native="addExercise()">添加动作</md-button>
-            <md-button class="md-raised md-accent" v-on:click.native="doneEdit()">课程编辑完成</md-button>
+            <md-button class="md-raised md-primary" v-on:click.native="doneEdit()">课程编辑完成</md-button>
         </md-list-item>
     </md-list>
 </div>
@@ -86,13 +86,12 @@ import _ from 'lodash';
 	    },
 	    methods: {
 	        addExercise: function() {
-                console.info(this.activeExercise)
                 this.$store.commit('pushExercise',  _.clone(this.activeExercise))
                 this.activeExercise.name = '';
                 this.activeExercise.weight = '';
                 this.activeExercise.sets = '';
                 this.activeExercise.repeats = '';
-
+                this.activeExercise = {};
 	        },
 	        removeExercise(row){
 	        	this.$store.commit('removeExercise', row )
@@ -106,8 +105,10 @@ import _ from 'lodash';
                 return this.$route.params.id;
             },
             exercises: function(){
-                console.info(this.$store.state.sessions)
-                return this.$store.state.sessions[this.sessionIndex].workouts;
+                return this.$store.state.plan.sessions[this.sessionIndex].workouts;
+            },
+            title:function(){
+                return this.$store.state.plan.sessions[this.sessionIndex].name
             }
         }
 	}
