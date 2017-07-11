@@ -40,7 +40,7 @@
         </md-table>
     </md-table-card>
     <hr>
-    <md-list>
+    <md-list v-if="$store.state.plan.planEditing">
         <md-list-item>
             <md-input-container :md-clearable="true">
                 <label>动作名称</label>

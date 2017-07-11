@@ -1,6 +1,9 @@
 <template>
 <div>
-	 <md-table-card>
+<md-button class="md-fab md-raised md-accent" v-on:click.native="openReturnConfirm()">
+	<md-icon>reply</md-icon>
+</md-button>
+    <md-table-card>
         <md-toolbar>
             <h1 class="md-title">{{$store.state.plan.planName}}的训练课</h1>
         </md-toolbar>
@@ -14,34 +17,34 @@
                     <md-table-head style="width:20%"></md-table-head>
                 </md-table-row>
             </md-table-header>
-             <md-table-body>
-		      <md-table-row v-for="(row, rowIndex) in sessions" :key="rowIndex" :md-item="row">
+            <md-table-body>
+                <md-table-row v-for="(row, rowIndex) in sessions" :key="rowIndex" :md-item="row">
+                    <md-table-cell>
+                        {{ row.name }}
+                    </md-table-cell>
+                    <md-table-cell>
+                        {{ row.muscle }}
+                    </md-table-cell>
+                    <md-table-cell>
+                        {{ timeMapping[row.weekly] }}
+                    </md-table-cell>
+                    <md-table-cell md-numeric>
+                        {{ row.repeats }}
+                    </md-table-cell>
+                    <md-table-cell >
+                        <md-button class="md-fab md-primary" v-on:click.native="editSesssions(rowIndex)">
+                            <md-icon>edit</md-icon>
+                        </md-button>
+                        <md-button class="md-fab md-accent" v-on:click.native="removeSession(row)" v-if="$store.state.plan.planEditing">
+                            <md-icon>remove circle outline</md-icon>
+                        </md-button>
+                    </md-table-cell>
 
-		        <md-table-cell>
-		          {{ row.name }}
-		        </md-table-cell>
-		        <md-table-cell>
-		          {{ row.muscle }}
-		        </md-table-cell>
-		        <md-table-cell>
-		          {{ timeMapping[row.weekly] }}
-		        </md-table-cell>
-		        <md-table-cell md-numeric>
-		          {{ row.repeats }}
-		        </md-table-cell>
-		        <md-table-cell>
-		        	<md-button class="md-fab md-primary"  v-on:click.native="editSesssions(rowIndex)">
-	         			<md-icon>edit</md-icon>
-	         		</md-button>
-	         		<md-button class="md-fab md-accent" v-on:click.native="removeSession(row)">
-	         		<md-icon>remove circle outline</md-icon>
-	         		</md-button>
-		        </md-table-cell>
-		      </md-table-row>
-		    </md-table-body>
+                </md-table-row>
+            </md-table-body>
         </md-table>
     </md-table-card>
-     <hr>
+    <hr>
     <md-list v-if="$store.state.plan.planEditing">
         <md-list-item>
             <md-input-container>
@@ -64,7 +67,7 @@
             </md-input-container>
         </md-list-item>
         <md-list-item>
-                <md-input-container>
+            <md-input-container>
                 <label>训练时间</label>
                 <md-select name="weekly" id="weekly" v-model="activeSession.weekly">
                     <md-option value="Monday">周一</md-option>
@@ -84,20 +87,14 @@
             </md-input-container>
         </md-list-item>
         <md-list-item>
-        <md-button class="md-raised" v-on:click.native="addSessions()">添加并开始编辑训练课</md-button>
-        <md-button class="md-raised md-accent" v-on:click.native="openReturnConfirm()">返回列表</md-button>
-        <md-button class="md-raised md-primary" v-on:click.native="addSessions()">创建计划</md-button>
+            <md-button class="md-raised" v-on:click.native="addSessions()">添加并开始编辑训练课</md-button>
+            <md-button class="md-raised md-primary" v-on:click.native="addSessions()">创建计划</md-button>
         </md-list-item>
     </md-list>
-    <md-dialog-confirm
-      md-title=""
-      md-content="未保存的计划，返回会丢失现有数据，确认放弃么？"
-      md-ok-text="确认放弃"
-      md-cancel-text="返回继续"
-      @close="onClose"
-      ref="confirmReturn">
+    <md-dialog-confirm md-title="" md-content="未保存的计划，返回会丢失现有数据，确认放弃么？" md-ok-text="确认放弃" md-cancel-text="返回继续" @close="onClose" ref="confirmReturn">
     </md-dialog-confirm>
 </div>
+
 </template>
 <script>
 export default {
@@ -132,7 +129,11 @@ export default {
     		window.location.href = "#/working/plan/per-session/" + rowIndex;
         },
         openReturnConfirm(){
-            this.$refs['confirmReturn'].open();
+        	if(this.$store.state.plan.planEditing){
+            	this.$refs['confirmReturn'].open();
+        	}else{
+        		this.onClose('ok');
+        	}
         },
         onClose(type){
             if(type == 'ok'){
