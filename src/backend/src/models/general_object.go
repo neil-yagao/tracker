@@ -5,7 +5,7 @@ type Movement struct {
 	TargetMuscle    string `json:"targetMuscle" orm:"size(32)"`
 	SecondaryMuscle string `json:"secondarMuscle" orm:"size(32)"`
 	Name            string `json:"name" orm:"size(128)"`
-	Description     string `json:"description" orm:"size(2048)"`
+	Description     string `json:"description" orm:"type(text)"`
 	Dividable       int8   `json:"dividable" orm:"digits(4)"`
 }
 

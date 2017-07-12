@@ -3,7 +3,6 @@ package models
 type SessionMovement struct {
 	Id         int64     `json:"id" orm:"auto;pk"`
 	Movement   *Movement `json:"movement" orm:"rel(fk)"`
-	Weight     float64   `json:"weight" orm:"digits(8);decimals(2)"`
 	Sets       float64   `json:"sets" orm:"digits(8);decimals(2)"`
 	Reps       float64   `json:"reps" orm:"digits(8);decimals(2)"`
 	Sequence   int64     `json:"sequence" orm:"digits(8)"`
@@ -25,4 +24,5 @@ type Plan struct {
 	Id       int64      `json:"id" orm:"auto;pk"`
 	Name     string     `json:"name" orm:"size(128)"`
 	Sessions []*Session `json:"sessions" orm:"reverse(many)"`
+	CreateBy *UserInfo  `json:"createby" orm:"rel(fk)"`
 }
