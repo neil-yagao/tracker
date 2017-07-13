@@ -1,5 +1,7 @@
 package models
 
+//workout template information
+//each session is composed by serveral movement and each movement has its own target reps and sets
 type SessionMovement struct {
 	Id         int64     `json:"id" orm:"auto;pk"`
 	Movement   *Movement `json:"movement" orm:"rel(fk)"`
@@ -10,6 +12,8 @@ type SessionMovement struct {
 	Session    *Session  `orm:"rel(fk)"`
 }
 
+//session template information
+//each plan is composed by several weekly(current setting) repeating sessions
 type Session struct {
 	Id           int64              `json:"id" orm:"auto;pk"`
 	Name         string             `json:"name" orm:"size(128)"`
@@ -20,6 +24,8 @@ type Session struct {
 	Plan         *Plan              `orm:"rel(fk)"`
 }
 
+//plan template information
+//could be assign to user which will create assigned plan object
 type Plan struct {
 	Id       int64      `json:"id" orm:"auto;pk"`
 	Name     string     `json:"name" orm:"size(128)"`
