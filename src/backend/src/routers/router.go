@@ -9,11 +9,8 @@ import (
 func init() {
 	//beego.Router("/", &controllers.MainController{})
 	//beego.Include(&master.OwnerController{})
-	beego.Include(&controllers.WorkoutController{})
-	beego.Include(&controllers.MovementController{})
+
 	beego.Include(&controllers.WorkingSessionController{})
-	beego.Include(&controllers.UserControllers{})
-	beego.Include(&controllers.TemplateController{})
 
 	beego.SetStaticPath("/", "../../webapp")
 	beego.SetStaticPath("/mobile", "../../hybrid/www")

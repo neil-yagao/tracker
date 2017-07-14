@@ -17,6 +17,7 @@ type UserSession struct {
 	AssignTo      *UserInfo         `orm:"rel(fk)"`
 	ExpectingDate time.Time         `orm:"type(date)"`
 	ExecutionDate time.Time         `orm:"null;type(date)"`
+	OriginSession *Session          `orm:"rel(fk)"`
 	Status        string            `orm:"size(16)"`
 	Workouts      []*SessionWorkout `orm:"reverse(many)"`
 }
@@ -28,6 +29,7 @@ type SessionWorkout struct {
 	BelongSession  *UserSession     `orm:"rel(fk)"`
 	MappedMovement *SessionMovement `orm:"rel(fk)"`
 	Exercises      []*Exercise      `orm:"reverse(many)"`
+	Status         string           `orm:"size(4)"`
 }
 
 //exercise instance for each movement

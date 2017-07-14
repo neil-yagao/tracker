@@ -20,15 +20,20 @@ window._ = require('lodash');
 
 const store = new Vuex.Store({
 
-	state: {
-		username: ''
-	},
-	modules:{
-		plan:planState
-	}
+    state: {
+        user: {}
+    },
+    mutation: {
+        setUser(state, user) {
+            state.user = user
+        }
+    },
+    modules: {
+        plan: planState
+    }
 })
 
 window.Vue = new Vue({ // eslint-disable-line no-new
-	store,
-	router
+    store,
+    router
 }).$mount('#app')

@@ -1,14 +1,13 @@
 package main
 
 import (
-	/*	_ "routers"
+	_ "routers"
 
-		"github.com/astaxie/beego"*/
-
-	"github.com/astaxie/beego/orm"
-	_ "models"
-)
+	"github.com/astaxie/beego"
+	/*"github.com/astaxie/beego/orm"
+	_ "models"*/)
 
 func main() {
-	orm.RunCommand()
+	//orm.RunCommand()
+	beego.Run()
 }

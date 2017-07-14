@@ -5,11 +5,17 @@ package models
 type SessionMovement struct {
 	Id         int64     `json:"id" orm:"auto;pk"`
 	Movement   *Movement `json:"movement" orm:"rel(fk)"`
-	Sets       float64   `json:"sets" orm:"digits(8);decimals(2)"`
-	Reps       float64   `json:"reps" orm:"digits(8);decimals(2)"`
+	Sets       int8      `json:"sets" orm:"digits(8)"`
+	Reps       int8      `json:"reps" orm:"digits(8)"`
 	Sequence   int64     `json:"sequence" orm:"digits(8)"`
 	NeedWarmup int8      `json:"needWarmup" orm:"digits(4)"`
 	Session    *Session  `orm:"rel(fk)"`
+}
+
+func (u *SessionMovement) TableUnique() [][]string {
+	return [][]string{
+		[]string{"Movement", "Session"},
+	}
 }
 
 //session template information
@@ -24,6 +30,12 @@ type Session struct {
 	Plan         *Plan              `orm:"rel(fk)"`
 }
 
+func (u *Session) TableUnique() [][]string {
+	return [][]string{
+		[]string{"Name", "Plan"},
+	}
+}
+
 //plan template information
 //could be assign to user which will create assigned plan object
 type Plan struct {
@@ -31,4 +43,10 @@ type Plan struct {
 	Name     string     `json:"name" orm:"size(128)"`
 	Sessions []*Session `json:"sessions" orm:"reverse(many)"`
 	CreateBy *UserInfo  `json:"createby" orm:"rel(fk)"`
+}
+
+func (u *Plan) TableUnique() [][]string {
+	return [][]string{
+		[]string{"Name"},
+	}
 }

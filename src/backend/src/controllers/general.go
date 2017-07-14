@@ -3,13 +3,15 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
-
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/orm"
 )
 
 type GeneralController struct {
 	beego.Controller
 }
+
+var o = orm.NewOrm()
 
 // passing in param should be pointer
 // so that value could be persisted after method exit
