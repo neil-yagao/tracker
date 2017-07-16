@@ -12,6 +12,7 @@
         </md-list-item>
         <md-button class='md-raised md-warn' v-on:click.native='openCreationPromot()'>未找到满意的？自己创建一个吧</md-button>
     </md-list>
+    <movement-selection></movement-selection>
     <md-dialog-prompt md-title="创建新计划" md-ok-text="创建" md-cancel-text="取消" @close="onClose" v-model="$store.state.plan.planName" md-input-maxlength='20' md-input-placeholder='新计划名称' ref="createPlanPromot">
     </md-dialog-prompt>
     <loading-modal ref="loadingModal"></loading-modal>
@@ -20,6 +21,7 @@
 </template>
 <script>
 import LoadingModal from '../general/loading.vue'
+import Movement from '../movement/movement.vue'
 export default {
 	name:'plan-list',
 	data(){
@@ -55,7 +57,9 @@ export default {
 
 	},
 	components:{
-		'loading-modal': LoadingModal
+		'loading-modal': LoadingModal,
+		'movement-selection': Movement
+
 	}
 }
 </script>

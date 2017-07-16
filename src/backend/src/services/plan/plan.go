@@ -21,7 +21,15 @@ func CreateNewPlan(instance *models.Plan) {
 		for _, movement := range movements {
 			o.Insert(movement)
 			logger.Println("inserted movement:", movement)
-
 		}
 	}
+}
+
+func GetAllPlan() []*models.Plan {
+	qs := o.QueryTable("plan")
+
+	qs.RelatedSel()
+	var plans []*models.Plan
+	qs.All(&plans)
+	return plans
 }

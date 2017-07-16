@@ -55,7 +55,7 @@
         <md-list-item>
             <md-input-container>
                 <label>目标肌群</label>
-                <md-select name="muscle" id="muscle" v-model="activeSession.muscle">
+                <md-select name="muscle" id="muscle" v-model="activeSession.muscle" multiple>
                     <md-option value="肩部">肩部</md-option>
                     <md-option value="胸部">胸部</md-option>
                     <md-option value="背部">背部</md-option>

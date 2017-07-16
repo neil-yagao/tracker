@@ -7,6 +7,7 @@ import VueResource from 'vue-resource'
 import router from './router.js'
 import Vuex from 'vuex'
 window.jQuery = require("jquery");
+window.$ = window.jQuery;
 require("bootstrap")
 require('../node_modules/bootstrap/dist/css/bootstrap.css')
 import VueMaterial from 'vue-material'
@@ -32,3 +33,11 @@ window.Vue = new Vue({ // eslint-disable-line no-new
 	store,
 	router
 }).$mount('#app')
+
+Vue.directive('focus', {
+  // When the bound element is inserted into the DOM...
+  inserted: function (el) {
+    // Focus the element
+    el.focus()
+  }
+})

@@ -49,4 +49,5 @@ func init() {
 func TestSave(t *testing.T) {
 	t.Log("testing:", testingPlan)
 	CreateNewPlan(testingPlan)
+	t.Log(GetAllPlan())
 }

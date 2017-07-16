@@ -1,3 +1,5 @@
+CREATE SCHEMA `powerlift` DEFAULT CHARACTER SET utf8 ;
+
 -- --------------------------------------------------
 --  Table Structure for `models.UserInfo`
 -- --------------------------------------------------
