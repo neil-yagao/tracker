@@ -21,23 +21,20 @@ window._ = require('lodash');
 
 const store = new Vuex.Store({
 
-	state: {
-		username: ''
-	},
-	modules:{
-		plan:planState
-	}
+    state: {
+        user: {}
+    },
+    mutation: {
+        setUser(state, user) {
+            state.user = user
+        }
+    },
+    modules: {
+        plan: planState
+    }
 })
 
 window.Vue = new Vue({ // eslint-disable-line no-new
-	store,
-	router
+    store,
+    router
 }).$mount('#app')
-
-Vue.directive('focus', {
-  // When the bound element is inserted into the DOM...
-  inserted: function (el) {
-    // Focus the element
-    el.focus()
-  }
-})

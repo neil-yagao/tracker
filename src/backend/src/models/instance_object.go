@@ -13,21 +13,23 @@ type AssignedPlan struct {
 
 //Session instance that generated after assign plan to user
 type UserSession struct {
-	Id            int64             `orm:"auto;pk" json:"id"`
-	AssignTo      *UserInfo         `orm:"rel(fk)" json:"assignTo"`
-	ExpectingDate time.Time         `orm:"type(date)" json:"expectingDate"`
-	ExecutionDate time.Time         `orm:"null;type(date)" json:"executionDate"`
-	Status        string            `orm:"size(16)" json:"status"`
-	Workouts      []*SessionWorkout `orm:"reverse(many)" json:"workouts"`
+	Id            int64             `orm:"auto;pk"`
+	AssignTo      *UserInfo         `orm:"rel(fk)"`
+	ExpectingDate time.Time         `orm:"type(date)"`
+	ExecutionDate time.Time         `orm:"null;type(date)"`
+	OriginSession *Session          `orm:"rel(fk)"`
+	Status        string            `orm:"size(16)"`
+	Workouts      []*SessionWorkout `orm:"reverse(many)"`
 }
 
 //workout instance for each assigned session
 //mapping to each movement
 type SessionWorkout struct {
-	Id             int64            `orm:"auto;pk" json:"id"`
-	BelongSession  *UserSession     `orm:"rel(fk)" json:"belongSession"`
-	MappedMovement *SessionMovement `orm:"rel(fk)" json:"mappedMovement"`
-	Exercises      []*Exercise      `orm:"reverse(many)" json:"exercises"`
+	Id             int64            `orm:"auto;pk"`
+	BelongSession  *UserSession     `orm:"rel(fk)"`
+	MappedMovement *SessionMovement `orm:"rel(fk)"`
+	Exercises      []*Exercise      `orm:"reverse(many)"`
+	Status         string           `orm:"size(4)"`
 }
 
 //exercise instance for each movement

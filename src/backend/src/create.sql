@@ -6,7 +6,8 @@ CREATE SCHEMA `powerlift` DEFAULT CHARACTER SET utf8 ;
 CREATE TABLE IF NOT EXISTS `user_info` (
     `id` bigint AUTO_INCREMENT NOT NULL PRIMARY KEY,
     `username` varchar(128) NOT NULL DEFAULT '' ,
-    `useridentity` varchar(128) NOT NULL DEFAULT '' 
+    `useridentity` varchar(128) NOT NULL DEFAULT '' ,
+    UNIQUE (`username`)
 ) ENGINE=InnoDB;
 
 -- --------------------------------------------------
@@ -19,7 +20,8 @@ CREATE TABLE IF NOT EXISTS `movement` (
     `name` varchar(128) NOT NULL DEFAULT '' ,
     `description` longtext NOT NULL,
     `dividable` tinyint NOT NULL DEFAULT 0 ,
-    `add_by_id` bigint NOT NULL
+    `add_by_id` bigint NOT NULL,
+    UNIQUE (`name`)
 ) ENGINE=InnoDB;
 
 -- --------------------------------------------------
@@ -41,6 +43,7 @@ CREATE TABLE IF NOT EXISTS `user_session` (
     `assign_to_id` bigint NOT NULL,
     `expecting_date` date NOT NULL,
     `execution_date` date,
+    `origin_session_id` bigint NOT NULL,
     `status` varchar(16) NOT NULL DEFAULT '' 
 ) ENGINE=InnoDB;
 
@@ -50,7 +53,8 @@ CREATE TABLE IF NOT EXISTS `user_session` (
 CREATE TABLE IF NOT EXISTS `session_workout` (
     `id` bigint AUTO_INCREMENT NOT NULL PRIMARY KEY,
     `belong_session_id` bigint NOT NULL,
-    `mapped_movement_id` bigint NOT NULL
+    `mapped_movement_id` bigint NOT NULL,
+    `status` varchar(4) NOT NULL DEFAULT '' 
 ) ENGINE=InnoDB;
 
 -- --------------------------------------------------
@@ -70,11 +74,12 @@ CREATE TABLE IF NOT EXISTS `exercise` (
 CREATE TABLE IF NOT EXISTS `session_movement` (
     `id` bigint AUTO_INCREMENT NOT NULL PRIMARY KEY,
     `movement_id` bigint NOT NULL,
-    `sets` numeric(8, 2) NOT NULL DEFAULT 0 ,
-    `reps` numeric(8, 2) NOT NULL DEFAULT 0 ,
+    `sets` tinyint NOT NULL DEFAULT 0 ,
+    `reps` tinyint NOT NULL DEFAULT 0 ,
     `sequence` bigint NOT NULL DEFAULT 0 ,
     `need_warmup` tinyint NOT NULL DEFAULT 0 ,
-    `session_id` bigint NOT NULL
+    `session_id` bigint NOT NULL,
+    UNIQUE (`movement_id`, `session_id`)
 ) ENGINE=InnoDB;
 
 -- --------------------------------------------------
@@ -86,7 +91,8 @@ CREATE TABLE IF NOT EXISTS `session` (
     `target_muscle` varchar(128) NOT NULL DEFAULT '' ,
     `repeat` bigint NOT NULL DEFAULT 0 ,
     `weekly` varchar(32) NOT NULL DEFAULT '' ,
-    `plan_id` bigint NOT NULL
+    `plan_id` bigint NOT NULL,
+    UNIQUE (`name`, `plan_id`)
 ) ENGINE=InnoDB;
 
 -- --------------------------------------------------
@@ -95,5 +101,6 @@ CREATE TABLE IF NOT EXISTS `session` (
 CREATE TABLE IF NOT EXISTS `plan` (
     `id` bigint AUTO_INCREMENT NOT NULL PRIMARY KEY,
     `name` varchar(128) NOT NULL DEFAULT '' ,
-    `create_by_id` bigint NOT NULL
+    `create_by_id` bigint NOT NULL,
+    UNIQUE (`name`)
 ) ENGINE=InnoDB;
