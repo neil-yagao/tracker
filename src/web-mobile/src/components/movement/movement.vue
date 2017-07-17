@@ -5,62 +5,55 @@
         <md-input v-model="name"></md-input>
     </md-input-container>
     <md-dialog ref="movementSelection">
-        <md-dialog-title>选择需要的动作</md-dialog-title>
-        <md-dialog-content>
-            <md-toolbar md-theme="white">
-                <md-input-container>
-                <md-icon>search</md-icon>
-                <md-input class="md-input" v-model="criteria" id="criteria"></md-input>
-                </md-input-container>
-            </md-toolbar>
-            <md-list>
-                <md-list-item>
-                    <span>News</span>
-                    <md-list-expand>
-                        <md-list>
-                            <md-list-item class="md-inset">World</md-list-item>
-                            <md-list-item class="md-inset">Americas</md-list-item>
-                            <md-list-item class="md-inset">Europe</md-list-item>
-                        </md-list>
-                    </md-list-expand>
-                </md-list-item>
-                <md-list-item>
-                    <span>Games</span>
-                    <md-list-expand>
-                        <md-list>
-                            <md-list-item class="md-inset">Console</md-list-item>
-                            <md-list-item class="md-inset">PC</md-list-item>
-                            <md-list-item class="md-inset">Phone</md-list-item>
-                        </md-list>
-                    </md-list-expand>
-                </md-list-item>
-            </md-list>
-        </md-dialog-content>
-        <md-dialog-actions>
-            <md-button class="md-primary" @click="closeDialog()">Cancel</md-button>
-            <md-button class="md-primary" @click="closeDialog()">Ok</md-button>
-        </md-dialog-actions>
+    	<movement-list v-if="step == 'list'" @to-add="step = 'add'" :movements="movements" 
+    	@close="closeDialog()" @selected="selectedMovement($event)">
+    	</movement-list>
+    	<movement-add v-if="step == 'add'" @to-list="step = 'list'" @add-movement="addMovements($event)"></movement-add>
     </md-dialog>
 </div>
 
 
 </template>
 <script type="text/javascript">
+import MovementList from './movement-list.vue'
+import MovementAdd from './movement-add.vue'
 export default {
+
     name:'movement-selection',
     data(){
         return {
-            name:''
+            name:'',
+            step:'list',
+            movements:[]
         }
     },
     methods:{
         showDialog(){
             this.$refs['movementSelection'].open();
+            this.step = 'list'
         },
         closeDialog(){
             this.$refs['movementSelection'].close();
+        },
+        loadMovements(){
+        	this.$http.get('movements').then((res)=>{
+        		this.movements = res.data
+        	})
+        },
+        addMovements(movement){
+        	this.movements.push(movement);
+        	this.step = 'list'
+        },
+        selectedMovement(movement){
+        	this.name = movement.name;
+        	this.closeDialog();
+        	this.$emit('selected-movement', movement)
         }
     },
+    components:{
+    	'movement-list': MovementList,
+    	'movement-add':MovementAdd
+    }
 
 } 
 </script>

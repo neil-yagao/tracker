@@ -1,5 +1,8 @@
 <template>
 <div style="margin-top:1em">
+<md-button class="md-fab md-raised md-accent" v-on:click.native="openReturnConfirm()">
+	<md-icon>reply</md-icon>
+</md-button>
     <md-table-card>
         <md-toolbar>
             <h1 class="md-title">{{title}}已添加的动作</h1>
@@ -9,10 +12,9 @@
                 <md-table-row>
                     <md-table-head>#</md-table-head>
                     <md-table-head>动作名称</md-table-head>
-                    <md-table-head md-numeric>重量</md-table-head>
-                    <md-table-head md-numeric> 组数 </md-table-head>
-                    <md-table-head md-numeric>每组数量</md-table-head>
-                    <md-table-head></md-table-head>
+                    <md-table-head> 组数 </md-table-head>
+                    <md-table-head>每组数量</md-table-head>
+                    <md-table-head  v-if="$store.state.plan.planEditing"></md-table-head>
                 </md-table-row>
             </md-table-header>
              <md-table-body>
@@ -21,18 +23,15 @@
 		          {{ rowIndex + 1}}
 		        </md-table-cell>
 		        <md-table-cell>
-		          {{ row.name }}
-		        </md-table-cell>
-		        <md-table-cell md-numeric>
-		          {{ row.weight }}
+		          {{ row.name || row.movement.name}}
 		        </md-table-cell>
 		        <md-table-cell md-numeric>
 		          {{ row.sets }}
 		        </md-table-cell>
 		        <md-table-cell md-numeric>
-		          {{ row.repeats }}
+		          {{ row.reps }}
 		        </md-table-cell>
-		        <md-table-cell>
+		        <md-table-cell  v-if="$store.state.plan.planEditing">
                     <md-icon class="md-accent"  v-on:click.native="removeExercise(row)">delete</md-icon>
 		        </md-table-cell>
 		      </md-table-row>
@@ -41,18 +40,7 @@
     </md-table-card>
     <hr>
     <md-list v-if="$store.state.plan.planEditing">
-        <md-list-item>
-            <md-input-container :md-clearable="true">
-                <label>动作名称</label>
-                <md-input v-model="activeExercise.name"></md-input>
-            </md-input-container>
-        </md-list-item>
-        <md-list-item>
-            <md-input-container :md-clearable="true">
-                <label>重量</label>
-                <md-input type="number" v-model="activeExercise.weight"></md-input>
-            </md-input-container>
-        </md-list-item>
+        <movement id="movement-element" @selected-movement="selectMovement($event)"></movement>
         <md-list-item>
             <md-input-container :md-clearable="true">
                 <label>重复组数</label>
@@ -62,7 +50,7 @@
         <md-list-item>
             <md-input-container :md-clearable="true">
                 <label>每组次数</label>
-                <md-input type="number" v-model="activeExercise.repeats"></md-input>
+                <md-input type="number" v-model="activeExercise.reps"></md-input>
             </md-input-container>
         </md-list-item>
         <md-list-item>
@@ -76,6 +64,7 @@
 	
 </template>
 <script>
+import Movement from '../movement/movement.vue'
 import _ from 'lodash';
 	export default {
 	    name: 'session-exercise',
@@ -90,15 +79,25 @@ import _ from 'lodash';
                 this.activeExercise.name = '';
                 this.activeExercise.weight = '';
                 this.activeExercise.sets = '';
-                this.activeExercise.repeats = '';
+                this.activeExercise.reps = '';
                 this.activeExercise = {};
 	        },
 	        removeExercise(row){
 	        	this.$store.commit('removeExercise', row )
 	        },
             doneEdit(){
-                window.location.href = "#/working/plan/sessions"
-            }
+                this.$router.replace("/working/plan/sessions")
+            },
+            selectMovement(movement){
+            	this.activeExercise.movement = movement;
+            },
+	        openReturnConfirm(){
+	        	if(this.$store.state.plan.planEditing){
+	            	this.$refs['confirmReturn'].open();
+	        	}else{
+	        		this.doneEdit();
+	        	}
+	        }
 	    },
         computed:{
             sessionIndex: function(){
@@ -110,6 +109,15 @@ import _ from 'lodash';
             title:function(){
                 return this.$store.state.plan.sessions[this.sessionIndex].name
             }
+        },
+        components:{
+        	Movement
         }
 	}
 </script>
+<style>
+#movement-element {
+	padding-left: 16px;
+	padding-right: 15px;
+}
+</style>

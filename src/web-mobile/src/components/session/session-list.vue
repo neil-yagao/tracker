@@ -28,7 +28,7 @@ export default {
 					username:'tester',
 					useridentity:'awer4'
 				},
-				expectingDate:moment().format("MM-DD")
+				expectingDate:moment().format("MM-DD"),
 				originSession:{
 					id:1,
 					name:"session1"
@@ -36,8 +36,9 @@ export default {
 				status:'assigned',
 				workouts:[
 					{
-						id:1
-						belong
+						id:1,
+						belong:''
+
 					}
 				]
 			}]

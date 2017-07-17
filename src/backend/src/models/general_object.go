@@ -4,7 +4,7 @@ package models
 type Movement struct {
 	Id              int64     `json:"id" orm:"auto;pk"`
 	TargetMuscle    string    `json:"targetMuscle" orm:"size(32)"`
-	SecondaryMuscle string    `json:"secondarMuscle" orm:"size(32)"`
+	SecondaryMuscle string    `json:"secondaryMuscle" orm:"size(128)"`
 	Name            string    `json:"name" orm:"size(128)"`
 	Description     string    `json:"description" orm:"type(text)"`
 	Dividable       int8      `json:"dividable" orm:"digits(4)"`

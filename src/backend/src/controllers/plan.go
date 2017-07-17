@@ -17,3 +17,16 @@ func (this *PlanController) CreateNewPlan() {
 	plan.CreateNewPlan(newPlan)
 	this.ServeJson()
 }
+
+//@router /plans [get]
+func (this *PlanController) GetAllPlans() {
+	defer this.RecoverFromError()
+	this.ServeJson(plan.GetAllPlan())
+}
+
+//@router /plan/?:plan [get]
+func (this *PlanController) GetPlan() {
+	defer this.RecoverFromError()
+	planName := this.Ctx.Input.Param(":plan")
+	this.ServeJson(plan.FindPlan(planName))
+}

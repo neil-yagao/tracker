@@ -54,7 +54,7 @@
         </md-list-item>
         <md-list-item>
             <md-input-container>
-                <label>目标肌群</label>
+                <label>训练目标</label>
                 <md-select name="muscle" id="muscle" v-model="activeSession.muscle" multiple>
                     <md-option value="肩部">肩部</md-option>
                     <md-option value="胸部">胸部</md-option>
@@ -101,7 +101,9 @@ export default {
 	name:'plan-sessions',
 	data(){
 		return {
-			activeSession:{},
+			activeSession:{
+				muscle:[]
+			},
 			timeMapping:{
 				'Monday': '周一',
 				'Tuesday': '周二',

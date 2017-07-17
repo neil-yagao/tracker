@@ -31,5 +31,8 @@ func GetAllPlan() []*models.Plan {
 	qs.RelatedSel()
 	var plans []*models.Plan
 	qs.All(&plans)
+	for _, plan := range plans {
+		o.LoadRelated(plan, "createby")
+	}
 	return plans
 }

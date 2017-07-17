@@ -5,14 +5,13 @@
             <md-icon>visibility</md-icon>
             <div class='md-list-text-container'>
                 <span class="list-head">{{plan.name}}</span>
-                <span class="list-content">{{plan.createBy}}</span>
+                <span class="list-content">{{plan.createby.username}}</span>
                 <md-ink-ripple></md-ink-ripple>
             </div>
             <md-divider></md-divider>
         </md-list-item>
         <md-button class='md-raised md-warn' v-on:click.native='openCreationPromot()'>未找到满意的？自己创建一个吧</md-button>
     </md-list>
-    <movement-selection></movement-selection>
     <md-dialog-prompt md-title="创建新计划" md-ok-text="创建" md-cancel-text="取消" @close="onClose" v-model="$store.state.plan.planName" md-input-maxlength='20' md-input-placeholder='新计划名称' ref="createPlanPromot">
     </md-dialog-prompt>
     <loading-modal ref="loadingModal"></loading-modal>
@@ -21,20 +20,11 @@
 </template>
 <script>
 import LoadingModal from '../general/loading.vue'
-import Movement from '../movement/movement.vue'
 export default {
 	name:'plan-list',
 	data(){
 		return {
-			exsitingPlan: [
-				{
-					name:'plan1',
-					createBy: 'builder'
-				},
-				{
-					name:'plan2',
-					createBy: 'builder'
-				}
+			exsitingPlan: [	
 			]
 		}
 	},
@@ -42,9 +32,14 @@ export default {
 		checkPlan(plan){
 			console.info(plan)
 			this.$refs['loadingModal'].open();
-			setTimeout(()=>{
+			this.$http.get('/plan/' + plan.name).then((res) =>{
+				var planDetail = res.body.data;
+				console.info(planDetail);
+				this.$store.commit('resetPlan', planDetail);
+				this.$router.push('/working/plan/sessions');
 				this.$refs['loadingModal'].close();
-			}, 1000)
+			})
+	
 		},
 		onClose(type){
 			if(type == 'ok'){
@@ -53,13 +48,21 @@ export default {
 		},
 		openCreationPromot(){
 			this.$refs['createPlanPromot'].open();
+		},
+		loadPlans(){
+			this.$http.get('/plans').then((res)=>{
+				console.info(res)
+				this.exsitingPlan = res.body.data;
+			})
 		}
 
 	},
 	components:{
-		'loading-modal': LoadingModal,
-		'movement-selection': Movement
+		'loading-modal': LoadingModal
 
+	},
+	mounted:function(){
+		this.loadPlans();
 	}
 }
 </script>
