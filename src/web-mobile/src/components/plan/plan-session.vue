@@ -64,7 +64,7 @@
 	
 </template>
 <script>
-import Movement from '../movement/movement.vue'
+import Movement from '../movement/movement.vue';
 import _ from 'lodash';
 	export default {
 	    name: 'session-exercise',

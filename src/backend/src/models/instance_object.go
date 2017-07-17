@@ -13,13 +13,13 @@ type AssignedPlan struct {
 
 //Session instance that generated after assign plan to user
 type UserSession struct {
-	Id            int64             `orm:"auto;pk"`
-	AssignTo      *UserInfo         `orm:"rel(fk)"`
-	ExpectingDate time.Time         `orm:"type(date)"`
-	ExecutionDate time.Time         `orm:"null;type(date)"`
-	OriginSession *Session          `orm:"rel(fk)"`
+	Id            int64             `orm:"auto;pk" json:"id"`
+	AssignTo      *UserInfo         `orm:"rel(fk)" json:"assignTo"`
+	ExpectingDate time.Time         `orm:"type(date)" json:"expectingDate"`
+	ExecutionDate time.Time         `orm:"null;type(date)" `
+	OriginSession *Session          `orm:"rel(fk)" json:"originSession"`
 	Status        string            `orm:"size(16)"`
-	Workouts      []*SessionWorkout `orm:"reverse(many)"`
+	Workouts      []*SessionWorkout `orm:"reverse(many)"  json:"workouts"`
 }
 
 //workout instance for each assigned session
@@ -27,7 +27,7 @@ type UserSession struct {
 type SessionWorkout struct {
 	Id             int64            `orm:"auto;pk"`
 	BelongSession  *UserSession     `orm:"rel(fk)"`
-	MappedMovement *SessionMovement `orm:"rel(fk)"`
+	MappedMovement *SessionMovement `orm:"rel(fk)"  json:"mappedMovement"`
 	Exercises      []*Exercise      `orm:"reverse(many)"`
 	Status         string           `orm:"size(4)"`
 }

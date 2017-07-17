@@ -33,7 +33,8 @@
                     </md-table-cell>
                     <md-table-cell >
                         <md-button class="md-fab md-primary" v-on:click.native="editSesssions(rowIndex)">
-                            <md-icon>edit</md-icon>
+                            <md-icon v-if="$store.state.plan.planEditing">edit</md-icon>
+                            <md-icon v-if="!$store.state.plan.planEditing">visibility</md-icon>
                         </md-button>
                         <md-button class="md-fab md-accent" v-on:click.native="removeSession(row)" v-if="$store.state.plan.planEditing">
                             <md-icon>remove circle outline</md-icon>

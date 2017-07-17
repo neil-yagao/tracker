@@ -11,7 +11,9 @@
 export default {
 	name:'session-main',
 	data(){
-		return {}
+		return {
+			
+		}
 	}
 }
 </script>

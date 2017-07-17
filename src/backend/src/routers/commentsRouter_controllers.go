@@ -2,6 +2,7 @@ package routers
 
 import (
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/context/param"
 )
 
 func init() {
@@ -11,6 +12,7 @@ func init() {
 			Method: "GetMovements",
 			Router: `/movements`,
 			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
 			Params: nil})
 
 	beego.GlobalControllerRouter["controllers:PlanController"] = append(beego.GlobalControllerRouter["controllers:PlanController"],
@@ -18,6 +20,7 @@ func init() {
 			Method: "CreateNewPlan",
 			Router: `/plan`,
 			AllowHTTPMethods: []string{"post"},
+			MethodParams: param.Make(),
 			Params: nil})
 
 	beego.GlobalControllerRouter["controllers:PlanController"] = append(beego.GlobalControllerRouter["controllers:PlanController"],
@@ -25,6 +28,7 @@ func init() {
 			Method: "GetAllPlans",
 			Router: `/plans`,
 			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
 			Params: nil})
 
 	beego.GlobalControllerRouter["controllers:PlanController"] = append(beego.GlobalControllerRouter["controllers:PlanController"],
@@ -32,6 +36,7 @@ func init() {
 			Method: "GetPlan",
 			Router: `/plan/?:plan`,
 			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
 			Params: nil})
 
 	beego.GlobalControllerRouter["controllers:WorkingSessionController"] = append(beego.GlobalControllerRouter["controllers:WorkingSessionController"],
@@ -39,6 +44,15 @@ func init() {
 			Method: "FindUserSession",
 			Router: `/session/?:username`,
 			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["controllers:WorkingSessionController"] = append(beego.GlobalControllerRouter["controllers:WorkingSessionController"],
+		beego.ControllerComments{
+			Method: "GetSessionDetail",
+			Router: `/session-detail/?:sessionId`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
 			Params: nil})
 
 }

@@ -97,15 +97,17 @@ func FindUserSessions(user *models.UserInfo) []*models.UserSession {
 	return sessions
 }
 
-func FindSessionDetail(id int64) {
+func FindSessionDetail(id int64) *models.UserSession {
 	var session *models.UserSession = new(models.UserSession)
 	session.Id = id
 	o.Read(session)
 	loadSessionDetail(session)
+	return session
 }
 
 func loadSessionDetail(session *models.UserSession) {
 	o.LoadRelated(session, "Workouts")
+	o.LoadRelated(session, "OriginSession")
 	for _, workout := range session.Workouts {
 		o.LoadRelated(workout, "MappedMovement")
 		o.LoadRelated(workout.MappedMovement, "Movement")

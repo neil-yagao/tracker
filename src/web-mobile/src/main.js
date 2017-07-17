@@ -22,9 +22,11 @@ window._ = require('lodash');
 const store = new Vuex.Store({
 
     state: {
-        user: {}
+        user: {
+            username:"tester"
+        }
     },
-    mutation: {
+    mutations: {
         setUser(state, user) {
             state.user = user
         }
@@ -33,6 +35,7 @@ const store = new Vuex.Store({
         plan: planState
     }
 })
+
 
 window.Vue = new Vue({ // eslint-disable-line no-new
     store,

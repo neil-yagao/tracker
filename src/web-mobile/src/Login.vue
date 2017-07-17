@@ -34,6 +34,10 @@ export default {
            		this.$store.state.username = this.username;
             	window.location.href = '#/working';
             })*/
+            this.$store.commit('setUser',{
+                username:this.username,
+                userIdentity: md5Encode
+            })
 			window.location.href = '#/working';
         }
     }
