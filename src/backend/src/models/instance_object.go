@@ -25,11 +25,11 @@ type UserSession struct {
 //workout instance for each assigned session
 //mapping to each movement
 type SessionWorkout struct {
-	Id             int64            `orm:"auto;pk"`
+	Id             int64            `orm:"auto;pk" json:"id"`
 	BelongSession  *UserSession     `orm:"rel(fk)"`
 	MappedMovement *SessionMovement `orm:"rel(fk)"  json:"mappedMovement"`
 	Exercises      []*Exercise      `orm:"reverse(many)"`
-	Status         string           `orm:"size(4)"`
+	Status         string           `orm:"size(4)" json:"status"`
 }
 
 //exercise instance for each movement
@@ -39,5 +39,4 @@ type Exercise struct {
 	BelongWorkout *SessionWorkout `orm:"rel(fk)" json:"belongWorkout"`
 	Weight        float64         `orm:"digits(8);decimals(2)" json:"weight"`
 	Reps          int8            `orm:"digits(8)" json:"reps"`
-	Sequence      int8            `orm:"digits(8)" json:"sequence"`
 }

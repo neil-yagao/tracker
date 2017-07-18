@@ -42,7 +42,7 @@
     <md-list v-if="$store.state.plan.planEditing">
         <movement id="movement-element" @selected-movement="selectMovement($event)"></movement>
         <md-list-item>
-            <md-input-container :md-clearable="true">
+            <md-input-container :md-clearable="true" md-numeric>
                 <label>重复组数</label>
                 <md-input type="number" v-model="activeExercise.sets"></md-input>
             </md-input-container>

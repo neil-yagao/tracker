@@ -14,10 +14,13 @@
 		    <md-divider></md-divider>
 		</md-list-item>
 	</md-list>
+	<loading-modal ref="loadingModal"></loading-modal>
 </div>
 </template>
 <script>
 import moment from 'moment'
+import LoadingModal from '../general/loading.vue'
+
 export default {
 	name:'session-list',
 	data(){
@@ -36,11 +39,21 @@ export default {
 			return moment(date).format("MM-DD")
 		},
 		toDetail(session){
-			this.$router.push("/working/workouts/detail/" + session.id)
+			this.$refs['loadingModal'].open();
+			this.$http.get('/session-detail/' + session.id).then((res) =>{
+				console.info(res.body.data)
+				this.$store.commit('startExecutingSession', res.body.data);
+				this.$refs['loadingModal'].close()
+				this.$router.push("/working/workouts/detail/" + session.id)
+			})
 		}
 	},
 	mounted:function(){
 		this.loadSessions()
+	},
+	components:{
+		'loading-modal': LoadingModal
+
 	}
 }
 

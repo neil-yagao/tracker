@@ -1,11 +1,10 @@
 <template>
 <div>
-    <md-toolbar class="md-large">
+    <md-toolbar>
         <md-button>
-            <md-icon class="md-size-3x">menu</md-icon>
+            <md-icon class="md-size-2x">menu</md-icon>
         </md-button>
-        
-        <span class="md-display-2" style="color:white">举铁小助手</span>
+        <span class="md-display-1" style="color:white">举铁小助手</span>
     </md-toolbar>
     <router-view class="container-fluid"></router-view>
     <md-bottom-bar class="bottom-stick" >

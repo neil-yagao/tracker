@@ -12,6 +12,7 @@ require("bootstrap")
 require('../node_modules/bootstrap/dist/css/bootstrap.css')
 import VueMaterial from 'vue-material'
 import planState from './components/plan/plan-state.js'
+import sessionState from './components/session/session-state.js'
 
 Vue.use(VueMaterial)
 Vue.use(VueRouter)
@@ -23,7 +24,7 @@ const store = new Vuex.Store({
 
     state: {
         user: {
-            username:"tester"
+            username: "tester"
         }
     },
     mutations: {
@@ -32,7 +33,8 @@ const store = new Vuex.Store({
         }
     },
     modules: {
-        plan: planState
+        plan: planState,
+        session: sessionState
     }
 })
 

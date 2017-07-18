@@ -2,19 +2,18 @@
 	<div>
         <md-dialog-title>
         <md-toolbar class="md-transparent">
-        <h2 class="md-title" >选择动作</h2>
         	<md-input-container style="flex: 1" >
                 <md-icon>search</md-icon>
                 <md-input class="md-input" v-model="criteria" id="criteria"></md-input>
             </md-input-container>
 	        <md-button  class="md-raised md-primary" v-on:click.native="moveToAdd()">
-	  			增加一个新的动作
+	  			新增
 	      	</md-button>
         </md-toolbar>
         </md-dialog-title>
         <md-dialog-content>
-            <md-list ref="m-list" >
-                <md-list-item v-for="(movements, muscle) in movementList" md-expand-multiple>
+            <md-list ref="m-list" style="max-height: 200px;overflow-y: scroll;">
+                <md-list-item v-for="(movements, muscle) in movementList">
                     <span>{{muscle}}</span>
                     <md-list-expand>
                         <md-list>

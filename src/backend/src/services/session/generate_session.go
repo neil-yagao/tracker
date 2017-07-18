@@ -83,7 +83,7 @@ func findNextWeekday(weekday string, startPoint time.Time) time.Time {
 func FindUserSessions(user *models.UserInfo) []*models.UserSession {
 	var sessions []*models.UserSession
 	qs := o.QueryTable("user_session").Filter("assign_to_id", user.Id)
-	_, err := qs.Filter("status", NEW_SESSION).RelatedSel().All(&sessions, "OriginSession", "ExpectingDate")
+	_, err := qs.Filter("status", NEW_SESSION).RelatedSel().All(&sessions)
 	/*for _, session := range sessions {
 		o.LoadRelated(session, "Workouts")
 		for _, workout := range session.Workouts {
@@ -111,5 +111,6 @@ func loadSessionDetail(session *models.UserSession) {
 	for _, workout := range session.Workouts {
 		o.LoadRelated(workout, "MappedMovement")
 		o.LoadRelated(workout.MappedMovement, "Movement")
+		o.LoadRelated(workout, "Exercises")
 	}
 }

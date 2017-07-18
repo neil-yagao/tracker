@@ -43,7 +43,8 @@ export default {
 		},
 		onClose(type){
 			if(type == 'ok'){
-				this.$router.push('/working/plan/sessions')
+				this.$router.push('/working/plan/sessions');
+				this.$store.commit('editingPlan')
 			}
 		},
 		openCreationPromot(){

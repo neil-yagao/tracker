@@ -1,20 +1,20 @@
 <template>
 <div>
-<md-button class="md-fab md-raised md-accent" v-on:click.native="openReturnConfirm()">
-	<md-icon>reply</md-icon>
-</md-button>
     <md-table-card>
         <md-toolbar>
-            <h1 class="md-title">{{$store.state.plan.planName}}的训练课</h1>
+        	 <md-button class="md-raised md-accent" v-on:click.native="openReturnConfirm()">
+				<md-icon>reply</md-icon>
+			</md-button>
+            <span >{{$store.state.plan.planName}}的训练课</span> 
         </md-toolbar>
         <md-table>
             <md-table-header>
                 <md-table-row>
-                    <md-table-head style="width:25%">训练课名称</md-table-head>
+                    <md-table-head>训练课名称</md-table-head>
                     <md-table-head>训练肌群</md-table-head>
                     <md-table-head>训练时间</md-table-head>
                     <md-table-head>重复次数</md-table-head>
-                    <md-table-head style="width:20%"></md-table-head>
+                    <md-table-head></md-table-head>
                 </md-table-row>
             </md-table-header>
             <md-table-body>
@@ -45,7 +45,6 @@
             </md-table-body>
         </md-table>
     </md-table-card>
-    <hr>
     <md-list v-if="$store.state.plan.planEditing">
         <md-list-item>
             <md-input-container>
