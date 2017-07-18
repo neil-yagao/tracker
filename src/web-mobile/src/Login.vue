@@ -1,18 +1,15 @@
 <template>
-        <div class="jumbotron" >
-            <h1>我们应该怎么称呼您?</h1>
-            <p>
-                <div class="row padding-top">
-                    <div class="col-xs-8">
-                        <input type="text" v-model="username" class="form-control input-lg" @keyup.enter="login()">
-                    </div>
-                    <div class="col-xs-2 col-xs-offset-1">
-                        <a class="btn btn-info btn-lg" role="button" @click="login()">开始举铁!</a>
-                    </div>
-                </div>
-            </p>
+    <div class="jumbotron">
+        <h1>我们应该怎么称呼您?</h1>
+        <div class="row">
+            <div class="col-xs-6">
+                <input type="text" v-model="username" class="form-control input-lg" @keyup.enter="login()">
+            </div>
+            <div class="col-xs-2 col-xs-offset-1">
+                <a class="btn btn-info btn-lg" role="button" @click="login()">开始举铁!</a>
+            </div>
         </div>
-
+    </div>
 </template>
 <script>
 import md5 from 'md5'
@@ -38,19 +35,13 @@ export default {
                 username:this.username,
                 userIdentity: md5Encode
             })
-			window.location.href = '#/working';
+			window.location.href = '#/working/workouts';
         }
     }
 }
 </script>
 <style scoped>
-.jumbotron {
-    padding-left: 3%;
-    position: absolute;
-    width: 100%;
-    top:40%;
-    left:1%;
-}
+
 
 .vcenter {
     margin-top: 50%;
