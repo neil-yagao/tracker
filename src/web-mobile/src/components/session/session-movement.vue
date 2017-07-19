@@ -44,11 +44,13 @@
     </md-card>
     <loading-modal ref="loadingModal"></loading-modal>
     <set-confirm ref="set-modal" @closed="pushExercise($event)" :defaultReps="movement.mappedMovement.reps"></set-confirm>
+    <rest-modal ref="resting" rest="60"></rest-modal>
 </p>
 </template>
 <script>
 import SetConfirm from './set-confirm.vue'
 import LoadingModal from '../general/loading.vue'
+import RestModal from './rest-modal.vue'
 export default {
 	name:'session-movement',
 	props:['movement'],
@@ -64,7 +66,8 @@ export default {
 		expandContent(){
 			this.expanding = !this.expanding;
 			console.info("expanding:" + this.expanding);
-			this.flashContent()
+			this.flashContent();
+			
 		},
 		executingMovement(){
 			if(this.executing == 0){
@@ -104,7 +107,8 @@ export default {
 			this.$refs['set-modal'].open();
 		},
 		pushExercise(exercise){
-			this.exercises.push(exercise)
+			this.exercises.push(exercise);
+			this.$refs['resting'].open();
 		},
 		removeExercise(exercise){
 			this.exercises = _.without(this.exercises, exercise)
@@ -139,7 +143,8 @@ export default {
 
 	components:{
 		'set-confirm':SetConfirm,
-		'loading-modal': LoadingModal
+		'loading-modal': LoadingModal,
+		'rest-modal': RestModal
 	}
 }
 </script>

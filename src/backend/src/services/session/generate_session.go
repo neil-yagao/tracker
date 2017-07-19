@@ -40,6 +40,9 @@ func createUserSessonBasedOnPlan(p *models.Plan, user *models.UserInfo, startDat
 		var nextWorkoutDate = findNextWeekday(weekly, startTimePoint)
 		var timeSpan, _ = time.ParseDuration(fmt.Sprint(WEEK_HOUR) + "h")
 		var i int64 = 0
+		if session.Repeat == 0 {
+			session.Repeat = 4
+		}
 		for ; i < session.Repeat; i++ {
 			var userSession = new(models.UserSession)
 			userSession.AssignTo = user

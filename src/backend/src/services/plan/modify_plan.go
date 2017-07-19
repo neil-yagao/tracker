@@ -40,6 +40,12 @@ func AddMovementToSession(sId int64, sm *models.SessionMovement) {
 	s.Id = sId
 	o.Read(s)
 	sm.Session = s
+	if sm.Reps == 0 {
+		sm.Reps = 12
+	}
+	if sm.Sets == 0 {
+		sm.Sets = 4
+	}
 	o.Insert(sm)
 	s.Workouts = append(s.Workouts, sm)
 }

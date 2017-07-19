@@ -6,7 +6,7 @@
 	            <md-icon>visibility</md-icon>
 	            <div class='md-list-text-container'>
 	                <span class="list-head">{{plan.name}}</span>
-	                <span class="list-content">{{plan.createby.username}}</span>
+	                <span class="list-content">由{{plan.createby.username}}创建</span>
 	                <md-ink-ripple></md-ink-ripple>
 	            </div>
 	            <md-divider></md-divider>

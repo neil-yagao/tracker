@@ -24,6 +24,7 @@ func (this *WorkingSessionController) GetSessionDetail() {
 	defer this.RecoverFromError()
 	id := this.GetIntParam(":sessionId")
 	this.ServeJson(session.FindSessionDetail(id))
+
 }
 
 // @router /session/?:id [post]

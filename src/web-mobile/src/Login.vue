@@ -1,9 +1,9 @@
 <template>
 <div class="vcenter">
-	<md-card>
+	<md-card class="md-primary">
 
 	    <md-card-header>
-	        <div class="md-title">欢迎加入撸铁大家庭，给自己起个名字吧！</div>
+	        <div class="md-title">给自己个响亮的外号，开撸！</div>
 	    </md-card-header>
 
 	    <md-card-content>
