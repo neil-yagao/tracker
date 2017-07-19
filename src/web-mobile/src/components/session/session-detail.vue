@@ -38,6 +38,7 @@ export default {
 						this.$refs['workout-finalize'].open();
 					})
 				}
+				
 			},
 			openReturnConfirm(){
 				this.$router.push("/working/workouts")

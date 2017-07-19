@@ -92,11 +92,7 @@ import _ from 'lodash';
             	this.activeExercise.movement = movement;
             },
 	        openReturnConfirm(){
-	        	if(this.$store.state.plan.planEditing){
-	            	this.$refs['confirmReturn'].open();
-	        	}else{
-	        		this.doneEdit();
-	        	}
+        		this.doneEdit();
 	        }
 	    },
         computed:{

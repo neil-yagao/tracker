@@ -13,7 +13,7 @@ type Movement struct {
 
 func (u *Movement) TableUnique() [][]string {
 	return [][]string{
-		[]string{"Name"},
+		{"Name"},
 	}
 }
 
@@ -25,6 +25,6 @@ type UserInfo struct {
 
 func (u *UserInfo) TableUnique() [][]string {
 	return [][]string{
-		[]string{"Username"},
+		{"Username"},
 	}
 }

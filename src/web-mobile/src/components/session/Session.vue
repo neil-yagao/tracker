@@ -1,10 +1,8 @@
 <template>
-<router-view class="margin-top"></router-view>  
+<router-view></router-view>  
 </template>
 <style>
-.margin-top{
-	margin-top:10px;
-}
+
 
 </style>
 <script>
