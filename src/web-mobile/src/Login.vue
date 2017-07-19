@@ -17,6 +17,7 @@
 
 	</md-card>
 </div>
+
 </template>
 <script>
 import md5 from 'md5'
@@ -44,12 +45,12 @@ export default {
                 id:1
             })
 			this.$router.push('/working/workouts');
+
         }
     }
 }
 </script>
 <style scoped>
-
 .vcenter {
     margin-top: 50%;
 }

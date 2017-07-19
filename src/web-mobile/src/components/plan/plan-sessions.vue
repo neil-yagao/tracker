@@ -123,6 +123,7 @@ export default {
                 muscle :[]
             }
             this.closeDialog()
+
         },
         removeSession(row){
     		this.$store.commit('removeSession', row);
@@ -171,8 +172,8 @@ export default {
 				var planDetail = res.body.data;
 				this.$store.commit('resetPlan', planDetail);
 			})
-        }
 
+        }
 	},
 	components:{
 		'loading-modal': LoadingModal
