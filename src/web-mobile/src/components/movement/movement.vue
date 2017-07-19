@@ -48,6 +48,7 @@ export default {
         selectedMovement(movement){
         	this.name = movement.name;
         	this.closeDialog();
+            this.selectedMovement(movement)
         	this.$emit('selected-movement', movement)
         }
     },
