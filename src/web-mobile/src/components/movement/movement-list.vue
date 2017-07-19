@@ -12,16 +12,18 @@
         </md-toolbar>
         </md-dialog-title>
         <md-dialog-content>
-            <md-list ref="m-list" style="max-height: 200px;overflow-y: scroll;">
-                <md-list-item v-for="(movements, muscle) in movementList">
-                    <span>{{muscle}}</span>
-                    <md-list-expand>
-                        <md-list>
-                            <md-list-item class="md-inset" v-for="m in movements" v-on:dblclick.native="selectMovement(m)" v-on:click.native="selectingMovement(m)">{{m.name}}</md-list-item>
-                        </md-list>
-                    </md-list-expand>
-                </md-list-item>
-            </md-list>
+        	<div  style="max-height: 20em;overflow-y: auto;">
+	            <md-list ref="m-list">
+	                <md-list-item v-for="(movements, muscle) in movementList">
+	                    <span>{{muscle}}</span>
+	                    <md-list-expand>
+	                        <md-list>
+	                            <md-list-item class="md-inset" v-for="m in movements" v-on:dblclick.native="selectMovement(m)" v-on:click.native="selectingMovement(m)">{{m.name}}</md-list-item>
+	                        </md-list>
+	                    </md-list-expand>
+	                </md-list-item>
+	            </md-list>
+            </div>
         </md-dialog-content>
         <md-dialog-actions>
             <md-button class="md-primary" v-on:click.native="closeDialog()">取消</md-button>

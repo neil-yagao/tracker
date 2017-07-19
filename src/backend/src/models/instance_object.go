@@ -22,6 +22,11 @@ type UserSession struct {
 	Workouts      []*SessionWorkout `orm:"reverse(many)"  json:"workouts"`
 }
 
+func (u *UserSession) TableUnique() [][]string {
+	return [][]string{
+		[]string{"ExpectingDate", "OriginSession"}}
+}
+
 //workout instance for each assigned session
 //mapping to each movement
 type SessionWorkout struct {

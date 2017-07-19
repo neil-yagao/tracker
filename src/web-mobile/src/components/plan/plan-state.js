@@ -36,7 +36,7 @@ const planState = {
         resetPlan(state, planDetail) {
             state.planName = planDetail.name;
             state.sessions = planDetail.sessions;
-            state.planEditing = false;
+            //state.planEditing = false;
         }
     }
 }

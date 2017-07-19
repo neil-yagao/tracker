@@ -1,10 +1,8 @@
 <template>
 <div>
-    <md-toolbar>
-        <md-button>
-            <md-icon class="md-size-2x">menu</md-icon>
-        </md-button>
-        <span class="md-display-1" style="color:white">举铁小助手</span>
+    <md-toolbar class="md-dense">
+        <span class="md-title" style="color:white; flex:1">举铁小助手</span>
+        <span style="color:white">撸铁吧：{{username}}</span>
     </md-toolbar>
     <router-view class="container-fluid"></router-view>
     <md-bottom-bar class="bottom-stick" >
@@ -15,20 +13,15 @@
 </div>
 </template>
 <script>
-import Plan from './components/plan/plan.vue'
-import {MdToolbar, MdButton, MdIcon} from 'vue-material';
 export default {
     name: 'working-page',
     data() {
         return {}
     },
     computed: {
-        'username': function() {
-            return this.$store.state.username;
+        username: function() {
+            return this.$store.state.user.username;
         }
-    },
-    components:{
-    	Plan
     }
 }
 </script>

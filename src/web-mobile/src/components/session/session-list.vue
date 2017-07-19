@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="overflow-y: auto; max-height: 40em;">
 	<md-list>
 		<md-list-item v-for="session in userSessions" v-on:click.native="toDetail(session)"> 
 		<md-icon>directions_run</md-icon>
@@ -26,7 +26,7 @@ export default {
 		loadSessions(){
 			this.$http.get('/session/' + this.$store.state.user.username).then((res)=>{
 				console.info(res.body.data)
-				this.userSessions = res.body.data;
+				this.userSessions = _.sortBy(res.body.data,'expectingDate');
 			})
 		},
 		translateDate(date){

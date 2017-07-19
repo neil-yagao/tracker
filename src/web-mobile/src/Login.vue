@@ -1,18 +1,22 @@
 <template>
-        <div class="jumbotron" >
-            <h1>我们应该怎么称呼您?</h1>
-            <p>
-                <div class="row padding-top">
-                    <div class="col-xs-8">
-                        <input type="text" v-model="username" class="form-control input-lg" @keyup.enter="login()">
-                    </div>
-                    <div class="col-xs-2 col-xs-offset-1">
-                        <a class="btn btn-info btn-lg" role="button" @click="login()">开始举铁!</a>
-                    </div>
-                </div>
-            </p>
-        </div>
+<div class="vcenter">
+	<md-card>
 
+	    <md-card-header>
+	        <div class="md-title">欢迎加入撸铁大家庭，给自己起个名字吧！</div>
+	    </md-card-header>
+
+	    <md-card-content>
+	        <md-input-container :md-clearable="true">
+	            <md-input type="text" v-model="username"></md-input>
+	        </md-input-container>
+	    </md-card-content>
+	    <md-card-actions>
+	        <md-button v-on:click.native="login()">进入</md-button>
+	    </md-card-actions>
+
+	</md-card>
+</div>
 </template>
 <script>
 import md5 from 'md5'
@@ -36,21 +40,15 @@ export default {
             })*/
             this.$store.commit('setUser',{
                 username:this.username,
-                userIdentity: md5Encode
+                userIdentity: md5Encode,
+                id:1
             })
-			window.location.href = '#/working';
+			this.$router.push('/working/workouts');
         }
     }
 }
 </script>
 <style scoped>
-.jumbotron {
-    padding-left: 3%;
-    position: absolute;
-    width: 100%;
-    top:40%;
-    left:1%;
-}
 
 .vcenter {
     margin-top: 50%;

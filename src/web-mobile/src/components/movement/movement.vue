@@ -2,7 +2,7 @@
 <div>
     <md-input-container v-on:click.native="showDialog()">
         <label>训练动作</label>
-        <md-input v-model="name"></md-input>
+        <md-input v-model="name" required></md-input>
     </md-input-container>
     <md-dialog ref="movementSelection">
     	<movement-list v-if="step == 'list'" @to-add="step = 'add'" :movements="movements" 
@@ -36,13 +36,14 @@ export default {
             this.$refs['movementSelection'].close();
         },
         loadMovements(){
-        	this.$http.get('movements').then((res)=>{
-        		this.movements = res.data
+        	return this.$http.get('movements').then((res)=>{
+        		this.movements = res.body.data;
         	})
         },
         addMovements(movement){
-        	this.movements.push(movement);
-        	this.step = 'list'
+        	this.loadMovements().then(()=>{
+        		this.step = 'list'
+        	})
         },
         selectedMovement(movement){
         	this.name = movement.name;
@@ -53,6 +54,10 @@ export default {
     components:{
     	'movement-list': MovementList,
     	'movement-add':MovementAdd
+    },
+    mounted:function(){
+    	console.info("movement loaded!")
+    	this.loadMovements()
     }
 
 } 

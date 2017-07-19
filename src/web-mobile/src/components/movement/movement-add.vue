@@ -77,9 +77,12 @@ export default {
 		},
 		addMovement(){
 			this.movement.secondaryMuscle = _.join(this.movement.secondaryMuscleArray,";")
+			this.movement.addBy = this.$store.state.user
 			console.info(this.movement)
 			this.$emit('add-movement', this.movement)
-			//this.$http.post('movements',this.movement)
+			this.$http.put('movement',this.movement).then(() =>{
+				this.moveToList()
+			})
 		}
 	}
 }

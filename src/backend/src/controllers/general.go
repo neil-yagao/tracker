@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
+	"strconv"
 )
 
 type GeneralController struct {
@@ -54,4 +55,13 @@ func (this *GeneralController) ServeJson(data ...interface{}) {
 	this.Data["json"] = wrappedResult
 	this.ServeJSON()
 	this.StopRun()
+}
+
+func (this *GeneralController) GetIntParam(param string) int64 {
+	temp := this.Ctx.Input.Param(param)
+	id, err := strconv.ParseInt(temp, 10, 64)
+	if err != nil {
+		panic(err)
+	}
+	return id
 }

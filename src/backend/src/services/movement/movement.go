@@ -19,7 +19,7 @@ func GetAllMovement() []*models.Movement {
 }
 
 func InsertMovement(m *models.Movement) {
-	o.Insert(m)
+	o.InsertOrUpdate(m)
 }
 
 func UpdateMovement(m *models.Movement) {

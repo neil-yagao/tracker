@@ -10,10 +10,10 @@ var router = {
         path: "",
         component: PlanList
     }, {
-        path: "sessions",
+        path: ":id/sessions",
         component: PlanSessions
     }, {
-        path: "per-session/:id",
+        path: ":session/session/:id",
         component: PlanSession
     }]
 }

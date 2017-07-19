@@ -1,63 +1,48 @@
 <template>
-<div style="margin-top:1em">
-<md-button class="md-fab md-raised md-accent" v-on:click.native="openReturnConfirm()">
-	<md-icon>reply</md-icon>
-</md-button>
-    <md-table-card>
-        <md-toolbar>
-            <h1 class="md-title">{{title}}已添加的动作</h1>
-        </md-toolbar>
-        <md-table>
-            <md-table-header>
-                <md-table-row>
-                    <md-table-head>#</md-table-head>
-                    <md-table-head>动作名称</md-table-head>
-                    <md-table-head> 组数 </md-table-head>
-                    <md-table-head>每组数量</md-table-head>
-                    <md-table-head  v-if="$store.state.plan.planEditing"></md-table-head>
-                </md-table-row>
-            </md-table-header>
-             <md-table-body>
-		      <md-table-row v-for="(row, rowIndex) in exercises" :key="rowIndex" :md-item="row">
-		        <md-table-cell>
-		          {{ rowIndex + 1}}
-		        </md-table-cell>
-		        <md-table-cell>
-		          {{ row.name || row.movement.name}}
-		        </md-table-cell>
-		        <md-table-cell md-numeric>
-		          {{ row.sets }}
-		        </md-table-cell>
-		        <md-table-cell md-numeric>
-		          {{ row.reps }}
-		        </md-table-cell>
-		        <md-table-cell  v-if="$store.state.plan.planEditing">
-                    <md-icon class="md-accent"  v-on:click.native="removeExercise(row)">delete</md-icon>
-		        </md-table-cell>
-		      </md-table-row>
-		    </md-table-body>
-        </md-table>
-    </md-table-card>
-    <hr>
-    <md-list v-if="$store.state.plan.planEditing">
-        <movement id="movement-element" @selected-movement="selectMovement($event)"></movement>
-        <md-list-item>
-            <md-input-container :md-clearable="true" md-numeric>
-                <label>重复组数</label>
-                <md-input type="number" v-model="activeExercise.sets"></md-input>
-            </md-input-container>
-        </md-list-item>
-        <md-list-item>
-            <md-input-container :md-clearable="true">
-                <label>每组次数</label>
-                <md-input type="number" v-model="activeExercise.reps"></md-input>
-            </md-input-container>
-        </md-list-item>
-        <md-list-item>
-            <md-button class="md-raised" v-on:click.native="addExercise()">添加动作</md-button>
-            <md-button class="md-raised md-primary" v-on:click.native="doneEdit()">课程编辑完成</md-button>
-        </md-list-item>
-    </md-list>
+<div >
+	<md-toolbar class="md-transparent">
+        <md-button class="md-icon-button md-dense md-accent" v-on:click.native="openReturnConfirm()">
+            <md-icon>reply</md-icon>
+        </md-button>
+        <span class="md-title" style="flex:1">{{title}}训练内容</span>
+    </md-toolbar>
+    <div style="overflow-y: auto; max-height: 25em;">
+        <md-list md-triple-line>
+            <md-list-item v-for="(row, rowIndex) in exercises">
+                <div class="md-list-text-container" v-on:click="editSesssions(rowIndex)">
+                    <span>{{ row.name || row.movement.name}}</span>
+                    <span>重复组数： {{ row.sets }}</span>
+                    <p>每组数量 {{ row.reps }}个</p>
+                </div>
+                <md-button class="md-icon-button md-accent md-list-action" v-if="$store.state.plan.planEditing" v-on:click.native="removeExercise(row)">
+                    <md-icon>delete</md-icon>
+                </md-button>
+                <md-divider></md-divider>
+            </md-list-item>
+        </md-list>
+    </div>
+    <md-button class="md-raised" v-on:click.native="showNewExerciseModal()" v-if="$store.state.plan.planEditing">添加新动作</md-button>
+    <md-dialog ref="newExerciseModal" style="max-height:70%">
+	    <md-list>
+	        <movement id="movement-element" @selected-movement="selectMovement($event)"></movement>
+	        <md-list-item>
+	            <md-input-container :md-clearable="true" md-numeric >
+	                <label>重复组数</label>
+	                <md-input type="number" v-model="activeExercise.sets" required></md-input>
+	            </md-input-container>
+	        </md-list-item>
+	        <md-list-item>
+	            <md-input-container :md-clearable="true" >
+	                <label>每组次数</label>
+	                <md-input type="number" v-model="activeExercise.reps" required></md-input>
+	            </md-input-container>
+	        </md-list-item>
+	         <md-dialog-actions>
+	            <md-button class="md-primary" v-on:click.native="addExercise()">添加动作</md-button>
+	            <md-button class="md-primary" v-on:click.native="closeModal()">取消</md-button>
+	        </md-dialog-actions>
+	    </md-list>
+    </md-dialog>
 </div>
 
 
@@ -71,28 +56,40 @@ import _ from 'lodash';
 	    data() {
 	        return {
 	            activeExercise: {}
+
 	        }
 	    },
 	    methods: {
 	        addExercise: function() {
+                this.activeExercise.sequence = this.exercises.length + 1
+                this.activeExercise.sets = Number(this.activeExercise.sets);
+                this.activeExercise.reps = Number(this.activeExercise.reps);
                 this.$store.commit('pushExercise',  _.clone(this.activeExercise))
-                this.activeExercise.name = '';
-                this.activeExercise.weight = '';
-                this.activeExercise.sets = '';
-                this.activeExercise.reps = '';
-                this.activeExercise = {};
+                this.$http.post("/session/"+ this.session.id + "/movements",this.activeExercise).then(()=>{
+                	this.activeExercise.sets = '';
+	                this.activeExercise.reps = '';
+	                this.activeExercise = {};
+	                this.closeModal()
+                })
+                
 	        },
 	        removeExercise(row){
 	        	this.$store.commit('removeExercise', row )
 	        },
             doneEdit(){
-                this.$router.replace("/working/plan/sessions")
+                this.$router.replace("/working/plan/" +this.$route.params.session+ "/sessions")
             },
             selectMovement(movement){
             	this.activeExercise.movement = movement;
             },
 	        openReturnConfirm(){
         		this.doneEdit();
+	        },
+	        showNewExerciseModal(){
+	        	this.$refs['newExerciseModal'].open()
+	        },
+	        closeModal(){
+	        	this.$refs['newExerciseModal'].close()
 	        }
 	    },
         computed:{
@@ -100,10 +97,13 @@ import _ from 'lodash';
                 return this.$route.params.id;
             },
             exercises: function(){
-                return this.$store.state.plan.sessions[this.sessionIndex].workouts;
+                return this.session.workouts;
             },
             title:function(){
-                return this.$store.state.plan.sessions[this.sessionIndex].name
+                return this.session.name
+            },
+            session:function(){
+            	return this.$store.state.plan.sessions[this.sessionIndex]
             }
         },
         components:{

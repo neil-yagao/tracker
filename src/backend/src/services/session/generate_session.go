@@ -17,15 +17,18 @@ const WEEK_HOUR = 168
 
 var day, _ = time.ParseDuration("24h")
 
-func ApplyPlanToUser(p *models.Plan, user *models.UserInfo, startDate string) {
+func ApplyPlanToUser(planId int64, user *models.UserInfo, startDate string) {
 	var assignedPlan = new(models.AssignedPlan)
-	assignedPlan.AssignTime = time.Now()
+	var plan = new(models.Plan)
+	plan.Id = planId
+	o.Read(plan)
+	o.LoadRelated(plan, "Sessions")
 	assignedPlan.AssignTo = user
-	assignedPlan.AssignedPlan = p
+	assignedPlan.AssignedPlan = plan
 	assignedPlan.ExecutingStatus = NEW_SESSION
-	logs.Debug("assign plan %v to user %v", p, user)
 	o.Insert(assignedPlan)
-	createUserSessonBasedOnPlan(p, user, startDate)
+	logs.Debug("assign plan %v to user %v", plan, user)
+	createUserSessonBasedOnPlan(plan, user, startDate)
 }
 
 func createUserSessonBasedOnPlan(p *models.Plan, user *models.UserInfo, startDate string) []*models.UserSession {
@@ -55,6 +58,7 @@ func createUserSessonBasedOnPlan(p *models.Plan, user *models.UserInfo, startDat
 func createSessionWorkout(s *models.Session, us *models.UserSession) []*models.SessionWorkout {
 	var workouts []*models.SessionWorkout = make([]*models.SessionWorkout, 0)
 	logger.Println(s.Workouts)
+	o.LoadRelated(s, "Workouts")
 	for _, sm := range s.Workouts {
 		workout := new(models.SessionWorkout)
 		workout.MappedMovement = sm

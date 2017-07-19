@@ -4,14 +4,25 @@ import (
 	"models"
 )
 
-func AssignSessionToPlan(p *models.Plan, s *models.Session) {
+func AssignSessionToPlan(pId int64, s *models.Session) {
+	var p = new(models.Plan)
+	p.Id = pId
+	o.Read(p)
 	s.Plan = p
 	o.Insert(s)
 	p.Sessions = append(p.Sessions, s)
 }
 
-func RemoveSessionFromPlan(p *models.Plan, s *models.Session) {
+func RemoveSessionFromPlan(pId int64, sId int64) {
 	//Delete all the Movement from session
+	var p = new(models.Plan)
+	p.Id = pId
+	o.Read(p)
+	o.LoadRelated(p, "Sessions")
+	var s = new(models.Session)
+	s.Id = sId
+	o.Read(s)
+	o.LoadRelated(s, "Workouts")
 	for _, sm := range s.Workouts {
 		o.Delete(sm)
 	}
@@ -24,7 +35,10 @@ func RemoveSessionFromPlan(p *models.Plan, s *models.Session) {
 	}
 }
 
-func AddMovementToSession(s *models.Session, sm *models.SessionMovement) {
+func AddMovementToSession(sId int64, sm *models.SessionMovement) {
+	var s = new(models.Session)
+	s.Id = sId
+	o.Read(s)
 	sm.Session = s
 	o.Insert(sm)
 	s.Workouts = append(s.Workouts, sm)
@@ -40,9 +54,9 @@ func DeleteMovementFromSession(s *models.Session, sm *models.SessionMovement) {
 	}
 }
 
-func FindPlan(name string) *models.Plan {
+func FindPlan(id int64) *models.Plan {
 	var plan = new(models.Plan)
-	o.QueryTable("plan").Filter("name", name).RelatedSel().One(plan)
+	o.QueryTable("plan").Filter("id", id).RelatedSel().One(plan)
 	o.LoadRelated(plan, "Sessions")
 	for _, session := range plan.Sessions {
 		o.LoadRelated(session, "Workouts")

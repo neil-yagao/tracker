@@ -1,10 +1,9 @@
 package plan
 
 import (
-	"models"
-
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
+	"models"
 )
 
 var o = orm.NewOrm()

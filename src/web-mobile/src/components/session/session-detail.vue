@@ -5,12 +5,7 @@
 		<session-movement :movement="workout" @movement-done="setMovementDone($event)">
 		</session-movement>
 	</div>
-	<md-dialog-alert
-	  md-title="恭喜"
-	  md-content="本次训练课所有动作均已完成！"
-	  md-ok-text="确定"
-	  ref="workout-finalize">
-	</md-dialog-alert>
+
 	</div>
 </template>
 <script>
@@ -34,9 +29,7 @@ export default {
 					//all done
 					console.info('workout acheived');
 					this.$router.replace("/working/workouts")
-					this.$http.post('/session/' + this.$store.state.session.detail.id).then((res) =>{
-						this.$refs['workout-finalize'].open();
-					})
+					this.$http.post('/session/' + this.$store.state.session.detail.id)
 				}
 				
 			},
