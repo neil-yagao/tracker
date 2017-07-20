@@ -12,5 +12,5 @@ func init() {
 	orm.RegisterDataBase("default", "mysql", "root:password@tcp(127.0.0.1:3306)/powerlift?charset=utf8")
 
 	orm.RegisterModel(new(UserInfo), new(Movement), new(AssignedPlan), new(UserSession),
-		new(SessionWorkout), new(Exercise), new(SessionMovement), new(Session), new(Plan))
+		new(SessionWorkout), new(Exercise), new(SessionMovement), new(Session), new(Plan), new(PhysiqueInfo))
 }

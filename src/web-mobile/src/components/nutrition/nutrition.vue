@@ -6,7 +6,7 @@
 <script>
 
 export default{
-	name:'plan-container',
+	name:'nutrition-container',
 	data(){
 		return {
 			
@@ -19,4 +19,3 @@ export default{
 <style>
 
 </style>
-

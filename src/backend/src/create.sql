@@ -1,5 +1,3 @@
-CREATE SCHEMA `powerlift` DEFAULT CHARACTER SET utf8 ;
-
 -- --------------------------------------------------
 --  Table Structure for `models.UserInfo`
 -- --------------------------------------------------
@@ -16,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `user_info` (
 CREATE TABLE IF NOT EXISTS `movement` (
     `id` bigint AUTO_INCREMENT NOT NULL PRIMARY KEY,
     `target_muscle` varchar(32) NOT NULL DEFAULT '' ,
-    `secondary_muscle` varchar(32) NOT NULL DEFAULT '' ,
+    `secondary_muscle` varchar(128) NOT NULL DEFAULT '' ,
     `name` varchar(128) NOT NULL DEFAULT '' ,
     `description` longtext NOT NULL,
     `dividable` tinyint NOT NULL DEFAULT 0 ,
@@ -44,7 +42,8 @@ CREATE TABLE IF NOT EXISTS `user_session` (
     `expecting_date` date NOT NULL,
     `execution_date` date,
     `origin_session_id` bigint NOT NULL,
-    `status` varchar(16) NOT NULL DEFAULT '' 
+    `status` varchar(16) NOT NULL DEFAULT '' ,
+    UNIQUE (`expecting_date`, `origin_session_id`)
 ) ENGINE=InnoDB;
 
 -- --------------------------------------------------
@@ -64,8 +63,7 @@ CREATE TABLE IF NOT EXISTS `exercise` (
     `id` bigint AUTO_INCREMENT NOT NULL PRIMARY KEY,
     `belong_workout_id` bigint NOT NULL,
     `weight` numeric(8, 2) NOT NULL DEFAULT 0 ,
-    `reps` tinyint NOT NULL DEFAULT 0 ,
-    `sequence` tinyint NOT NULL DEFAULT 0 
+    `reps` tinyint NOT NULL DEFAULT 0 
 ) ENGINE=InnoDB;
 
 -- --------------------------------------------------
@@ -103,4 +101,16 @@ CREATE TABLE IF NOT EXISTS `plan` (
     `name` varchar(128) NOT NULL DEFAULT '' ,
     `create_by_id` bigint NOT NULL,
     UNIQUE (`name`)
+) ENGINE=InnoDB;
+
+-- --------------------------------------------------
+--  Table Structure for `models.PhysiqueInfo`
+-- --------------------------------------------------
+CREATE TABLE IF NOT EXISTS `physique_info` (
+    `id` bigint AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `user_id` bigint NOT NULL,
+    `weight` numeric(8, 2) NOT NULL DEFAULT 0 ,
+    `height` numeric(8, 2) NOT NULL DEFAULT 0 ,
+    `age` numeric(8, 2) NOT NULL DEFAULT 0 ,
+    `record_time` date NOT NULL
 ) ENGINE=InnoDB;
