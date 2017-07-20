@@ -31,21 +31,22 @@ export default {
     methods: {
         login() {
             var md5Encode = md5(this.username);
-            console.info(md5Encode);
-            /*this.$http.post('login',{
-            	'username': this.username,
-            	'usr':md5Encode
-            }).then((res)=>{
-           		this.$store.state.username = this.username;
-            	window.location.href = '#/working';
-            })*/
-            this.$store.commit('setUser',{
-                username:this.username,
-                userIdentity: md5Encode,
-                id:1
-            })
-			this.$router.push('/working/workouts');
 
+            var localStore = window.localStorage.getItem('user');
+            if(localStore.id){
+                this.$store.commit('setUser', localStore);
+                this.$router.push('/working/workouts');
+            }else {
+                this.$http.post('login',{
+                'username': this.username,
+                'usr':md5Encode
+                }).then((res)=>{
+                    console.info(res.body.data)
+                    this.$store.commit('setUser',res.body.data);
+                    this.$router.push('/working/workouts');
+                    window.localStorage.setItem('user', res.body.data)
+                })
+            }
         }
     }
 }

@@ -6,9 +6,6 @@ import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import router from './router.js'
 import Vuex from 'vuex'
-window.jQuery = require("jquery");
-window.$ = window.jQuery;
-require("bootstrap")
 require('../node_modules/bootstrap/dist/css/bootstrap.css')
 import VueMaterial from 'vue-material'
 import planState from './components/plan/plan-state.js'

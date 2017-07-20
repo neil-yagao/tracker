@@ -37,6 +37,6 @@ type PhysiqueInfo struct {
 	Weight     float64   `json:"weight" orm:"digits(8);decimals(2)"`
 	Height     float64   `json:"height" orm:"digits(8);decimals(2)"`
 	Age        float64   `json:"age" orm:"digits(8);decimals(2)"`
-	Gender     int8      `json:"gender" orm:"digits(8)"`
+	Gender     float64   `json:"gender" orm:"digits(8);decimals(2)"`
 	RecordTime time.Time `orm:"auto_now_add;type(date)" json:"recordTime"`
 }

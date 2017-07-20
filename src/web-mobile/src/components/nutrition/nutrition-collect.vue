@@ -62,7 +62,7 @@ export default {
 			age:''
 		}
 	},
-	method:{
+	methods:{
 		doSave(){
 			var physique = {
 				gender:Number(this.gender),
@@ -71,7 +71,9 @@ export default {
 				height:Number(this.height)
 			}
 			this.$http.put("/physique/" + this.$store.state.user.id, physique).then(() =>{
-
+				setTimeout(()=>{
+					this.$router.replace('/working/nutrition')
+				},500)
 			})
 		}
 	}

@@ -112,5 +112,6 @@ CREATE TABLE IF NOT EXISTS `physique_info` (
     `weight` numeric(8, 2) NOT NULL DEFAULT 0 ,
     `height` numeric(8, 2) NOT NULL DEFAULT 0 ,
     `age` numeric(8, 2) NOT NULL DEFAULT 0 ,
+    `gender` numeric(8, 2) NOT NULL DEFAULT 0 ,
     `record_time` date NOT NULL
 ) ENGINE=InnoDB;

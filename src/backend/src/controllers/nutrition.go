@@ -18,3 +18,10 @@ func (this *NutritionController) SaveUserPhysiqueInfo() {
 	nutrition.SaveUserPhysique(userId, info)
 	this.ServeJson()
 }
+
+// @router /physique/:user [get]
+func (this *NutritionController) GetUserPhysique() {
+	defer this.RecoverFromError()
+	userId := this.GetIntParam(":user")
+	this.ServeJson(nutrition.GetUserPhysique(userId))
+}

@@ -22,6 +22,13 @@ export default {
         username: function() {
             return this.$store.state.user.username;
         }
+    },
+    mounted:function(){
+        //load user info from local storage
+        var localStore = window.localStorage.getItem('user');
+        if(localStore.id){
+            this.$store.commit('setUser', localStore);
+        }
     }
 }
 </script>
