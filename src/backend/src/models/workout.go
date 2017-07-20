@@ -1,22 +1,5 @@
 package models
 
-type Movement struct {
-	Id              int64  `json:"id"`
-	TargetMuscle    string `json:"targetMuscle"`
-	SecondaryMuscle string `json:"secondarMuscle"`
-	Name            string `json:"name"`
-	Description     string `json:"description"`
-	Dividable       int8   `json:"dividable"`
-}
-
-type MovementTemplate struct {
-	Name        string  `json:"name"`
-	Repeats     int     `json:"repeats"`
-	Weight      float64 `json:"weight"`
-	Sets        int     `json:"sets"`
-	NeedWarmSet int8    `json:"needWarmSet"`
-}
-
 type WorkingSet struct {
 	Id            int64   `json:"id"`
 	Workout       int64   `json:"workout"`

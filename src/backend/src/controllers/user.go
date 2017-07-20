@@ -2,18 +2,20 @@ package controllers
 
 import (
 	"models"
-	"services"
 )
 
-type UserControllers struct {
+type UserController struct {
 	GeneralController
 }
 
 // @router /login [post]
-func (this *UserControllers) UserLogin() {
-	defer this.RecoverFromError()
-	userInfo := new(models.UserInfo)
-	this.ParseRequestBody(userInfo)
-	services.UserService.HandleUserLogin(*userInfo)
-	this.ServeJson()
+func (this *UserController) Login() {
+	user := new(models.UserInfo)
+	this.ParseRequestBody(user)
+	if user.Id == 0 {
+		//not register
+		o.Insert(user)
+	}
+	o.Read(user, "Username")
+	this.ServeJson(user)
 }

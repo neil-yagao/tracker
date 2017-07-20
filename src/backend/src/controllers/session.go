@@ -2,38 +2,45 @@ package controllers
 
 import (
 	"models"
-	"services"
-	"strconv"
+	"services/session"
 )
 
 type WorkingSessionController struct {
 	GeneralController
 }
 
-// @router /session/?:workout [get]
-func (this *WorkingSessionController) GetWorkoutSessions() {
+// @router /session/?:username [get]
+func (this *WorkingSessionController) FindUserSession() {
 	defer this.RecoverFromError()
-	workoutId, _ := strconv.Atoi((this.Ctx.Input.Param(":workout")))
-	result := services.SessionService.GetWorkoutSession(workoutId)
-	this.ServeJson(result)
+	username := this.Ctx.Input.Param(":username")
+	user := new(models.UserInfo)
+	user.Username = username
+	o.Read(user, "Username")
+	this.ServeJson(session.FindUserSessions(user))
 }
 
-// @router /session/?:workout [post]
-func (this *WorkingSessionController) SaveSession() {
+// @router /session-detail/?:sessionId [get]
+func (this *WorkingSessionController) GetSessionDetail() {
 	defer this.RecoverFromError()
-	achieved := make([]models.WorkingSet, 0)
-	this.ParseRequestBody(&achieved)
-	workoutId := this.Ctx.Input.Param(":workout")
-	userIdentify := this.GetUserIdentity()
-	services.SessionService.FinalizeSession(achieved, workoutId, userIdentify)
+	id := this.GetIntParam(":sessionId")
+	this.ServeJson(session.FindSessionDetail(id))
+
+}
+
+// @router /session/?:id [post]
+func (this *WorkingSessionController) SettleSession() {
+	defer this.RecoverFromError()
+	id := this.GetIntParam(":sessionId")
+	session.AchievedSession(id)
 	this.ServeJson()
 }
 
-// @router /session/?:workout/movement [post]
-func (this *WorkingSessionController) UpdateSessionMovement() {
+// @router /session-movement/?:movementId [post]
+func (this *WorkingSessionController) DoneOneMovement() {
 	defer this.RecoverFromError()
-	updateInfo := new(models.SessionUpdateInfo)
-	this.ParseRequestBody(updateInfo)
-	services.SessionService.UpdateSessionMovement(updateInfo)
+	exercises := make([]*models.Exercise, 0)
+	this.ParseRequestBody(&exercises)
+	id := this.GetIntParam(":movementId")
+	session.DoneOneMovement(id, exercises)
 	this.ServeJson()
 }
