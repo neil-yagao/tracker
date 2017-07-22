@@ -16,8 +16,7 @@ func init() {
 	beego.Include(&controllers.NutritionController{})
 	beego.Include(&controllers.UserController{})
 
-	beego.SetStaticPath("/", "../../webapp")
-	beego.SetStaticPath("/mobile", "../../hybrid/www")
-	beego.SetStaticPath("/dist", "../../webapp/dist")
-	beego.SetStaticPath("/node_modules", "../../webapp/node_modules")
+	beego.SetStaticPath("/", "../../web-mobile")
+	beego.SetStaticPath("/dist", "../../web-mobile/dist")
+	beego.SetStaticPath("/node_modules", "../../web-mobile/node_modules")
 }
