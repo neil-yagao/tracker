@@ -16,7 +16,7 @@ func (this *PlanController) CreateNewPlan() {
 	var newPlan = new(models.Plan)
 	this.ParseRequestBody(newPlan)
 	plan.CreateNewPlan(newPlan)
-	this.ServeJson()
+	this.ServeJson(newPlan)
 }
 
 //@router /plans [get]

@@ -1,6 +1,6 @@
 package main
 
-/*import (
+import (
 	"github.com/astaxie/beego"
 	_ "routers"
 )
@@ -8,9 +8,9 @@ package main
 func main() {
 
 	beego.Run()
-}*/
+}
 
-import (
+/*import (
 	"github.com/astaxie/beego/orm"
 	_ "models"
 )
@@ -18,4 +18,4 @@ import (
 func main() {
 
 	orm.RunCommand()
-}
+}*/

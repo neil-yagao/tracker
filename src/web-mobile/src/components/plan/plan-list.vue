@@ -1,6 +1,6 @@
 <template>
 <div>
-	<div>
+	<div style="overflow-y: auto; max-height: 40em;">
 	    <md-list class="md-double-line">
 	        <md-list-item v-for='plan in exsitingPlan' v-on:click.native='checkPlan(plan)'>
 	            <md-icon>visibility</md-icon>
@@ -14,7 +14,7 @@
 	        <md-button class='md-raised md-warn' v-on:click.native='openCreationPromot()'>未找到满意的？自己创建一个吧</md-button>
 	    </md-list>
     </div>
-    <md-dialog-prompt md-title="创建新计划" md-ok-text="创建" md-cancel-text="取消" @close="onClose" v-model="$store.state.plan.planName" md-input-maxlength='20' md-input-placeholder='新计划名称' ref="createPlanPromot">
+    <md-dialog-prompt md-title="创建新计划" md-ok-text="创建" md-cancel-text="取消" @close="onClose" v-model="planName" md-input-maxlength='20' md-input-placeholder='新计划名称' ref="createPlanPromot">
     </md-dialog-prompt>
     <loading-modal ref="loadingModal"></loading-modal>
 </div>
@@ -27,7 +27,8 @@ export default {
 	data(){
 		return {
 			exsitingPlan: [	
-			]
+			],
+			planName:''
 		}
 	},
 	methods:{
@@ -46,8 +47,20 @@ export default {
 		},
 		onClose(type){
 			if(type == 'ok'){
-				this.$router.push('/working/plan/' + -1 + ' /sessions');
-				this.$store.commit('editingPlan')
+				var plan = {
+					name:this.planName,
+					createby:this.$store.state.user
+				}
+				this.$http.post('/plan', plan).then((res)=>{
+					var createdPlan = res.body.data;
+					if(!createdPlan.sessions){
+						createdPlan.sessions = []
+					}
+					this.$store.commit('resetPlan',createdPlan)
+					this.$router.push('/working/plan/' + createdPlan.id + '/sessions');
+
+				})
+				
 			}
 		},
 		openCreationPromot(){

@@ -4,7 +4,7 @@
         <span class="md-title" style="color:white; flex:1">举铁小助手</span>
         <span style="color:white">撸铁吧：{{username}}</span>
     </md-toolbar>
-    <router-view class="container-fluid"></router-view>
+    <router-view class="container-fluid" ></router-view>
     <md-bottom-bar class="bottom-stick" >
 	  <md-bottom-bar-item md-icon="history" href='#/working/workouts' :md-active="$route.path.indexOf('workouts') > 0">训练课</md-bottom-bar-item>
 	  <md-bottom-bar-item md-icon="favorite" href="#/working/plan" :md-active="$route.path.indexOf('plan') > 0" > 训练计划</md-bottom-bar-item>
@@ -25,10 +25,22 @@ export default {
     },
     mounted:function(){
         //load user info from local storage
-        var localStore = window.localStorage.getItem('user');
-        if(localStore.id){
-            this.$store.commit('setUser', localStore);
+        if(!this.username){
+            var str = window.localStorage.getItem('user');
+            var localStore = null;
+            try{
+                localStore = JSON.parse(str);
+            }catch (e){
+                console.info(str + " translate to json fail")
+                console.info(e)
+            }
+            if(localStore && localStore.id){
+                this.$store.commit('setUser', localStore);
+            }else {
+                this.$router.replace('/')
+            }
         }
+        
     }
 }
 </script>

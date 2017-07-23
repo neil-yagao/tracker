@@ -9,7 +9,7 @@
     <div style="overflow-y: auto; max-height: 25em;">
         <md-list md-triple-line>
             <md-list-item v-for="(row, rowIndex) in exercises">
-                <div class="md-list-text-container" v-on:click="editSesssions(rowIndex)">
+                <div class="md-list-text-container">
                     <span>{{ row.name || row.movement.name}}</span>
                     <span>重复组数： {{ row.sets }}</span>
                     <p>每组数量 {{ row.reps }}个</p>

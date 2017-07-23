@@ -9,6 +9,7 @@
         </md-toolbar>
         </md-dialog-title>
 		<md-dialog-content>
+		<div style="overflow-y: auto; max-height: 25em">
 		<md-list>
 			<md-list-item>
 			<md-input-container>
@@ -52,6 +53,7 @@
 			</md-input-container>
 			</md-list-item>
 			</md-list>
+			</div>
 			 <md-button  class="md-raised md-primary" v-on:click.native="addMovement()">
 	  			添加
 	      	</md-button>

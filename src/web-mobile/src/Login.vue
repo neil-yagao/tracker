@@ -30,24 +30,39 @@ export default {
     },
     methods: {
         login() {
-            var md5Encode = md5(this.username);
 
-            var localStore = window.localStorage.getItem('user');
-            if(localStore.id){
+            var str = window.localStorage.getItem('user');
+            var localStore = null;
+            try{
+                localStore = JSON.parse(str);
+            }catch (e){
+                console.info(str + " translate to json fail")
+                console.info(e)
+            }
+            if(localStore && localStore.id){
                 this.$store.commit('setUser', localStore);
+                window.localStorage.setItem('user', localStore)
                 this.$router.push('/working/workouts');
             }else {
+                if(!this.username){
+                    return
+                }
+                var md5Encode = md5(this.username);
                 this.$http.post('login',{
                 'username': this.username,
                 'usr':md5Encode
                 }).then((res)=>{
-                    console.info(res.body.data)
-                    this.$store.commit('setUser',res.body.data);
+                    var user = res.body.data
+                    console.info(JSON.stringify(user))
+                    this.$store.commit('setUser',user);
+                    window.localStorage.setItem('user', JSON.stringify(user))
                     this.$router.push('/working/workouts');
-                    window.localStorage.setItem('user', res.body.data)
                 })
             }
         }
+    },
+    mounted:function(){
+        this.login()
     }
 }
 </script>

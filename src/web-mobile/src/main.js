@@ -21,8 +21,6 @@ const store = new Vuex.Store({
 
     state: {
         user: {
-            username: "tester",
-            id: 1
         }
     },
     mutations: {

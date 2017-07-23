@@ -1,6 +1,6 @@
 <template>
 <div style="overflow-y: auto; max-height: 40em;">
-
+	
 	<md-list>
 		<md-list-item v-for="session in userSessions" v-on:click.native="toDetail(session)"> 
 		<md-icon>directions_run</md-icon>

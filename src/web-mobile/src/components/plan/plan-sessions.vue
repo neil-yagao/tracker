@@ -170,6 +170,8 @@ export default {
         loadPlan(){
         	this.$http.get('/plan/' + this.planId).then((res) =>{
 				var planDetail = res.body.data;
+                console.info("load plan");
+                console.info(planDetail);
 				this.$store.commit('resetPlan', planDetail);
 			})
 

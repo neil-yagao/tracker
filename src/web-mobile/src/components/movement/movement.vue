@@ -30,7 +30,7 @@ export default {
     methods:{
         showDialog(){
             this.$refs['movementSelection'].open();
-            this.step = 'list'
+            this.loadMovements()
         },
         closeDialog(){
             this.$refs['movementSelection'].close();
@@ -42,13 +42,13 @@ export default {
         },
         addMovements(movement){
         	this.loadMovements().then(()=>{
-        		this.step = 'list'
+        		this.step = 'list';
         	})
+
         },
         selectedMovement(movement){
         	this.name = movement.name;
         	this.closeDialog();
-            this.selectedMovement(movement)
         	this.$emit('selected-movement', movement)
         }
     },

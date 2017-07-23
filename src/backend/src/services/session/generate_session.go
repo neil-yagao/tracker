@@ -65,6 +65,9 @@ func createSessionWorkout(s *models.Session, us *models.UserSession) []*models.S
 	for _, sm := range s.Workouts {
 		workout := new(models.SessionWorkout)
 		workout.MappedMovement = sm
+		if us.Id == 0 {
+			continue
+		}
 		workout.BelongSession = us
 		workout.Status = "0"
 		o.Insert(workout)
