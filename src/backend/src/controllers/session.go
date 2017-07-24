@@ -30,7 +30,7 @@ func (this *WorkingSessionController) GetSessionDetail() {
 // @router /session/?:id [post]
 func (this *WorkingSessionController) SettleSession() {
 	defer this.RecoverFromError()
-	id := this.GetIntParam(":sessionId")
+	id := this.GetIntParam(":id")
 	session.AchievedSession(id)
 	this.ServeJson()
 }
