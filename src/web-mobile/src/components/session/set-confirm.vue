@@ -1,6 +1,9 @@
 <template>
 <div>
     <md-dialog ref="set" id="set-confirm-modal">
+    	<md-dialog-title>
+    		完成组信息
+    	</md-dialog-title>
         <md-dialog-content>
             <md-layout md-gutter>
                 <md-layout md-flex="44">
@@ -51,6 +54,6 @@ export default {
 <style>
 #set-confirm-modal{
 	height:50vh;
-	min-height:10em;
+	min-height:20em;
 }
 </style>
