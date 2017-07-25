@@ -2,14 +2,17 @@
 	<div style="height:45em">
 		<md-dialog-title>
 		 <md-toolbar class="md-transparent">
+			<md-button class="md-raised md-accent md-icon-button" v-on:click.native="moveToList()" >
+	  			<md-icon>reply</md-icon>
+  			</md-button>
         	<h2 class="md-title"  style="flex:1">添加新动作</h2>
-	        <md-button  class="md-raised md-accent" v-on:click.native="moveToList()">
-	  			返回
+	      	<md-button  class="md-raised md-primary md-icon-button" v-on:click.native="addMovement()">
+	  			<md-icon>add</md-icon>
 	      	</md-button>
         </md-toolbar>
         </md-dialog-title>
 		<md-dialog-content>
-		<div style="overflow-y: auto; max-height: 23em">
+		<div style="overflow-y: auto; max-height: 20vh">
 		<md-list>
 			<md-list-item>
 			<md-input-container>
@@ -54,9 +57,6 @@
 			</md-list-item>
 			</md-list>
 			</div>
-			 <md-button  class="md-raised md-primary" v-on:click.native="addMovement()">
-	  			添加
-	      	</md-button>
 		</md-dialog-content>
 	</div>
 </template>

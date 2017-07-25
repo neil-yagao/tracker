@@ -12,7 +12,7 @@
         </md-toolbar>
         </md-dialog-title>
         <md-dialog-content>
-        	<div  style="max-height: 20em;overflow-y: auto;">
+        	<div  style="max-height: 20vh;overflow-y: auto;">
 	            <md-list ref="m-list">
 	                <md-list-item v-for="(movements, muscle) in movementList">
 	                    <span>{{muscle}}</span>
@@ -53,7 +53,9 @@ export default {
 			this.selectedMovement = {};
 		},
 		selectingMovement(m){
+			console.info(m)
 			this.selectedMovement = m;
+			this.criteria = m.name;
 		}
 
 	},

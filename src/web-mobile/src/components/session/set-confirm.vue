@@ -1,7 +1,6 @@
 <template>
 <div>
     <md-dialog ref="set" id="set-confirm-modal">
-        <md-dialog-title>已完成</md-dialog-title>
         <md-dialog-content>
             <md-layout md-gutter>
                 <md-layout md-flex="44">
