@@ -4,7 +4,7 @@
         <label>训练动作</label>
         <md-input v-model="name" required></md-input>
     </md-input-container>
-    <md-dialog ref="movementSelection">
+    <md-dialog ref="movementSelection" id="movement-dialog">
     	<movement-list v-if="step == 'list'" @to-add="step = 'add'" :movements="movements" 
     	@close="closeDialog()" @selected="selectedMovement($event)">
     	</movement-list>
@@ -64,8 +64,9 @@ export default {
 } 
 </script>
 <style>
-.md-dialog{width:90%;height: 70%}
+.md-dialog{width:90vw;height: 75vh}
 #criteria {
     margin-left: 10px
 }
+
 </style>

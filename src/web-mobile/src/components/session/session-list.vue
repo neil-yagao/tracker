@@ -1,5 +1,5 @@
 <template>
-<div style="overflow-y: auto; max-height: 40em;">
+<div style="overflow-y: auto; max-height: 84vh;">
 	
 	<md-list>
 		<md-list-item v-for="session in userSessions" v-on:click.native="toDetail(session)"> 

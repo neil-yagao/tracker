@@ -1,5 +1,5 @@
 <template>
-<div class="vcenter">
+<div class="v-center">
 	<md-card class="md-primary">
 
 	    <md-card-header>
@@ -67,7 +67,9 @@ export default {
 }
 </script>
 <style scoped>
-.vcenter {
-    margin-top: 50%;
+.v-center {
+	position: absolute;
+	top: 30vh;
+	width:99%;
 }
 </style>

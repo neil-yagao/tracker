@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div style="height:45em">
 		<md-dialog-title>
 		 <md-toolbar class="md-transparent">
         	<h2 class="md-title"  style="flex:1">添加新动作</h2>
@@ -9,7 +9,7 @@
         </md-toolbar>
         </md-dialog-title>
 		<md-dialog-content>
-		<div style="overflow-y: auto; max-height: 25em">
+		<div style="overflow-y: auto; max-height: 23em">
 		<md-list>
 			<md-list-item>
 			<md-input-container>
