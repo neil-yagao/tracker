@@ -12,7 +12,7 @@
         </md-toolbar>
         </md-dialog-title>
 		<md-dialog-content>
-		<div style="overflow-y: auto; max-height: 20vh">
+		<div style="overflow-y: auto; max-height: 555550vh">
 		<md-list>
 			<md-list-item>
 			<md-input-container>

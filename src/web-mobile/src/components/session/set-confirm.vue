@@ -50,6 +50,7 @@ export default {
 </script>
 <style>
 #set-confirm-modal{
-	height:50%;
+	height:50vh;
+	min-height:10em;
 }
 </style>
