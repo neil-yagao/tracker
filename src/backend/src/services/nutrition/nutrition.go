@@ -18,7 +18,7 @@ func SaveUserPhysique(userId int64, info *models.PhysiqueInfo) {
 
 func GetUserPhysique(userId int64) *models.PhysiqueInfo {
 	var physique = new(models.PhysiqueInfo)
-	err := o.QueryTable("physique_info").Filter("user_id", userId).OrderBy("-record_time").One(physique)
+	err := o.QueryTable("physique_info").Filter("user_id", userId).OrderBy("-record_time", "-id").One(physique)
 	if err != nil {
 		panic(err)
 	}

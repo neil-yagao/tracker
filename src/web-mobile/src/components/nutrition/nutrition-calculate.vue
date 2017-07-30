@@ -48,7 +48,14 @@
                     </md-list>
                 </md-list-expand> -->
             </md-list-item>
+
             </md-list>
+            <md-card-actions>
+            <md-button class="md-raised" v-on:click.native="goToCollect()">
+            		<md-icon>edit</md-icon>
+            		重新填写
+            	</md-button>
+        	</md-card-actions>
         </md-card-content>
     </md-card>
 </div>
@@ -71,6 +78,11 @@ export default {
 				this.$router.replace('/working/nutrition/collect')
 			}
 		})
+	},
+	methods:{
+		goToCollect:function(){
+			this.$router.replace('/working/nutrition/collect')
+		}
 	},
 	computed:{
 		rmc: function(){

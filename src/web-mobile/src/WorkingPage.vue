@@ -1,6 +1,10 @@
 <template>
 <div>
     <md-toolbar class="md-dense">
+        <md-button class="md-icon-button" v-if="$store.state.goback" v-on:click.native="goback()">
+            <md-icon>keyboard_arrow_left
+            </md-icon>
+        </md-button>
         <span class="md-title" style="color:white; flex:1">举铁小助手</span>
         <span style="color:white">撸铁吧：{{username}}</span>
         <md-button class="md-icon-button" v-on:click.native="logout()"><md-icon >exit_to_app</md-icon></md-button>
@@ -28,6 +32,9 @@ export default {
         logout:function(){
             window.localStorage.setItem('user','')
             this.$router.replace('/')
+        },
+        goback(){
+            this.$router.replace(this.$store.state.goback)
         }
     },
 

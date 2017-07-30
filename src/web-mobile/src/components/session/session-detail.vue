@@ -1,11 +1,9 @@
 <template>
 <div>
-<md-button class="md-accent" v-on:click.native="returnToList()">返回训练课列表</md-button>
 	<div v-for="workout in $store.state.session.detail.workouts">
 		<session-movement :movement="workout" @movement-done="setMovementDone($event)">
 		</session-movement>
 	</div>
-
 	</div>
 </template>
 <script>
@@ -32,13 +30,13 @@ export default {
 					this.$http.post('/session/' + this.$store.state.session.detail.id)
 				}
 				
-			},
-			returnToList(){
-				this.$router.push("/working/workouts")
 			}
 		},
 		components:{
 			'session-movement':SessionMovement
+		},
+		mounted:function(){
+			this.$store.commit('setBackUrl','/working/workouts');
 		}
 }
 </script>

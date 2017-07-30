@@ -19,11 +19,15 @@ window._ = require('lodash');
 const store = new Vuex.Store({
 
     state: {
-        user: {}
+        user: {},
+        goback:''
     },
     mutations: {
         setUser(state, user) {
             state.user = user
+        },
+        setBackUrl(state, url){
+            state.goback = url;
         }
     },
     modules: {
