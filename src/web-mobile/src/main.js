@@ -20,7 +20,11 @@ const store = new Vuex.Store({
 
     state: {
         user: {},
-        goback:''
+        goback:'',
+        guide:{
+            new:false,
+            instruction:'aaa'
+        }
     },
     mutations: {
         setUser(state, user) {
@@ -28,6 +32,10 @@ const store = new Vuex.Store({
         },
         setBackUrl(state, url){
             state.goback = url;
+        },
+        setGuideInfo(state, guide){
+            state.guide.new = guide.new;
+            state.guide.instruction = guide.instruction;
         }
     },
     modules: {

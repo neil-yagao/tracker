@@ -28,7 +28,7 @@
             </md-list>
         </div>
         <md-button class="md-raised " v-on:click.native="showNewSessionModal()" v-if="$store.state.plan.planEditing">添加新训练课</md-button>
-        <md-button class="md-raised" v-on:click.native="applyPlan()" v-if="!$store.state.plan.planEditing">应用这个计划</md-button>
+        <md-button class="md-raised" v-on:click.native="applyPlan()" v-if="!$store.state.plan.planEditing">应用计划</md-button>
         <md-dialog-prompt md-title="选择开始日期" md-ok-text="确定" md-cancel-text="取消" v-model="startDate" @close="confirmStart" ref="startDate">
         </md-dialog-prompt>
         <md-dialog ref="newSessionModal">

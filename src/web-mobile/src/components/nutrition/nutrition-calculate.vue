@@ -11,7 +11,7 @@
                 <md-button-toggle md-single>
                     <md-button v-on:click.native="extra = 1">增肌饮食</md-button>
                     <md-button v-on:click.native="extra = -1">减脂饮食</md-button>
-                    <md-button v-on:click.native="extra = 0">保持体重</md-button>
+                    <md-button class="md-toggle" v-on:click.native="extra = 0">保持体重</md-button>
                 </md-button-toggle>
        
             </md-list-item>

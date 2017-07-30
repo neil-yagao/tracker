@@ -2,7 +2,7 @@
 <div>
 	<div style="overflow-y: auto; max-height: 40em;">
 	    <md-list class="md-double-line">
-	        <md-list-item v-for='plan in exsitingPlan' v-on:click.native='checkPlan(plan)'>
+	        <md-list-item v-for='plan in exsitingPlan' v-on:click.native='checkPlan(plan)' :class="highlight">
 	            <md-icon>visibility</md-icon>
 	            <div class='md-list-text-container'>
 	                <span class="list-head">{{plan.name}}</span>
@@ -28,8 +28,10 @@ export default {
 		return {
 			exsitingPlan: [	
 			],
-			defaultPlanName:'' + this.$store.state.user.username + '的私人计划',
-			planName:''
+			defaultPlanName:'' + this.$store.state.user.username + '的计划',
+			planName:'',
+			highlight:'',
+			interval:''
 		}
 	},
 	methods:{
@@ -80,6 +82,7 @@ export default {
 	},
 	mounted:function(){
 		this.loadPlans();
+		this.$store.commit('setGuideInfo',{new:false, instruction:'请点击查看任意一个计划，然后点击“应用计划”来使用该计划！'})
 	}
 }
 </script>
@@ -90,4 +93,5 @@ export default {
 .list-content {
 	font-size: 30px
 }
+
 </style>

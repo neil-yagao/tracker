@@ -5,7 +5,7 @@
 	  <md-button class="md-primary" style="flex:1" v-on:click.native="showState = 'achieved'">已完成</md-button>
 	</md-button-toggle>
 	<md-list>
-		<md-list-item v-for="session in userSessions" v-on:click.native="toDetail(session)"> 
+		<md-list-item v-for="session in userSessions" v-on:click.native="toDetail(session)" > 
 		<md-icon>directions_run</md-icon>
 	    	<div class='md-list-text-container'>
 	  			<h2 class="list-head" >{{session.originSession.name}}</h2>
@@ -32,6 +32,9 @@ export default {
 			this.$http.get('/session/' + this.$store.state.user.username + "/" +  state).then((res)=>{
 				console.info(res.body.data)
 				this.userSessions = _.sortBy(res.body.data,'expectingDate');
+				if(this.userSessions.length == 0 && state == 'assigned'){
+					this.$store.commit('setGuideInfo', {new:true, instruction:'您尚未应用任何计划，让我们开始吧！'})
+				}
 			})
 		},
 		translateDate(date){
@@ -43,7 +46,6 @@ export default {
 				console.info(res.body.data)
 				this.$router.push("/working/workouts/detail/" + session.id);
 			})
-
 		}
 	},
 	mounted:function(){
