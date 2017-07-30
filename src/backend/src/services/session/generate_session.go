@@ -90,10 +90,10 @@ func findNextWeekday(weekday string, startPoint time.Time) time.Time {
 
 }
 
-func FindUserSessions(user *models.UserInfo) []*models.UserSession {
+func FindUserSessions(user *models.UserInfo, status string) []*models.UserSession {
 	var sessions []*models.UserSession
 	qs := o.QueryTable("user_session").Filter("assign_to_id", user.Id)
-	_, err := qs.Filter("status", NEW_SESSION).RelatedSel().All(&sessions)
+	_, err := qs.Filter("status", status).RelatedSel().All(&sessions)
 	/*for _, session := range sessions {
 		o.LoadRelated(session, "Workouts")
 		for _, workout := range session.Workouts {

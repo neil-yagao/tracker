@@ -2,7 +2,7 @@
 <div>
 	<div style="overflow-y: auto; max-height: 40em;">
 	    <md-list class="md-double-line">
-	        <md-list-item v-for='plan in exsitingPlan' v-on:click.native='checkPlan(plan)'>
+	        <md-list-item v-for='plan in exsitingPlan' v-on:click.native='checkPlan(plan)' :class="highlight">
 	            <md-icon>visibility</md-icon>
 	            <div class='md-list-text-container'>
 	                <span class="list-head">{{plan.name}}</span>
@@ -14,7 +14,7 @@
 	        <md-button class='md-raised md-warn' v-on:click.native='openCreationPromot()'>未找到满意的？自己创建一个吧</md-button>
 	    </md-list>
     </div>
-    <md-dialog-prompt md-title="创建新计划" md-ok-text="创建" md-cancel-text="取消" @close="onClose" v-model="planName" md-input-maxlength='20' md-input-placeholder='新计划名称' ref="createPlanPromot">
+    <md-dialog-prompt md-title="创建新计划" md-ok-text="创建" md-cancel-text="取消" @close="onClose" v-model="planName" md-input-maxlength='20' :md-input-placeholder='defaultPlanName' ref="createPlanPromot">
     </md-dialog-prompt>
     <loading-modal ref="loadingModal"></loading-modal>
 </div>
@@ -28,7 +28,10 @@ export default {
 		return {
 			exsitingPlan: [	
 			],
-			planName:''
+			defaultPlanName:'' + this.$store.state.user.username + '的计划',
+			planName:'',
+			highlight:'',
+			interval:''
 		}
 	},
 	methods:{
@@ -48,7 +51,7 @@ export default {
 		onClose(type){
 			if(type == 'ok'){
 				var plan = {
-					name:this.planName,
+					name:this.planName?this.planName:this.defaultPlanName,
 					createby:this.$store.state.user
 				}
 				this.$http.post('/plan', plan).then((res)=>{
@@ -57,10 +60,10 @@ export default {
 						createdPlan.sessions = []
 					}
 					this.$store.commit('resetPlan',createdPlan)
+					this.$store.commit('editPlan')
 					this.$router.push('/working/plan/' + createdPlan.id + '/sessions');
 
 				})
-				
 			}
 		},
 		openCreationPromot(){
@@ -79,6 +82,7 @@ export default {
 	},
 	mounted:function(){
 		this.loadPlans();
+		this.$store.commit('setGuideInfo',{new:false, instruction:'请点击查看任意一个计划，然后点击“应用计划”来使用该计划！'})
 	}
 }
 </script>
@@ -89,4 +93,5 @@ export default {
 .list-content {
 	font-size: 30px
 }
+
 </style>

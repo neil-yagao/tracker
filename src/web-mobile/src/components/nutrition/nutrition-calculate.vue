@@ -11,7 +11,7 @@
                 <md-button-toggle md-single>
                     <md-button v-on:click.native="extra = 1">增肌饮食</md-button>
                     <md-button v-on:click.native="extra = -1">减脂饮食</md-button>
-                    <md-button v-on:click.native="extra = 0">保持体重</md-button>
+                    <md-button class="md-toggle" v-on:click.native="extra = 0">保持体重</md-button>
                 </md-button-toggle>
        
             </md-list-item>
@@ -48,7 +48,14 @@
                     </md-list>
                 </md-list-expand> -->
             </md-list-item>
+
             </md-list>
+            <md-card-actions>
+            <md-button class="md-raised" v-on:click.native="goToCollect()">
+            		<md-icon>edit</md-icon>
+            		重新填写
+            	</md-button>
+        	</md-card-actions>
         </md-card-content>
     </md-card>
 </div>
@@ -71,6 +78,11 @@ export default {
 				this.$router.replace('/working/nutrition/collect')
 			}
 		})
+	},
+	methods:{
+		goToCollect:function(){
+			this.$router.replace('/working/nutrition/collect')
+		}
 	},
 	computed:{
 		rmc: function(){

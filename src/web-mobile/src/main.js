@@ -19,11 +19,23 @@ window._ = require('lodash');
 const store = new Vuex.Store({
 
     state: {
-        user: {}
+        user: {},
+        goback:'',
+        guide:{
+            new:false,
+            instruction:'aaa'
+        }
     },
     mutations: {
         setUser(state, user) {
             state.user = user
+        },
+        setBackUrl(state, url){
+            state.goback = url;
+        },
+        setGuideInfo(state, guide){
+            state.guide.new = guide.new;
+            state.guide.instruction = guide.instruction;
         }
     },
     modules: {

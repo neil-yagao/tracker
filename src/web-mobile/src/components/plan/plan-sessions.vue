@@ -12,7 +12,7 @@
                 <md-icon>save</md-icon>
             </md-button>
         </md-toolbar>
-        <div style="overflow-y: auto; max-height: 35em;">
+        <div style="overflow-y: auto; max-height: 65vh">
             <md-list md-triple-line>
                 <md-list-item v-for="(row, rowIndex) in sessions">
                     <div class="md-list-text-container" v-on:click="editSesssion(rowIndex)">
@@ -27,21 +27,21 @@
                 </md-list-item>
             </md-list>
         </div>
-        <md-button class="md-raised" v-on:click.native="showNewSessionModal()" v-if="$store.state.plan.planEditing">添加新训练课</md-button>
-        <md-button class="md-raised" v-on:click.native="applyPlan()" v-if="!$store.state.plan.planEditing">应用这个计划</md-button>
+        <md-button class="md-raised " v-on:click.native="showNewSessionModal()" v-if="$store.state.plan.planEditing">添加新训练课</md-button>
+        <md-button class="md-raised" v-on:click.native="applyPlan()" v-if="!$store.state.plan.planEditing">应用计划</md-button>
         <md-dialog-prompt md-title="选择开始日期" md-ok-text="确定" md-cancel-text="取消" v-model="startDate" @close="confirmStart" ref="startDate">
         </md-dialog-prompt>
         <md-dialog ref="newSessionModal">
             <md-dialog-content>
                 <md-list>
                     <md-list-item>
-                        <md-input-container>
+                        <md-input-container :class="showError && !activeSession.name?'md-input-invalid':''">
                             <label>训练课名称</label>
                             <md-input v-model="activeSession.name" required></md-input>
                         </md-input-container>
                     </md-list-item>
                     <md-list-item>
-                        <md-input-container>
+                        <md-input-container :class="showError && activeSession.muscle.length == 0?'md-input-invalid':''">
                             <label>训练目标</label>
                             <md-select name="muscle" id="muscle" v-model="activeSession.muscle" multiple required>
                                 <md-option value="肩部">肩部</md-option>
@@ -55,7 +55,7 @@
                         </md-input-container>
                     </md-list-item>
                     <md-list-item>
-                        <md-input-container>
+                        <md-input-container :class="showError && !activeSession.weekly?'md-input-invalid':''">
                             <label>训练时间</label>
                             <md-select name="weekly" id="weekly" v-model="activeSession.weekly" required>
                                 <md-option value="Monday">周一</md-option>
@@ -69,9 +69,9 @@
                         </md-input-container>
                     </md-list-item>
                     <md-list-item>
-                        <md-input-container>
+                        <md-input-container :class="showError && !activeSession.repeat?'md-input-invalid':''">
                             <label>重复次数</label>
-                            <md-input type="number" v-model="activeSession.repeat"></md-input>
+                            <md-input type="number" v-model="activeSession.repeat" required></md-input>
                         </md-input-container>
                     </md-list-item>
                 </md-list>
@@ -105,11 +105,17 @@ export default {
 				'Saturday': '周六',
 				'Sunday': '周日'
 			},
-			startDate:moment().format("YYYY-MM-DD")
+			startDate:moment().format("YYYY-MM-DD"),
+			showError:false
 		}
 	},
 	methods:{
 		addSession: function() {
+			console.info("add session")
+			if(!this.activeSession.name || !this.activeSession.weekly || !this.activeSession.repeat || this.activeSession.muscle.length == 0){
+				this.showError = true;
+				return
+			}
             this.activeSession.workouts = [];
             this.activeSession.targetMuscle = _.join(this.activeSession.muscle,',')
 			this.$store.commit('pushSession', _.clone(this.activeSession));
@@ -120,7 +126,10 @@ export default {
 
 			})
             this.activeSession = {
-                muscle :[]
+                muscle :[],
+                name:'',
+                weekly:'',
+                repeat:''
             }
             this.closeDialog()
 

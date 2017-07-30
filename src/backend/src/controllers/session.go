@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/astaxie/beego/logs"
 	"models"
 	"services/session"
 )
@@ -9,14 +10,16 @@ type WorkingSessionController struct {
 	GeneralController
 }
 
-// @router /session/?:username [get]
+// @router /session/?:username/?:status [get]
 func (this *WorkingSessionController) FindUserSession() {
 	defer this.RecoverFromError()
 	username := this.Ctx.Input.Param(":username")
+	status := this.Ctx.Input.Param(":status")
+	logs.Debug("status %v", status)
 	user := new(models.UserInfo)
 	user.Username = username
 	o.Read(user, "Username")
-	this.ServeJson(session.FindUserSessions(user))
+	this.ServeJson(session.FindUserSessions(user, status))
 }
 
 // @router /session-detail/?:sessionId [get]

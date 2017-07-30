@@ -15,14 +15,14 @@
 		<div style="overflow-y: auto; max-height: 555550vh">
 		<md-list>
 			<md-list-item>
-			<md-input-container>
+			<md-input-container :class="showError && !movement.name?'md-input-invalid':''">
 				<label>名称</label>
     			<md-input v-model="movement.name" required></md-input>
 			</md-input-container>
 			</md-list-item>
 
 			<md-list-item>
-			  <md-input-container required>
+			  <md-input-container required :class="showError && !movement.targetMuscle?'md-input-invalid':''">
                 <label>主要目标肌群</label>
                 <md-select name="muscle" id="muscle" v-model="movement.targetMuscle">
                     <md-option value="肩部">肩部</md-option>
@@ -50,7 +50,7 @@
             </md-input-container>
             </md-list-item>
             <md-list-item>
-			<md-input-container md-clearable>
+			<md-input-container md-clearable :class="showError && !movement.description?'md-input-invalid':''">
 				<label>动作描述</label>
     			<md-textarea v-model="movement.description" required ></md-textarea>
 			</md-input-container>
@@ -70,7 +70,8 @@ export default {
 				description:'',
 				targetMuscle:'',
 				secondaryMuscleArray:[]
-			}
+			},
+			showError:false
 		}
 	},
 	methods:{
@@ -78,6 +79,10 @@ export default {
 			this.$emit('to-list')
 		},
 		addMovement(){
+			if(!this.movement.name || !this.movement.targetMuscle || !this.movement.description){
+				this.showError = true;
+				return
+			}
 			this.movement.secondaryMuscle = _.join(this.movement.secondaryMuscleArray,";")
 			this.movement.addBy = this.$store.state.user
 			console.info(this.movement)
