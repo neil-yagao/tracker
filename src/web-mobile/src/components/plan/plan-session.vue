@@ -24,15 +24,15 @@
     <md-button class="md-raised" v-on:click.native="showNewExerciseModal()" v-if="$store.state.plan.planEditing">添加新动作</md-button>
     <md-dialog ref="newExerciseModal" style="max-height:70%">
 	    <md-list>
-	        <movement id="movement-element" @selected-movement="selectMovement($event)"></movement>
+	        <movement id="movement-element" @selected-movement="selectMovement($event)" :showError="showError"></movement>
 	        <md-list-item>
-	            <md-input-container :md-clearable="true" md-numeric >
+	            <md-input-container :md-clearable="true" md-numeric :class="showError && !activeExercise.sets?'md-input-invalid':''">
 	                <label>重复组数</label>
 	                <md-input type="number" v-model="activeExercise.sets" required></md-input>
 	            </md-input-container>
 	        </md-list-item>
 	        <md-list-item>
-	            <md-input-container :md-clearable="true" >
+	            <md-input-container :md-clearable="true" :class="showError && !activeExercise.reps?'md-input-invalid':''">
 	                <label>每组次数</label>
 	                <md-input type="number" v-model="activeExercise.reps" required></md-input>
 	            </md-input-container>
@@ -55,12 +55,17 @@ import _ from 'lodash';
 	    name: 'session-exercise',
 	    data() {
 	        return {
-	            activeExercise: {}
+	            activeExercise: {},
+	            showError:false
 
 	        }
 	    },
 	    methods: {
 	        addExercise: function() {
+	        	if(!this.activeExercise.movement || !this.activeExercise.sets || !this.activeExercise.reps){
+	        		this.showError = true
+	        		return 
+	        	}
                 this.activeExercise.sequence = this.exercises.length + 1
                 this.activeExercise.sets = Number(this.activeExercise.sets);
                 this.activeExercise.reps = Number(this.activeExercise.reps);

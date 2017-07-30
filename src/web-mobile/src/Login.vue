@@ -37,7 +37,6 @@ export default {
                 localStore = JSON.parse(str);
             }catch (e){
                 console.info(str + " translate to json fail")
-                console.info(e)
             }
             if(localStore && localStore.id){
                 this.$store.commit('setUser', localStore);
@@ -72,4 +71,5 @@ export default {
 	top: 30vh;
 	width:99%;
 }
+
 </style>

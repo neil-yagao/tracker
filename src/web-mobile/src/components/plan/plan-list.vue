@@ -14,7 +14,7 @@
 	        <md-button class='md-raised md-warn' v-on:click.native='openCreationPromot()'>未找到满意的？自己创建一个吧</md-button>
 	    </md-list>
     </div>
-    <md-dialog-prompt md-title="创建新计划" md-ok-text="创建" md-cancel-text="取消" @close="onClose" v-model="planName" md-input-maxlength='20' md-input-placeholder='新计划名称' ref="createPlanPromot">
+    <md-dialog-prompt md-title="创建新计划" md-ok-text="创建" md-cancel-text="取消" @close="onClose" v-model="planName" md-input-maxlength='20' :md-input-placeholder='defaultPlanName' ref="createPlanPromot">
     </md-dialog-prompt>
     <loading-modal ref="loadingModal"></loading-modal>
 </div>
@@ -28,6 +28,7 @@ export default {
 		return {
 			exsitingPlan: [	
 			],
+			defaultPlanName:'' + this.$store.state.user.username + '的私人计划',
 			planName:''
 		}
 	},
@@ -48,7 +49,7 @@ export default {
 		onClose(type){
 			if(type == 'ok'){
 				var plan = {
-					name:this.planName,
+					name:this.planName?this.planName:this.defaultPlanName,
 					createby:this.$store.state.user
 				}
 				this.$http.post('/plan', plan).then((res)=>{
@@ -57,10 +58,10 @@ export default {
 						createdPlan.sessions = []
 					}
 					this.$store.commit('resetPlan',createdPlan)
+					this.$store.commit('editPlan')
 					this.$router.push('/working/plan/' + createdPlan.id + '/sessions');
 
 				})
-				
 			}
 		},
 		openCreationPromot(){

@@ -7,17 +7,17 @@
         <md-card-content>
         	<md-list>
         		<md-list-item>
-		        	<div class="md-list-text-container"><label>您的性别是</label></div>
-		            <md-button-toggle md-single class="md-list-action">
-		                <md-button class="md-primary" v-on:click.native="gender = 1">男性</md-button>
-		                <md-button class="md-accent" v-on:click.native="gender = 2">女性</md-button>
+		        	<div class="md-list-text-container" :class="showError && gender == 0?'error':''"><label :reuqired="showError">您的性别是</label></div>
+		            <md-button-toggle md-single class="md-list-action" >
+		                <md-button class="md-primary" v-on:click.native="gender = 1" :class="gender == 1?'md-toggle':''">男性</md-button>
+		                <md-button class="md-accent" v-on:click.native="gender = 2" :class="gender == 2?'md-toggle':''">女性</md-button>
 		            </md-button-toggle>
 	            </md-list-item>
 	            <md-list-item>
 	            	<md-layout>
 		        	<md-layout md-flex="60"><label>您的年龄是</label></md-layout>
 		        	<md-layout md-flex="20">
-			            <md-input-container style="margin-top:-1.4em">
+			            <md-input-container style="margin-top:-1.4em" :class="showError && !age?'md-input-invalid':''">
 			            	<md-input v-model="age" md-numeric></md-input>
 			            </md-input-container>
 		            </md-layout>
@@ -27,7 +27,7 @@
 	            	<md-layout>
 		        	<md-layout md-flex="60"><label>您的体重是多少(kg)</label></md-layout>
 		        	<md-layout md-flex="20">
-			            <md-input-container style="margin-top:-1.4em">
+			            <md-input-container style="margin-top:-1.4em" :class="showError && !weight?'md-input-invalid':''">
 			            	<md-input v-model="weight" md-numeric></md-input>
 			            </md-input-container>
 		            </md-layout>
@@ -37,7 +37,7 @@
 	            	<md-layout>
 		        	<md-layout md-flex="60"><label>您的身高是多少(cm)</label></md-layout>
 		        	<md-layout md-flex="20">
-			            <md-input-container style="margin-top:-1.4em">
+			            <md-input-container style="margin-top:-1.4em" :class="showError && !height?'md-input-invalid':''">
 			            	<md-input v-model="height" md-numeric></md-input>
 			            </md-input-container>
 		            </md-layout>
@@ -59,11 +59,16 @@ export default {
 			gender:0,
 			weight:'',
 			height:'',
-			age:''
+			age:'',
+			showError:false
 		}
 	},
 	methods:{
 		doSave(){
+			if(this.gender == 0 || !this.weight || !this.height || !this.age){
+				this.showError = true;
+				return
+			}
 			var physique = {
 				gender:Number(this.gender),
 				weight:Number(this.weight),
@@ -80,3 +85,8 @@ export default {
 
 }
 </script>
+<style scoped>
+.error{
+	color: #ff5722;
+}
+</style>
