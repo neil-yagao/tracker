@@ -5,10 +5,12 @@
         <span style="color:white">撸铁吧：{{username}}</span>
         <md-button class="md-icon-button" v-on:click.native="logout()"><md-icon >exit_to_app</md-icon></md-button>
     </md-toolbar>
-    <router-view class="container-fluid" ></router-view>
+    <router-view></router-view>
     <md-bottom-bar class="bottom-stick" >
 	  <md-bottom-bar-item md-icon="history" href='#/working/workouts' :md-active="$route.path.indexOf('workouts') > 0">训练课</md-bottom-bar-item>
+	  <div class="show">
 	  <md-bottom-bar-item md-icon="favorite" href="#/working/plan" :md-active="$route.path.indexOf('plan') > 0" > 训练计划</md-bottom-bar-item>
+	  </div>
 	  <md-bottom-bar-item md-icon="near_me" href="#/working/nutrition" :md-active="$route.path.indexOf('nutrition') > 0">营养跟踪</md-bottom-bar-item>
 </md-bottom-bar>
 </div>
@@ -60,5 +62,21 @@ export default {
 	position: fixed;
     bottom: 0;
     width: 100%;
+}
+.impact {
+	color:#ff5722;
+}
+
+.highlight {
+  box-shadow: 3px 3px 15px #666;
+  border-color:#C76C0C;
+  background: #C76C0C;
+  color: #fff;
+  cursor: pointer;
+  z-index:100;
+  /*Opacity*/
+  zoom: 1;
+  filter: alpha(opacity=100);
+  opacity: 1;
 }
 </style>

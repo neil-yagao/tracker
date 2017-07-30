@@ -1,6 +1,6 @@
 <template>
 <div>
-    <md-input-container v-on:click.native="showDialog()">
+    <md-input-container v-on:click.native="showDialog()" :class="showError && !name?'md-input-invalid':''">
         <label>训练动作</label>
         <md-input v-model="name" required></md-input>
     </md-input-container>
@@ -27,6 +27,7 @@ export default {
             movements:[]
         }
     },
+    props:['showError'],
     methods:{
         showDialog(){
             this.$refs['movementSelection'].open();
