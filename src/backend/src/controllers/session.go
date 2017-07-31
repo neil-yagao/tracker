@@ -47,3 +47,11 @@ func (this *WorkingSessionController) DoneOneMovement() {
 	session.DoneOneMovement(id, exercises)
 	this.ServeJson()
 }
+
+// @router /session-movement/history/?:user/?:movement [get]
+func (this *WorkingSessionController) GetMovementPersonalHistory() {
+	defer this.RecoverFromError()
+	user := this.GetIntParam(":user")
+	movement := this.GetIntParam(":movement")
+	this.ServeJson(session.GetUserSessionMovement(user, movement))
+}
