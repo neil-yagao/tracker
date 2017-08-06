@@ -24,7 +24,7 @@ type UserSession struct {
 
 func (u *UserSession) TableUnique() [][]string {
 	return [][]string{
-		[]string{"ExpectingDate", "OriginSession"}}
+		{"ExpectingDate", "OriginSession"}}
 }
 
 //workout instance for each assigned session
@@ -33,7 +33,7 @@ type SessionWorkout struct {
 	Id             int64            `orm:"auto;pk" json:"id"`
 	BelongSession  *UserSession     `orm:"rel(fk)"`
 	MappedMovement *SessionMovement `orm:"rel(fk)"  json:"mappedMovement"`
-	Exercises      []*Exercise      `orm:"reverse(many)"`
+	Exercises      []*Exercise      `orm:"reverse(many)" json:"exercises"`
 	Status         string           `orm:"size(4)" json:"status"`
 }
 
@@ -44,4 +44,23 @@ type Exercise struct {
 	BelongWorkout *SessionWorkout `orm:"rel(fk)" json:"belongWorkout"`
 	Weight        float64         `orm:"digits(8);decimals(2)" json:"weight"`
 	Reps          int8            `orm:"digits(8)" json:"reps"`
+}
+
+//movement video that created by user
+type MovementVideo struct {
+	Id             int64     `orm:"auto;pk" json:"id"`
+	MappedMovement *Movement `orm:"rel(fk)" json:"mappedMovement"`
+	Location       string    `orm:"size(1024)" json:"location"`
+	UploadedBy     *UserInfo `orm:"rel(fk)" json:"uploadedBy"`
+	UploadedAt     time.Time `orm:"auto_now_add;type(date)" json:"uploadAt"`
+	Rating         int8      `orm:"digits(8)" json:"rating"`
+}
+
+//user rating for each movement video
+type UserMovementRating struct {
+	Id             int64     `orm:"auto;pk" json:"id"`
+	MappedMovement *Movement `orm:"rel(fk)" json:"mappedMovement"`
+	RatedBy        *UserInfo `orm:"rel(fk)" json:"ratedBy"`
+	Rating         int8      `orm:"digits(8)" json:"rating"`
+	RatedAt        time.Time `orm:"auto_now_add;type(date)" json:"ratedAt"`
 }

@@ -15,10 +15,12 @@
     <md-bottom-bar class="bottom-stick">
         <md-bottom-bar-item md-icon="history" href='#/working/workouts' :md-active="$route.path.indexOf('workouts') > 0">训练课</md-bottom-bar-item>
         <md-bottom-bar-item md-icon="favorite" href="#/working/plan" :md-active="$route.path.indexOf('plan') > 0" :class="highlight" v-on:click="clearHighlight()"> 训练计划</md-bottom-bar-item>
+        <md-bottom-bar-item md-icon="fitness_center" href="#/working/movement" :md-active="$route.path.indexOf('movement') > 0">训练动作</md-bottom-bar-item>
         <md-bottom-bar-item md-icon="near_me" href="#/working/nutrition" :md-active="$route.path.indexOf('nutrition') > 0">营养跟踪</md-bottom-bar-item>
-        <md-dialog-alert :md-content="instruction" :md-ok-text="确定" @close="startHighlight" ref="showDialog" id="guide-promot">
-        </md-dialog-alert>
+    
     </md-bottom-bar>
+    <md-dialog-alert :md-content="instruction" :md-ok-text="确定" @close="startHighlight" ref="showDialog" id="guide-promot">
+    </md-dialog-alert>
 </div>
 </template>
 <script>
