@@ -3,11 +3,11 @@
     <md-toolbar class="md-transparent">
 
         	<h2 class="md-title"  style="flex:1">{{movement.name}}</h2>
-        	<md-button  class="md-raised md-accent md-icon-button" v-on:click.native="addMovement()">
+        	<md-button  class="md-raised md-accent md-icon-button" v-on:click.native="">
 	  			<md-icon v-if="editing">save</md-icon>
 	  			<md-icon v-if="!editing">edit_mode</md-icon>
 	      	</md-button>
-	      	<md-button  class="md-raised md-primary md-icon-button" v-on:click.native="addMovement()">
+	      	<md-button  class="md-raised md-primary md-icon-button" v-on:click.native="openCaputre()">
 	  			<md-icon>videocam</md-icon>
 	      	</md-button>
         </md-toolbar>
@@ -48,16 +48,23 @@
             </md-list-item>
         </md-list>
         <movement-video></movement-video>
+        <capture-modal ref="capture"></capture-modal>
     </div>
 </template>
 <script>
 import MovementVideo from './movement-videos.vue'
+import CaptureModal from '../general/capture-modal.vue'
 export default {
 	name:'movement-detail',
 	data(){
 		return {
 			showError:false,
 			editing:false
+		}
+	},
+	methods:{
+		openCaputre(){
+			this.$refs['capture'].open();
 		}
 	},
 	computed:{
@@ -69,7 +76,8 @@ export default {
 		}
 	},
 	components:{
-		'movement-video':MovementVideo
+		'movement-video':MovementVideo,
+		'capture-modal':CaptureModal
 	}
 }
 </script>
