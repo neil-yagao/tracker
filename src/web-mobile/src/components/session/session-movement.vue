@@ -2,7 +2,17 @@
 	<p class="padding">
     <md-card md-with-hover >
         <md-card-header>
-            <div class="md-title">{{movement.mappedMovement.movement.name}},需要完成{{movement.mappedMovement.sets}}组</div>
+	        
+         <md-card-header-text style="flex:1">
+            <span class="md-title" >{{movement.mappedMovement.movement.name}},需要完成{{movement.mappedMovement.sets}}组
+
+            </span>
+            </md-card-header-text>
+            <md-button class="md-icon-button" style="margin-top:-0.3em" v-if="executing !=2">
+	    		<md-icon>history</md-icon>
+	    		<md-tooltip md-direction="left" style='margin-top:-1vh'>{{history}}</md-tooltip>
+		  	</md-button>
+            
         </md-card-header>
         <md-card-expand ref="expand-toggle">
             <md-card-content>
@@ -59,7 +69,8 @@ export default {
 			expanding:false,
 			interval:'',
 			executing:Number(this.movement.status)||0, //0 is not started, 1 is executing, 2 is done,
-			exercises:this.movement.Exercises ||[]
+			exercises:this.movement.Exercises ||[],
+			history:'没有此前该动作的纪录！'
 		}
 	},
 	methods:{
@@ -123,7 +134,7 @@ export default {
 						this.$refs['expand-toggle'].toggle()
 						this.expanding = false;
 					}
-			}, 3000)
+			}, 3000)	
 			}
 		}
 	},computed:{
@@ -145,7 +156,26 @@ export default {
 		'set-confirm':SetConfirm,
 		'loading-modal': LoadingModal,
 		'rest-modal': RestModal
+	},
+	mounted:function(){
+		console.info('load movement history');
+		var movement = this.movement.mappedMovement.movement.id
+		this.$http.get('/session-movement/history/' + this.$store.state.user.id + '/' + movement )
+		.then((res)=>{
+			var movementHistory = res.body.data;
+			if(movementHistory && movementHistory[0]){
+				var exercises = movementHistory[0].exercises;
+				if(exercises){
+					this.history = ''
+					_.forEach(exercises,(exercise)=>{
+						this.history += exercise.weight + 'KG*' + exercise.reps + ';  '
+					})
+				}
+				
+			}
+		})
 	}
+
 }
 </script>
 <style>

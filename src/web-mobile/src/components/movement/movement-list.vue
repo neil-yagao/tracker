@@ -58,7 +58,6 @@ export default {
 			this.selectedMovement = m;
 			this.criteria = m.name;
 		}
-
 	},
 	props:['movements'],
 	computed:{

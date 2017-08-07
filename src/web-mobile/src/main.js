@@ -9,6 +9,8 @@ import Vuex from 'vuex'
 import VueMaterial from 'vue-material'
 import planState from './components/plan/plan-state.js'
 import sessionState from './components/session/session-state.js'
+import movementState from './components/movement/movement-state.js'
+
 
 Vue.use(VueMaterial)
 Vue.use(VueRouter)
@@ -40,7 +42,8 @@ const store = new Vuex.Store({
     },
     modules: {
         plan: planState,
-        session: sessionState
+        session: sessionState,
+        movement:movementState
     }
 })
 

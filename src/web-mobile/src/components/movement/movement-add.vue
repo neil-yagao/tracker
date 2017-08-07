@@ -12,7 +12,7 @@
         </md-toolbar>
         </md-dialog-title>
 		<md-dialog-content>
-		<div style="overflow-y: auto; max-height: 555550vh">
+		<div style="overflow-y: auto; max-height: 50vh">
 		<md-list>
 			<md-list-item>
 			<md-input-container :class="showError && !movement.name?'md-input-invalid':''">
