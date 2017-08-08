@@ -53,7 +53,6 @@ type MovementVideo struct {
 	Location       string    `orm:"size(1024)" json:"location"`
 	UploadedBy     *UserInfo `orm:"rel(fk)" json:"uploadedBy"`
 	UploadedAt     time.Time `orm:"auto_now_add;type(date)" json:"uploadAt"`
-	Rating         int8      `orm:"digits(8)" json:"rating"`
 }
 
 //user rating for each movement video

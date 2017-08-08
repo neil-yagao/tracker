@@ -25,3 +25,11 @@ func InsertMovement(m *models.Movement) {
 func UpdateMovement(m *models.Movement) {
 	o.Update(m)
 }
+
+func SaveMovementImage(location string, u, m int64) {
+	movement := new(models.MovementVideo)
+	movement.MappedMovement.Id = m
+	movement.Location = location
+	movement.UploadedBy.Id = u
+	o.InsertOrUpdate(movement)
+}

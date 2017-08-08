@@ -50,7 +50,12 @@ export default {
 		},
 		upload(){
 			this.formData = new FormData()
-			this.formData.set('gif',document.getElementById('img').src)
+			//console.info( document.getElementById('img').src)
+			this.formData.set('gif', document.getElementById('img').src.replace('data:image/gif;base64,', ''))
+			this.$http.post('/movement/upload/' + this.$store.state.user.id + "/" + this.movement, this.formData)
+			.then(()=>{
+				this.close()				
+			})
 		},
 		clear(){
 			this.capture = true;
@@ -95,14 +100,14 @@ export default {
 			var self = this;
 			this.initVideo()
 			var progressInterval = setInterval(()=>{
-				this.progress += 2
+				this.progress += 4
 				if(this.progress > 100){
 					clearInterval(progressInterval)
 				}
 			}, 200);	
 			gifshot.createGIF({
 			    interval: 0.2,
-			    numFrames: 50,
+			    numFrames: 25,
 			    frameDuration: 10
 			},function(obj) {
 				if(!obj.error) {

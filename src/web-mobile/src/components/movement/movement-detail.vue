@@ -48,7 +48,7 @@
             </md-list-item>
         </md-list>
         <movement-video></movement-video>
-        <capture-modal ref="capture"></capture-modal>
+        <capture-modal ref="capture" :movement="movement.id"></capture-modal>
     </div>
 </template>
 <script>
@@ -72,7 +72,9 @@ export default {
 			return this.$router.params.id
 		},
 		movement:function(){
-			return this.$store.state.movement.movement
+			var movement = this.$store.state.movement.movement;
+			movement.secondaryMuscleArray = movement.secondaryMuscle.split(';')
+			return movement;
 		}
 	},
 	components:{
