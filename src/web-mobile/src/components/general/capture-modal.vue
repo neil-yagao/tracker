@@ -51,6 +51,10 @@ export default {
 		upload(){
 			this.formData = new FormData()
 			this.formData.set('gif',document.getElementById('img').src)
+			this.$http.post('/movement/upload/'+ this.$store.state.user.id + '/' + this.movement, this.formData)
+				.then(()=>{
+					this.close()
+				})
 		},
 		clear(){
 			this.capture = true;

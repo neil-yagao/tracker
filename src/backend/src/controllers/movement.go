@@ -23,3 +23,11 @@ func (this *MovementController) AddNewMovement() {
 	movement.InsertMovement(m)
 	this.ServeJson()
 }
+
+// @router /movement/upload/?:user/?:movement
+func (this *MovementController) AttachMovementGif() {
+	movement := this.GetString(":movement")
+	logs.Debug("movement:" + movement)
+	this.SaveToFile("gif", "./"+movement+".gif")
+	this.ServeJson()
+}
