@@ -19,7 +19,10 @@
                 </md-card-actions>
             </md-card-media-actions>
         </md-card>
-        <md-progress class="md-accent" :md-progress="progress"></md-progress>
+        <md-progress class="md-accent" :md-progress="progress" v-if="progress < 100 && capture"></md-progress>
+		<md-layout md-flex="35" md-align="center">
+			<md-spinner md-indeterminate v-if="progress >= 100 && capture "></md-spinner>
+		</md-layout>
        </md-dialog-content>
 
 	  <md-dialog-actions>
@@ -35,7 +38,7 @@ export default {
 	name:'capture-modal',
 	data(){
 		return {
-			capture:true,
+			capture:false,
 			formData:'',
 			progress:0,
 			stream:''
@@ -50,22 +53,25 @@ export default {
 		},
 		upload(){
 			this.formData = new FormData()
-			this.formData.set('gif',document.getElementById('img').src)
-			this.$http.post('/movement/upload/'+ this.$store.state.user.id + '/' + this.movement, this.formData)
-				.then(()=>{
-					this.close()
-				})
+			//console.info( document.getElementById('img').src)
+			this.formData.set('gif', document.getElementById('img').src.replace('data:image/gif;base64,', ''))
+			this.$http.post('/movement/upload/' + this.$store.state.user.id + "/" + this.movement, this.formData)
+			.then(()=>{
+				this.close()				
+			})
 		},
 		clear(){
-			this.capture = true;
+			this.capture = false;
 			document.getElementById('img').src = '';
 			this.progress = 0;
 			this.initVideo()
 		},
 		open(){
-			this.$refs['captureDialog'].open()
+			this.$refs['captureDialog'].open();
+			this.initVideo()
 		},
 		initVideo(){
+
 			var self = this;
 	        navigator.getMedia = (navigator.getUserMedia ||
 	            navigator.webkitGetUserMedia ||
@@ -96,17 +102,18 @@ export default {
 	        );
 		},
 		captureGif(){
+			this.capture = true
 			var self = this;
 			this.initVideo()
 			var progressInterval = setInterval(()=>{
-				this.progress += 2
+				this.progress += 4
 				if(this.progress > 100){
 					clearInterval(progressInterval)
 				}
 			}, 200);	
 			gifshot.createGIF({
 			    interval: 0.2,
-			    numFrames: 50,
+			    numFrames: 25,
 			    frameDuration: 10
 			},function(obj) {
 				if(!obj.error) {

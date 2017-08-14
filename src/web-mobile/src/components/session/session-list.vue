@@ -1,8 +1,8 @@
 <template>
 <div style="overflow-y: auto; max-height: 84vh;">
 	<md-button-toggle md-single>
-	  <md-button class="md-toggle" style="flex:1" v-on:click.native="showState = 'assigned'">待完成</md-button>
-	  <md-button class="md-primary" style="flex:1" v-on:click.native="showState = 'achieved'">已完成</md-button>
+	  <md-button style="flex:1" v-on:click.native="showState = 'assigned'">待完成</md-button>
+	  <md-button style="flex:1" v-on:click.native="showState = 'achieved'">已完成</md-button>
 	</md-button-toggle>
 	<md-list>
 		<md-list-item v-for="session in userSessions" v-on:click.native="toDetail(session)" > 
@@ -50,7 +50,6 @@ export default {
 	},
 	mounted:function(){
 		this.loadSessions(this.showState);
-		this.$store.commit('setBackUrl','');
 	},
 	watch:{
 		showState:function(value){

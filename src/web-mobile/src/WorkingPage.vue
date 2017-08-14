@@ -50,6 +50,7 @@ export default {
         },
         goback(){
             this.$router.replace(this.$store.state.goback)
+            this.$store.commit('setBackUrl','')
         },
         startHighlight(){
             if(this.$store.state.guide.new){

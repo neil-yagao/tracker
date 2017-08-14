@@ -25,3 +25,23 @@ func InsertMovement(m *models.Movement) {
 func UpdateMovement(m *models.Movement) {
 	o.Update(m)
 }
+
+func SaveMovementImage(location string, u, m int64) {
+	movement := new(models.MovementVideo)
+	movement.MappedMovement = new(models.Movement)
+	movement.MappedMovement.Id = m
+	movement.Location = location
+	movement.UploadedBy = new(models.UserInfo)
+	movement.UploadedBy.Id = u
+	o.InsertOrUpdate(movement)
+}
+
+func GetMovementImage(m int64) *models.MovementVideo {
+	movement := new(models.MovementVideo)
+	movement.MappedMovement = new(models.Movement)
+	movement.MappedMovement.Id = m
+	o.Read(movement, "MappedMovement")
+	//currently not need
+	//o.LoadRelated(movement, "UploadedBy")
+	return movement
+}

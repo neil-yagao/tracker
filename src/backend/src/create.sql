@@ -115,3 +115,14 @@ CREATE TABLE IF NOT EXISTS `physique_info` (
     `gender` numeric(8, 2) NOT NULL DEFAULT 0 ,
     `record_time` date NOT NULL
 ) ENGINE=InnoDB;
+
+-- --------------------------------------------------
+--  Table Structure for `models.MovementVideo`
+-- --------------------------------------------------
+CREATE TABLE IF NOT EXISTS `movement_video` (
+    `id` bigint AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `mapped_movement_id` bigint NOT NULL,
+    `location` varchar(1024) NOT NULL DEFAULT '' ,
+    `uploaded_by_id` bigint NOT NULL,
+    `uploaded_at` date NOT NULL
+) ENGINE=InnoDB;

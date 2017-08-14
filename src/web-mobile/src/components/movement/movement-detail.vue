@@ -1,7 +1,6 @@
 <template>
     <div style="overflow-y: auto; max-height: 83vh">
     <md-toolbar class="md-transparent">
-
         	<h2 class="md-title"  style="flex:1">{{movement.name}}</h2>
         	<md-button  class="md-raised md-accent md-icon-button" v-on:click.native="">
 	  			<md-icon v-if="editing">save</md-icon>
@@ -47,13 +46,12 @@
                 </md-input-container>
             </md-list-item>
         </md-list>
-        <movement-video></movement-video>
-        <capture-modal ref="capture" :movement="movemenet.id"></capture-modal>
+        <movement-video :movement="movement.id" ref="mvideo"></movement-video>
     </div>
 </template>
 <script>
 import MovementVideo from './movement-videos.vue'
-import CaptureModal from '../general/capture-modal.vue'
+
 export default {
 	name:'movement-detail',
 	data(){
@@ -64,7 +62,7 @@ export default {
 	},
 	methods:{
 		openCaputre(){
-			this.$refs['capture'].open();
+			this.$refs['mvideo'].open();
 		}
 	},
 	computed:{
@@ -72,14 +70,16 @@ export default {
 			return this.$router.params.id
 		},
 		movement:function(){
-			var movement = this.$store.state.movement.movement
+			var movement = this.$store.state.movement.movement;
 			movement.secondaryMuscleArray = movement.secondaryMuscle.split(';')
-			return movement
+			return movement;
 		}
 	},
 	components:{
-		'movement-video':MovementVideo,
-		'capture-modal':CaptureModal
+		'movement-video':MovementVideo
+	},
+	mounted:function(){
+		this.$store.commit('setBackUrl','/working/movement')
 	}
 }
 </script>

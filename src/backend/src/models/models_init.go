@@ -20,5 +20,6 @@ func init() {
 	orm.RegisterDataBase("default", "mysql", connectString)
 
 	orm.RegisterModel(new(UserInfo), new(Movement), new(AssignedPlan), new(UserSession),
-		new(SessionWorkout), new(Exercise), new(SessionMovement), new(Session), new(Plan), new(PhysiqueInfo))
+		new(SessionWorkout), new(Exercise), new(SessionMovement), new(Session), new(Plan), new(PhysiqueInfo),
+		new(MovementVideo))
 }
